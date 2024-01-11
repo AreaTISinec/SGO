@@ -10,7 +10,8 @@ import NotFound from './components/NotFound'
 
 import store from './store'
 
-const App = () => {
+const App = () => 
+{
   return (
     <Provider store={store}>
       <Router>
