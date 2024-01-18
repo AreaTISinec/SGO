@@ -1,8 +1,9 @@
+import Sidebar from "../../components/Sidebar/Sidebar.jsx"
 
 const Home = () => {
   return (
     <div>
-      Home
+      <Sidebar />
     </div>
   )
 }

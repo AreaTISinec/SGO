@@ -71,6 +71,7 @@ import { Helmet } from 'react-helmet'
 import PropTypes from 'prop-types'
 import { login } from "../../actions/auth"
 import { useState, useEffect } from "react"
+import './Login.css'
 
 const Login = ({ login, isAuthenticated }) => {
   const [formData, setFormData] = useState({

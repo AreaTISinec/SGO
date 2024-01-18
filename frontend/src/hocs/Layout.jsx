@@ -1,13 +1,13 @@
 /* eslint-disable react/prop-types */
 
-import Navbar from '../components/Navbar/Navbar'
-
+import NavBar from '../components/Navbar/Navbar'
+import './Layout.css'
 
 const Layout = ({children}) => {
   return (
     <div>
-        <Navbar />
-        {children}  
+      <NavBar />
+      {children}  
     </div>
   )
 }

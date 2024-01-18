@@ -1,0 +1,41 @@
+.MenuContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: start; 
+    justify-content: start;
+    width: 60px;
+    transition: transform 0.3s ease-in-out;
+    background-color: #ce0e2d;
+    height: 100vh;
+    color: #fcf0c9;
+    margin-right: 450px;
+}
+.MenuVisible {
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    justify-content: start;
+    background-color: #ce0e2d;
+    transform: translateX(0);
+    width: 150px;
+    color: #fcf0c9;
+    height: 100vh;
+}
+
+.BotonMenu{
+    align-self: end;
+}
+
+.Despliegue{
+    align-items: center;
+}
+
+.DespliegueContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    padding-top: 200px;
+    padding-right: 20px;
+}
+

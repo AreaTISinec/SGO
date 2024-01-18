@@ -1,11 +1,12 @@
 a {
     text-decoration: none;
-    color: black;
-    background-color: beige;
+    color: white;
+    background-color: gray;
 }
 
+
 .navbar {
-    background-color: antiquewhite;
+    background-color: gray;
     display: flex;
     justify-content: space-between;
     list-style: none;
@@ -36,3 +37,4 @@ a {
     width: 90%;
     justify-content: space-between;
 }
+
