@@ -10,13 +10,14 @@ import NotFound from './components/NotFound'
 
 import store from './store'
 
-const App = () => {
+const App = () => 
+{
   return (
     <Provider store={store}>
       <Router>
         <Layout>
           <Routes>
-            <Route  path="/" element={<Home/>} />
+            <Route  path="/" element={<Login/>} /> {/*ACA DEBERIA IR EL LOGIN PARA MOSTRAR AL INGRESAR AL SISTEMA */}
             <Route  path="/login" element={<Login/>} />
             <Route  path="/signup" element={<Signup/>} />
             <Route  path="/docs/upload/" element={<UploadFile/>} />
@@ -30,3 +31,4 @@ const App = () => {
 
 export default App
 
+//<Home/>

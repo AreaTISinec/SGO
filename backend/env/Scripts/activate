@@ -38,7 +38,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="C:\Users\UTEM\Documents\proyectos\sinec\semana 02-01\backend\env"
+VIRTUAL_ENV="C:\Users\UTEM\Documents\proyectos\sinec\-SGO-GOS-Lucas\semana 15-01 - 19-01\backend\env"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

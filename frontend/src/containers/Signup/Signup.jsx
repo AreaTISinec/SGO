@@ -27,7 +27,7 @@ const Signup = ({ setAlert, signup, isAuthenticated }) => {
     if(password !== re_password)
       setAlert('Contraseñas no coinciden', 'error')
     else{
-      signup({ username, email, password, re_password, rol})
+      signup({  email, password, re_password, rol, username})
     }
   }
 
