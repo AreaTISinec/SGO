@@ -1,12 +1,12 @@
 a {
     text-decoration: none;
-    color: white;
-    background-color: #f26077;
+    color: #000;
+    background-color: #FFDFE4;
 }
 
 
 .navbar {
-    background-color: #f26077;
+    background-color: #FFDFE4;
     display: flex;
     justify-content: space-between;
     list-style: none;

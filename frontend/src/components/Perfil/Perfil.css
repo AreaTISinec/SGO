@@ -1,0 +1,5 @@
+.PerfilContainer{
+    display: flex;
+    flex-direction: row;
+    color: #000;
+}

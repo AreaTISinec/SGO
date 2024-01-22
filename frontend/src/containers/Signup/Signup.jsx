@@ -35,7 +35,7 @@ const Signup = ({ setAlert, signup, isAuthenticated }) => {
   useEffect(() => {
     // Check if isAuthenticated has changed
     if (isAuthenticated) {
-      navigate("/");
+      navigate("/login");
     }
   }, [isAuthenticated, navigate]);
 

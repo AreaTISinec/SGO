@@ -1,13 +1,17 @@
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom'
 import Home from "./containers/Home/Home"
 import Login from "./containers/Login/Login"
 import Signup from "./containers/Signup/Signup"
 import Layout from "./hocs/Layout"
+import Dashboard from './components/Dashboard/Dashboard'
+import Obras from './components/Obras/Obras'
+import Perfil from './components/Perfil/Perfil'
 import { Provider } from 'react-redux'
 import UploadFile from './containers/UploadFile/UploadFile'
 import NotFound from './components/NotFound'
 
 import store from './store'
+
 
 const App = () => 
 {
@@ -16,9 +20,15 @@ const App = () =>
       <Router>
         <Layout>
           <Routes>
-            <Route  path="/" element={<Login/>} /> {/*ACA DEBERIA IR EL LOGIN PARA MOSTRAR AL INGRESAR AL SISTEMA */}
-            <Route  path="/login" element={<Login/>} />
+            {/* <Route  path="/" element={<Navigate to = "/login"/>} /> PRIMERA VISTA SIEMPRE ES EL LOGIN*/}
             <Route  path="/signup" element={<Signup/>} />
+            <Route  path="/login" element={<Login/>} />
+            <Route  path="/" element={<Home/>} /> {/* ESTA RUTA ES MOMENTANEA */}
+            <Route  path="/home" element={<Home/>} /> {/*ACA DEBERIA IR EL LOGIN PARA MOSTRAR AL INGRESAR AL SISTEMA */}
+            {/* <Route  path="/dashboard" element={<Dashboard/>} /> */}
+            <Route  path="/obras" element={<Obras/>} />
+            {/* <Route  path="/perfil" element={<Perfil/>} /> */}
+            {/* <Route  path="/documentos" element={</>} /> */}
             <Route  path="/docs/upload/" element={<UploadFile/>} />
             <Route element={NotFound} />
           </Routes>
