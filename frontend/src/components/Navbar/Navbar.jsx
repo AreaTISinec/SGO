@@ -57,7 +57,7 @@ const NavBar = ({ auth: { isAuthenticated, loading }, logout }) => {
   return (
     <>
       <Navbar expand="lg" className="bg-body-tertiary p-0 m-0">
-        
+      
           <nav className="navbar">
             <div className="navbar__top">
               <div className="navbar__top__logo">

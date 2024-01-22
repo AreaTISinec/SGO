@@ -1,12 +1,12 @@
 a {
     text-decoration: none;
     color: white;
-    background-color: gray;
+    background-color: #f26077;
 }
 
 
 .navbar {
-    background-color: gray;
+    background-color: #f26077;
     display: flex;
     justify-content: space-between;
     list-style: none;
@@ -35,6 +35,5 @@ a {
 .navbar__bottom{
     display: flex;
     width: 90%;
-    justify-content: space-between;
+    justify-content: space-around;
 }
-
