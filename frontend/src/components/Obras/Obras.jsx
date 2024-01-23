@@ -8,7 +8,7 @@ import { Link, Navigate } from "react-router-dom";
 
 const Obras = () => {
   const [obrasData, setObrasData] = useState([]);
-  const id = 4
+  const id = 13
 
   const getDatos = async () => {
     const {data} = await axios.get(`http://127.0.0.1:8000/api/obras/${id}`)
