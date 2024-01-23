@@ -11,6 +11,7 @@ import UploadFile from './containers/UploadFile/UploadFile'
 import NotFound from './components/NotFound'
 
 import store from './store'
+import DetalleObra from './components/Obras/DetalleObra'
 
 const App = () => 
 {
@@ -22,10 +23,11 @@ const App = () =>
             {/* <Route  path="/" element={<Navigate to = "/login"/>} /> PRIMERA VISTA SIEMPRE ES EL LOGIN*/}
             <Route  path="/signup" element={<Signup/>} />
             <Route  path="/login" element={<Login/>} />
-            <Route  path="/" element={<Home/>} /> {/* ESTA RUTA ES MOMENTANEA */}
+            <Route  path="/" element={<Login/>} /> {/* ESTA RUTA ES MOMENTANEA */}
             <Route  path="/home" element={<Home/>} /> {/*ACA DEBERIA IR EL LOGIN PARA MOSTRAR AL INGRESAR AL SISTEMA */}
             {/* <Route  path="/dashboard" element={<Dashboard/>} /> */}
             <Route  path="/obras" element={<Obras/>} />
+            <Route  path="/obras/:idObra" element={<DetalleObra />} />
             {/* <Route  path="/perfil" element={<Perfil/>} /> */}
             {/* <Route  path="/documentos" element={</>} /> */}
             <Route  path="/docs/upload/" element={<UploadFile/>} />
