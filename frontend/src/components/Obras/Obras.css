@@ -26,15 +26,22 @@
 }
 
 .RecuadroListadoObras th, .RecuadroListadoObras td {
-    border: 1px solid #0000007a;
-    padding: 12px;
-    text-align: left;
-    border-radius: 10px;
+  border: 1px solid #0000007a;
+  padding: 12px;
+  text-align: center;
+  border-radius: 10px;
 }
 
 .RecuadroListadoObras td {
-    border: 1px solid #ddd;
-    padding: 12px;
-    text-align: left;
-    border-radius: 10px;
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: center;
+  border-radius: 10px;
+}
+
+.BuscadorDeObras{
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+  border-radius: 10px;
 }
