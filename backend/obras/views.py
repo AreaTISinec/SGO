@@ -12,8 +12,22 @@ class ObraListView(ListAPIView):
     
 
 class ObraDetailView(RetrieveAPIView):
+    permission_classes = (permissions.AllowAny, )
     queryset = Obras.objects.all()
     serializer_class = ObraSerializer
+    
+class ObraListByIDView(ListAPIView):
+    
+    permission_classes = (permissions.AllowAny, )
+    serializer_class = ObraSerializer
+    
+    def get_queryset(self):
+        # Obtenemos el valor del tipo de obra desde la URL
+        id_user = self.kwargs['id_user']
+        
+        # Filtramos las obras que tienen el mismo valor en el campo 'tipo_obra'
+        queryset = Obras.objects.filter(id_user=id_user)
+        return queryset
     
 class ObraUploadView(APIView):
     permission_classes = (permissions.AllowAny, )

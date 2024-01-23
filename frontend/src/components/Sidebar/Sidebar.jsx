@@ -15,7 +15,7 @@ const Sidebar = () => {
       return (
 
         <div className='DespliegueContainer'>
-          <Link className='LinksDespliegue' to="/">Home</Link>
+          <Link className='LinksDespliegue' to="/home">Home</Link>
           {/* <Link className='LinksDespliegue' to="/dashboard">Dashboard</Link> */}
           {/* <Link className='LinksDespliegue' to="/documentos">Documentos</Link> */}
           <Link className='LinksDespliegue' to="/obras">Obras</Link>

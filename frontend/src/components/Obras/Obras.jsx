@@ -4,30 +4,23 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import ejemplo from '../../../data.json'
 import Button from 'react-bootstrap/Button';
+import { Link, Navigate } from "react-router-dom";
 
 const Obras = () => {
   const [obrasData, setObrasData] = useState([]);
+  const id = 4
 
   const getDatos = async () => {
-    // const {data} = await axios.get("http://127.0.0.1:8000/api/obras/")
-    const {data} = ejemplo
-    console.log(data)
-    setObrasData(data)
+    const {data} = await axios.get(`http://127.0.0.1:8000/api/obras/${id}`)
+    //const {data} = ejemplo
+   
+    setObrasData(data.results)
   }
 
   useEffect(() => {
-    // Lógica para obtener datos de la base de datos y actualizar el estado
-    // Puedes usar fetch, axios u otra biblioteca para realizar la solicitud.
-    // Actualiza setObrasData con los datos recuperados.
+
     getDatos()
   }, []);
-
-  //Funciones de boton
-  const [detalle, setDetalle] = useState(false);
-
-  const verMas = () => {
-    setDetalle(!detalle);
-  };
 
   return (
     <div className="ObrasContainer">
@@ -45,13 +38,16 @@ const Obras = () => {
           </thead>
           <tbody>
             {obrasData.map((obra) => (
+              
               <tr key={obra.id}>
                 <td>{obra.id}</td>
-                <td>{obra.fechaInicio}</td>
+                <td>{obra.fecha_inicio}</td>
                 <td>{obra.direccion}</td>
-                <td>{obra.tipoObra}</td>
-                <td>{obra.estado}</td>
-                <Button onClick={verMas} variant="danger">+</Button>
+                <td>{obra.tipo_obra}</td>
+                <td>{obra.estado_obra}</td>
+                <Link to={`/obras/${obra.id}`}>
+                  <Button variant="danger">+</Button>
+                </Link>
               </tr>
             ))}
           </tbody>
