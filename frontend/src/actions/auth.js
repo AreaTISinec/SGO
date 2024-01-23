@@ -9,15 +9,11 @@ import {
 } from './types'
 
 
-const getCSRFToken = async () => {
+const getCSRFToken = () => async dispatch => {
     const csrfCookie = await axios.get('http://127.0.0.1:8000/api/accounts/csrfcookie')
     console.log(csrfCookie)
-    
-};
-const getCSRFToken2 = () => {
-    const csrfCookie = document.cookie.match(/csrftoken=([\w-]+)/);
-    console.log(csrfCookie)
-    return csrfCookie ? csrfCookie[1] : null;
+    return csrfCookie
+
   };
 
 export const login = (email, password ) => async dispatch => {
@@ -25,7 +21,9 @@ export const login = (email, password ) => async dispatch => {
     const config = {
         headers: {
             'Content-Type': 'application/json',
-            'X-CSRFToken': getCSRFToken2()
+
+            'X-CSRFToken': getCSRFToken()
+
         }
     }
 
@@ -55,7 +53,9 @@ export const signup = ({ username, email, password, re_password, rol }) => async
     const config = {
         headers: {
             'Content-Type': 'application/json',
-            'X-CSRFToken': getCSRFToken2(),
+
+            'X-CSRFToken': getCSRFToken(),
+
         }
     }
 

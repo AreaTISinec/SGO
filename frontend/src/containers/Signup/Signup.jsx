@@ -1,73 +1,68 @@
-import { useState, useEffect } from "react"
-import { connect } from "react-redux"
-import { useNavigate } from 'react-router-dom'
-import { Helmet } from "react-helmet"
-import { setAlert } from "../../actions/alert"
-import { signup } from "../../actions/auth"
-import PropTypes from 'prop-types'
+import { useState, useEffect } from "react";
+import { connect } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet";
+import { setAlert } from "../../actions/alert";
+import { signup } from "../../actions/auth";
+import PropTypes from "prop-types";
+import "./Singup.css";
 
 const Signup = ({ setAlert, signup, isAuthenticated }) => {
   const [formData, setFormData] = useState({
-    username: '',
-    email: '',
-    password: '',
-    re_password: '',
-    rol: 1
-  })
+    username: "",
+    email: "",
+    password: "",
+    re_password: "",
+    rol: 1,
+  });
 
   const { username, email, password, re_password, rol } = formData;
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
+  const onChange = (e) =>
+    setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  const onSubmit = e => {
+  const onSubmit = (e) => {
     e.preventDefault();
 
-    if(password !== re_password)
-      setAlert('Contraseñas no coinciden', 'error')
-    else{
-      signup({  email, password, re_password, rol, username})
+    if (password !== re_password) setAlert("Contraseñas no coinciden", "error");
+    else {
+      signup({ email, password, re_password, rol, username });
     }
-  }
+  };
 
   useEffect(() => {
     // Check if isAuthenticated has changed
     if (isAuthenticated) {
-      navigate('/');
+      navigate("/login");
     }
   }, [isAuthenticated, navigate]);
 
-
-
-
   return (
-    <div className="auth">
+    <div className="auth__">
       <Helmet>
         <title> </title>
-        <meta 
-          name="description"
-          content="signup page"
-        />
+        <meta name="description" content="signup page" />
       </Helmet>
-      <h1>Registrarse</h1>
-      <p>Crea la cuenta</p>
-      <form onSubmit={e => onSubmit(e)}>
-      <div>
-          <label>Nombre:  </label>
-          <input 
-            className="auth_form_input" 
-            type="text" 
-            placeholder="Nombre" 
-            name="username" 
-            value={username} 
-            onChange={e => onChange(e)} 
-            required 
+      <h1 className="auth__tittle">Registrarse</h1>
+      <p className="auth__lead">Crea tu cuenta</p>
+      <form onSubmit={(e) => onSubmit(e)}>
+        <div className="auth__form__group">
+          <label className="auth__form__group__label">Nombre: </label>
+          <input
+            className="auth__form__input"
+            type="text"
+            placeholder="Nombre"
+            name="username"
+            value={username}
+            onChange={(e) => onChange(e)}
+            required
           />
         </div>
-        <div>
-          <label>Selecciona un rol: </label>
-          <select id="rol" name="rol" onChange={e => onChange(e)}>
+        <div className="auth__form__group">
+          <label className="auth__form__group__label">Selecciona un rol: </label>
+          <select className="auth__form__input" id="rol" name="rol" onChange={(e) => onChange(e)}>
             <option value="1">SAdmin</option>
             <option value="2">CG</option>
             <option value="3">Admintrador</option>
@@ -75,44 +70,47 @@ const Signup = ({ setAlert, signup, isAuthenticated }) => {
             <option value="5">Gerencia</option>
           </select>
         </div>
-        <div>
-          <label>Email: </label>
-          <input 
-            className="auth_form_input" 
-            type="email" 
-            placeholder="email" 
-            name="email" 
-            value={email} 
-            onChange={e => onChange(e)} 
-            required 
+        <div className="auth__form__group">
+          <label className="auth__form__group__label">Email: </label>
+          <input
+            className="auth__form__input"
+            type="email"
+            placeholder="email"
+            name="email"
+            value={email}
+            onChange={(e) => onChange(e)}
+            required
           />
         </div>
-        <div>
-          <label>contraseña: </label>
-          <input 
-            className="auth_form_input" 
-            type="password" 
-            placeholder="password" 
-            name="password" 
-            value={password} 
-            onChange={e => onChange(e)} 
-            required 
+        <div className="auth__form__group">
+          <label className="auth__form__group__label">contraseña: </label>
+          <input
+            className="auth__form__input"
+            type="password"
+            placeholder="password"
+            name="password"
+            value={password}
+            onChange={(e) => onChange(e)}
+            required
           />
         </div>
-        <div>
-          <label>Confirmar contraseña: </label>
-          <input 
-            className="auth_form_input" 
-            type="password" 
-            placeholder="Confirmar contraseña" 
-            name="re_password" 
-            value={re_password} 
-            onChange={e => onChange(e)} 
-            required 
+        <div className="auth__form__group">
+          <label className="auth__form__group__label">Confirmar contraseña: </label>
+          <input
+            className="auth__form__input"
+            type="password"
+            placeholder="Confirmar contraseña"
+            name="re_password"
+            value={re_password}
+            onChange={(e) => onChange(e)}
+            required
           />
         </div>
-        <button>Iniciar Sesion</button>
+        <button className="auth__form__button">Registrate</button>
       </form>
+      <p className="auth__authtext">
+        ¿Ya tienes una cuenta? <Link className="auth__authtext__link" to="../login">Inicia sesion</Link>
+      </p>
     </div>
   )
 }
@@ -120,11 +118,11 @@ const Signup = ({ setAlert, signup, isAuthenticated }) => {
 Signup.propTypes = {
   setAlert: PropTypes.func.isRequired,
   signup: PropTypes.func.isRequired,
-  isAuthenticated: PropTypes.bool
-}
+  isAuthenticated: PropTypes.bool,
+};
 
-const mapStateToProps = state => ({
-  isAuthenticated: state.auth.isAuthenticated
-})
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+});
 
-export default connect(mapStateToProps, { setAlert, signup })(Signup)
+export default connect(mapStateToProps, { setAlert, signup })(Signup);

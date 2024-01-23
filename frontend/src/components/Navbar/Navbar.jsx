@@ -57,11 +57,11 @@ const NavBar = ({ auth: { isAuthenticated, loading }, logout }) => {
   return (
     <>
       <Navbar expand="lg" className="bg-body-tertiary p-0 m-0">
-        
+      
           <nav className="navbar">
             <div className="navbar__top">
               <div className="navbar__top__logo">
-                <Navbar.Brand href="#home">
+                <Navbar.Brand href="home">
                   <img
                     src={logogrupo}
                     alt="logo"
@@ -73,17 +73,7 @@ const NavBar = ({ auth: { isAuthenticated, loading }, logout }) => {
                 {!loading && <>{isAuthenticated ? authLinks : guestLinks}</>}
               </div>
             </div>
-            <div className="navbar__bottom">
-              <li className="navbar__bottom__item">
-                <NavLink to="/">Inicio</NavLink>
-              </li>
-              <li className="navbar__bottom__item">
-                <NavLink to="/documents">Documentos</NavLink>
-              </li>
-              <li className="navbar__bottom__item">
-                <NavLink to="/dashboard">Dashboard</NavLink>
-              </li>
-            </div>
+            
           </nav>
           <Alert />
         

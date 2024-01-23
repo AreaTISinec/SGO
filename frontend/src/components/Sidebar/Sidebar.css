@@ -3,26 +3,27 @@
     flex-direction: column;
     align-items: start; 
     justify-content: start;
-    width: 60px;
+    width: auto;
     transition: transform 0.3s ease-in-out;
-    background-color: #ce0e2d;
+    background-color: #FFDFE4;
     height: 100vh;
-    color: #fcf0c9;
-    margin-right: 450px;
+    color: #000;
 }
+
 .MenuVisible {
     display: flex;
     flex-direction: column;
-    align-items: end;
+    align-content: end;
     justify-content: start;
-    background-color: #ce0e2d;
+    background-color: #FFDFE4;
     transform: translateX(0);
-    width: 150px;
-    color: #fcf0c9;
+    width: auto;
+    color: #000;
     height: 100vh;
 }
 
 .BotonMenu{
+    color: #000;
     align-self: end;
 }
 
@@ -34,8 +35,13 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-content: center;
+    align-items: center;
     padding-top: 200px;
     padding-right: 20px;
 }
 
+.LinksDespliegue{
+    display: flex;
+    
+    padding: 10px;
+}
