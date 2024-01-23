@@ -2,12 +2,15 @@ import Sidebar from "../Sidebar/Sidebar";
 import "./Obras.css";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import ejemplo from '../../../data.json'
+import Button from 'react-bootstrap/Button';
 
 const Obras = () => {
   const [obrasData, setObrasData] = useState([]);
 
   const getDatos = async () => {
-    const {data} = await axios.get("http://127.0.0.1:8000/api/obras/")
+    // const {data} = await axios.get("http://127.0.0.1:8000/api/obras/")
+    const {data} = ejemplo
     console.log(data)
     setObrasData(data)
   }
@@ -18,6 +21,13 @@ const Obras = () => {
     // Actualiza setObrasData con los datos recuperados.
     getDatos()
   }, []);
+
+  //Funciones de boton
+  const [detalle, setDetalle] = useState(false);
+
+  const verMas = () => {
+    setDetalle(!detalle);
+  };
 
   return (
     <div className="ObrasContainer">
@@ -40,7 +50,8 @@ const Obras = () => {
                 <td>{obra.fechaInicio}</td>
                 <td>{obra.direccion}</td>
                 <td>{obra.tipoObra}</td>
-                <td>{obra.estadoObra}</td>
+                <td>{obra.estado}</td>
+                <Button onClick={verMas} variant="danger">+</Button>
               </tr>
             ))}
           </tbody>
