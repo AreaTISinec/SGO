@@ -65,12 +65,13 @@ const Login = ({ login }) => {
 export default connect(null, { login })(Login);
 */
 
-import {  useNavigate } from "react-router-dom"
+import {  Link, useNavigate } from "react-router-dom"
 import { connect } from "react-redux"
 import { Helmet } from 'react-helmet'
 import PropTypes from 'prop-types'
 import { login } from "../../actions/auth"
 import { useState, useEffect } from "react"
+import './Login.css'
 
 const Login = ({ login, isAuthenticated }) => {
   const [formData, setFormData] = useState({
@@ -94,25 +95,22 @@ const Login = ({ login, isAuthenticated }) => {
   useEffect(() => {
     // Check if isAuthenticated has changed
     if (isAuthenticated) {
-      navigate('/');
+      navigate('/home');
     }
   }, [isAuthenticated, navigate]);
   
 
   
   return (
-    <div className="auth">
+    <div className="auth_">
       <Helmet>
         <title> </title>
-        <meta 
-          name="description"
-          content="login page"
-        />
+        <meta name="description" content="login page"/>
       </Helmet>
-      <h1>Iniciar sesion</h1>
-      <p>Ingresa a tu cuenta</p>
+      <h1 className="auth_tittle">Iniciar sesion</h1>
+      <p className="auth_lead">Ingresa a tu cuenta</p>
       <form onSubmit={e => onSubmit(e)}>
-        <div>
+        <div className="auth_form_group">
           <input 
             className="auth_form_input" 
             type="email" 
@@ -123,7 +121,7 @@ const Login = ({ login, isAuthenticated }) => {
             required 
           />
         </div>
-        <div>
+        <div className="auth_form_group">
           <input 
             className="auth_form_input" 
             type="password" 
@@ -134,8 +132,11 @@ const Login = ({ login, isAuthenticated }) => {
             required 
           />
         </div>
-        <button>Iniciar Sesion</button>
+        <button className="auth_form_button">Iniciar Sesion</button>
       </form>
+      <p className="auth_authtext">
+        ¿No tienes cuenta? <Link className="auth_authtext_link" to='../signup'>Registrate</Link>
+      </p>
     </div>
   )
 }

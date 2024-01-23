@@ -1,40 +1,44 @@
 # Byte-compiled / optimized / DLL files
-/backend/__pycache__/
-/backend/*.py[cod]
-/backend/*$py.class
+
+backend/__pycache__/
+backend/*.py[cod]
+backend/*$py.class
 
 # C extensions
-/backend/*.so
+backend/*.so
 
 # Distribution / packaging
-/backend/.Python
-/backend/build/
-/backend/develop-eggs/
+backend/.Python
+backend/build/
+backend/develop-eggs/
 backend/dist/
-/backend/downloads/
-/backend/eggs/
-/backend/.eggs/
-/backend/lib/
-/backend/lib64/
-/backend/parts/
-/backend/sdist/
-/backend/var/
-/backend/wheels/
-/backend/share/python-wheels/
-/backend/*.egg-info/
-/backend/.installed.cfg
-/backend/*.egg
-/backend/MANIFEST
+backend/downloads/
+backend/eggs/
+backend/.eggs/
+backend/lib/
+backend/lib64/
+backend/parts/
+backend/sdist/
+backend/var/
+backend/wheels/
+backend/share/python-wheels/
+backend/*.egg-info/
+backend/.installed.cfg
+backend/*.egg
+backend/MANIFEST
+
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
 #  before PyInstaller builds the exe, so as to inject date/other infos into it.
-/backend/*.manifest
-/backend/*.spec
+
+backend/*.manifest
+backend/*.spec
 
 # Installer logs
-/backend/pip-log.txt
-/backend/pip-delete-this-directory.txt
+backend/pip-log.txt
+backend/pip-delete-this-directory.txt
+
 
 # Unit test / coverage reports
 htmlcov/
@@ -120,13 +124,16 @@ celerybeat.pid
 *.sage.py
 
 # Environments
+
 backend/.env
 backend/.venv
 backend/env/
+/backend/env/
 backend/venv/
 backend/ENV/
 backend/env.bak/
 backend/venv.bak/
+
 
 # Spyder project settings
 .spyderproject
@@ -158,3 +165,42 @@ cython_debug/
 #  and can be added to the global gitignore or merged into this file.  For a more nuclear
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
+
+.DS_STORE
+frontend/node_modules
+frontend/scripts/flow/*/.flowconfig
+frontend/.flowconfig
+frontend/*~
+frontend/*.pyc
+frontend/.grunt
+frontend/_SpecRunner.html
+frontend/__benchmarks__
+frontend/build/
+frontend/remote-repo/
+frontend/coverage/
+frontend/.module-cache
+frontend/fixtures/dom/public/react-dom.js
+frontend/fixtures/dom/public/react.js
+frontend/test/the-files-to-test.generated.js
+frontend/chrome-user-data
+frontend/*.sublime-project
+frontend/*.log*
+frontend/*.sublime-workspace
+frontend/.idea
+frontend/*.iml
+frontend/.vscode
+frontend/*.swp
+frontend/*.swo
+
+frontend/packages/react-devtools-core/dist
+frontend/packages/react-devtools-extensions/chrome/build
+frontend/packages/react-devtools-extensions/chrome/*.crx
+frontend/packages/react-devtools-extensions/chrome/*.pem
+frontend/packages/react-devtools-extensions/firefox/build
+frontend/packages/react-devtools-extensions/firefox/*.xpi
+frontend/packages/react-devtools-extensions/firefox/*.pem
+frontend/packages/react-devtools-extensions/shared/build
+frontend/packages/react-devtools-extensions/.tempUserDataDir
+frontend/packages/react-devtools-inline/dist
+frontend/packages/react-devtools-shell/dist
+frontend/packages/react-devtools-timeline/dist
