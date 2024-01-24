@@ -17,8 +17,8 @@ const CentroDeNegocios = () => {
     }
     try {
       const { data } = await axios.get(
-        `http://127.0.0.1:8000/api/obras/${searchTerm}`
-      );
+        `http://127.0.0.1:8000/api/cene/${searchTerm}`
+      ); 
       setCentronegocioData(data.results);
     }
     catch(err) {
@@ -58,7 +58,7 @@ const CentroDeNegocios = () => {
           </thead>
           <tbody>
             {centronegocioData.map((CentroNegocios) => (
-              <tr key={CentroNegocios.id}>
+              <tr key={CentroNegocios.nombre}>
                 <td>{CentroNegocios.id}</td>
                 <td>{CentroNegocios.fecha_inicio}</td>
                 <Link to={`/centro-de-negocios/${CentroNegocios.id}`}>
