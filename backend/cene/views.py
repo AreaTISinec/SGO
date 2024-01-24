@@ -8,15 +8,26 @@ class CeneListView(ListAPIView):
     permission_classes = (permissions.AllowAny, )
     queryset = Cene.objects.all()
     serializer_class = CeneSerializer
+    pagination_class = None
 
-class CeneItemView(RetrieveAPIView):
+class CeneItemByIDView(ListAPIView):
     permission_classes = (permissions.AllowAny, )
     serializer_class = CeneSerializer
     
     def get_queryset(self):
-        param = self.kwargs['param']
+        id_cene = self.kwargs['id_cene']
+    
+        queryset = Cene.objects.filter(id_cene=id_cene) 
         
-        queryset1 = Cene.objects.filter(id_cene=param)
-        queryset2 = Cene.objects.filter(nombre = param)
+        return queryset
+    
+class CeneItemByNameView(ListAPIView):
+    permission_classes = (permissions.AllowAny, )
+    serializer_class = CeneSerializer
+    
+    def get_queryset(self):
+        nombre = self.kwargs['nombre']
+    
+        queryset = Cene.objects.filter(nombre=nombre) 
         
-        return queryset1
+        return queryset
