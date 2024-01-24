@@ -1,0 +1,47 @@
+.CentroNegociosContainer {
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    height: 100vh;
+  }
+
+.RecuadroCentroNegocios{
+    display: flex;
+    flex-direction: row;
+    align-items: start;
+    justify-content: center;
+    width: 100%;
+    margin: 50px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    padding: 20px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+}
+
+.RecuadroCentroNegocios table {
+  width: 100%;
+  border-collapse: separate;
+  margin: 20px 0;
+}
+
+.RecuadroCentroNegocios th, .RecuadroCentroNegocios td {
+  border: 1px solid #0000007a;
+  padding: 12px;
+  text-align: center;
+  border-radius: 10px;
+}
+
+.RecuadroCentroNegocios td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: center;
+  border-radius: 10px;
+}
+
+.BuscadorDeCentrosNegocios{
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+  border-radius: 10px;
+}
