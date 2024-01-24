@@ -9,7 +9,7 @@ const DetalleCentroDeNegocios = () => {
     const [detalleCentroDeNegocios, setDetalleCentroDeNegocios] = useState();
 
   const getDatos = async () => {
-    const {data} = await axios.get(`http://127.0.0.1:8000/api/obras/${idCentroDeNegocios}`)
+    const {data} = await axios.get(`http://127.0.0.1:8000/api/cene/search/${idCentroDeNegocios}`)
     //const {data} = ejemplo
     console.log(data)
     setDetalleCentroDeNegocios(data)

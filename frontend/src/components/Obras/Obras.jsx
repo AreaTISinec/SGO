@@ -1,10 +1,9 @@
 import Sidebar from "../Sidebar/Sidebar";
 import "./Obras.css";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
-import ejemplo from "../../../data.json";
 import Button from "react-bootstrap/Button";
-import { Link, Navigate } from "react-router-dom";
+import { Link,  } from "react-router-dom";
 
 const Obras = () => {
 // const [obrasData, setObrasData] = useState([]);

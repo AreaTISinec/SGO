@@ -17,9 +17,10 @@ const CentroDeNegocios = () => {
     }
     try {
       const { data } = await axios.get(
-        `http://127.0.0.1:8000/api/cene/${searchTerm}`
+        `http://127.0.0.1:8000/api/cene/search/?search=${searchTerm}`
       ); 
-      setCentronegocioData(data.results);
+      console.log(data)
+      setCentronegocioData(data);
     }
     catch(err) {
       console.error("Error al obtener datos:", err);
@@ -57,15 +58,15 @@ const CentroDeNegocios = () => {
             </tr>
           </thead>
           <tbody>
-            {centronegocioData.map((CentroNegocios) => (
-              <tr key={CentroNegocios.nombre}>
-                <td>{CentroNegocios.id}</td>
-                <td>{CentroNegocios.fecha_inicio}</td>
-                <Link to={`/centro-de-negocios/${CentroNegocios.id}`}>
+            {centronegocioData ? centronegocioData.map((CentrodeNegocios) => (
+              <tr key={CentrodeNegocios.id_cene}>
+                <td>{CentrodeNegocios.id_cene}</td>
+                <td>{CentrodeNegocios.nombre}</td>
+                <Link to={`/centro-de-negocios/${CentrodeNegocios.id_cene}`}>
                   <Button variant="danger">+</Button>
                 </Link>
               </tr>
-            ))}
+            )) : ''}
           </tbody>
         </table>
       </div>
