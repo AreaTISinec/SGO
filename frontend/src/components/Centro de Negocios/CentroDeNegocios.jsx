@@ -36,6 +36,7 @@ const CentroDeNegocios = () => {
       <Sidebar />
       <div className="RecuadroCentroNegocios">
         <form
+          className="FormularioCDN"
           onSubmit={(e) => {
             e.preventDefault();
             getDatos();
@@ -49,6 +50,9 @@ const CentroDeNegocios = () => {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
+          <Link className="BotonNuevoCDN" to={'/centro-de-negocios/nuevo-centro-de-negocios'}>
+            <Button variant="danger">Nuevo Centro</Button>
+          </Link>
         </form>
         <table>
           <thead>

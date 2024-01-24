@@ -1,8 +1,5 @@
 .CentroNegociosContainer {
     display: flex;
-    justify-content: center;
-    align-items: start;
-    height: 100vh;
   }
 
 .RecuadroCentroNegocios{
@@ -44,4 +41,14 @@
   padding: 10px;
   text-align: left;
   border-radius: 10px;
+}
+
+.FormularioCDN{
+  display: flex;
+  flex-direction: column;
+}
+
+.BotonNuevoCDN{
+  background-color: transparent;
+  padding-top: 30px;
 }
