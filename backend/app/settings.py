@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     'docs',
     'obras',
     'ventas',
-    'perfil_usuario'
+    'perfil_usuario',
+    'cene',
 ]
 
 MIDDLEWARE = [
