@@ -16,10 +16,8 @@ const Sidebar = () => {
 
         <div className='DespliegueContainer'>
           <Link className='LinksDespliegue' to="/home">Home</Link>
-          {/* <Link className='LinksDespliegue' to="/dashboard">Dashboard</Link> */}
-          {/* <Link className='LinksDespliegue' to="/documentos">Documentos</Link> */}
           <Link className='LinksDespliegue' to="/obras">Obras</Link>
-          {/* <Link className='LinksDespliegue' to="/perfil">Perfil</Link> */}
+          <Link className='LinksDespliegue' to="/centro-de-negocios">Negocios</Link>
          </div>
       )
     }
@@ -28,7 +26,7 @@ const Sidebar = () => {
   return (
     <div className={` ${openMenu ? 'MenuVisible' : 'MenuContainer'}`}>
       <div>
-        {openMenu ? <div className='BotonMenu'><Button style={ {color: '#000'}} variant='outline-light' onClick={toggleMenu} >&lt;</Button></div> : <div className='BotonMenu'><Button style={ {color: '#000'}} variant='outline-light' onClick={toggleMenu} >&gt;</Button></div>  } 
+        {openMenu ? <div className='BotonMenu'><Button style={ {color: '#fff'}} variant='outline-light' onClick={toggleMenu} >&lt;</Button></div> : <div className='BotonMenu'><Button style={ {color: '#fff'}} variant='outline-light' onClick={toggleMenu} >&gt;</Button></div>  } 
         {/* importar los iconos desde bootstrap */}
         <div className='Despliegue'><Despliegue/></div>
       </div>

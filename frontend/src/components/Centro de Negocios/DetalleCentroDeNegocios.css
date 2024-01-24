@@ -1,0 +1,21 @@
+.DetalleCentroNegociosContainer {
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    height: 100vh;
+  }
+  
+  .RecuadroDetalleCentroNegocios{
+    flex-direction: row;
+    display: flex;
+    align-items: start;
+    justify-content: center;
+    width: 100%;
+    margin: 50px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    padding: 20px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+    height: 100vh;
+  }

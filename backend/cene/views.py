@@ -6,9 +6,23 @@ from .serializers import CeneSerializer
 
 class CeneListView(ListAPIView):
     permission_classes = (permissions.AllowAny, )
+<<<<<<< HEAD
     queryset = Cene.objects.all()
     serializer_class = CeneSerializer
     pagination_class = None
+=======
+    serializer_class = CeneSerializer
+    pagination_class = None
+    
+    def get_queryset(self):
+        queryset = Cene.objects.all()
+        search_term = self.request.query_params.get('search', None)
+
+        if search_term:
+            queryset = queryset.filter(nombre__icontains=search_term)
+        
+        return queryset
+>>>>>>> 2093a0749f176cec6c7ae0e8f8e7e8db38b14c8c
 
 class CeneItemByIDView(ListAPIView):
     permission_classes = (permissions.AllowAny, )

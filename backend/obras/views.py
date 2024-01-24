@@ -22,12 +22,16 @@ class ObraListByIDView(ListAPIView):
     serializer_class = ObraSerializer
     
     def get_queryset(self):
-        # Obtenemos el valor del tipo de obra desde la URL
-        id_user = self.kwargs['id_user']
+        try:
+            # Obtenemos el valor del tipo de obra desde la URL
+            id_user = self.kwargs['id_user']
+            
+            # Filtramos las obras que tienen el mismo valor en el campo 'tipo_obra'
+            queryset = Obras.objects.filter(id_user=id_user)
+            return queryset
+        except:
+            return Response({'error': 'Algo ocurrio mal al intentar checkear el estado de autentificacion'})
         
-        # Filtramos las obras que tienen el mismo valor en el campo 'tipo_obra'
-        queryset = Obras.objects.filter(id_user=id_user)
-        return queryset
     
 class ObraUploadView(APIView):
     permission_classes = (permissions.AllowAny, )

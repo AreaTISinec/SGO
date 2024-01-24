@@ -1,11 +1,11 @@
-.ObrasContainer {
+.CentroNegociosContainer {
     display: flex;
     justify-content: center;
     align-items: start;
     height: 100vh;
   }
 
-.RecuadroListadoObras{
+.RecuadroCentroNegocios{
     display: flex;
     flex-direction: row;
     align-items: start;
@@ -19,27 +19,27 @@
     border-radius: 20px;
 }
 
-.RecuadroListadoObras table {
+.RecuadroCentroNegocios table {
   width: 100%;
   border-collapse: separate;
   margin: 20px 0;
 }
 
-.RecuadroListadoObras th, .RecuadroListadoObras td {
+.RecuadroCentroNegocios th, .RecuadroCentroNegocios td {
   border: 1px solid #0000007a;
   padding: 12px;
   text-align: center;
   border-radius: 10px;
 }
 
-.RecuadroListadoObras td {
+.RecuadroCentroNegocios td {
   border: 1px solid #ddd;
   padding: 12px;
   text-align: center;
   border-radius: 10px;
 }
 
-.BuscadorDeObras{
+.BuscadorDeCentrosNegocios{
   border: 1px solid #ddd;
   padding: 10px;
   text-align: left;
