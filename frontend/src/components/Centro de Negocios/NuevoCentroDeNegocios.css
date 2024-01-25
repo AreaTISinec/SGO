@@ -1,0 +1,35 @@
+.NuevoCentroDeNegociosContainer{
+    display: flex;
+    flex-direction: row;
+}
+
+.RecuadroNuevoCentroDeNegocios{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin: 150px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    padding: 20px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+}
+
+.FormularioNuevoCentroDeNegocios{
+    display: flex;
+    flex-direction: column;
+
+}
+
+.BuscadorNuevoCentrosNegocios{
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+    border-radius: 10px;
+}
+
+.BotonCrearCentroDeNegocio{
+    margin-top: 30px;
+}

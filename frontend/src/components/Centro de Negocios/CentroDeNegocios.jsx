@@ -6,23 +6,21 @@ import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
 
 const CentroDeNegocios = () => {
-
   const [centronegocioData, setCentronegocioData] = useState([]);
-  const [searchTerm, setSearchTerm] = useState(''); // Estado para el término de búsqueda
+  const [searchTerm, setSearchTerm] = useState(""); // Estado para el término de búsqueda
 
   const getDatos = async () => {
-    if (searchTerm.trim() === '') {
+    if (searchTerm.trim() === "") {
       // Evitar la solicitud si el término de búsqueda está vacío
       return;
     }
     try {
       const { data } = await axios.get(
         `http://127.0.0.1:8000/api/cene/search/?search=${searchTerm}`
-      ); 
-      console.log(data)
+      );
+      console.log(data);
       setCentronegocioData(data);
-    }
-    catch(err) {
+    } catch (err) {
       console.error("Error al obtener datos:", err);
     }
   };
@@ -35,40 +33,54 @@ const CentroDeNegocios = () => {
     <div className="CentroNegociosContainer">
       <Sidebar />
       <div className="RecuadroCentroNegocios">
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            getDatos();
-          }}
-        >
-          <label htmlFor="search">Buscar por ID:</label>
-          <input
-            className="BuscadorDeCentrosNegocios"
-            type="text"
-            id="search"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-        </form>
-        <table>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Nombre</th>
-            </tr>
-          </thead>
-          <tbody>
-            {centronegocioData ? centronegocioData.map((CentrodeNegocios) => (
-              <tr key={CentrodeNegocios.id_cene}>
-                <td>{CentrodeNegocios.id_cene}</td>
-                <td>{CentrodeNegocios.nombre}</td>
-                <Link to={`/centro-de-negocios/${CentrodeNegocios.id_cene}`}>
-                  <Button variant="danger">+</Button>
-                </Link>
+        <div className="Titulo">
+          <h5>Tabla Centro de Negocios</h5>
+        </div>
+        <div>
+          <form
+            className="FormularioCDN"
+            onSubmit={(e) => {
+              e.preventDefault();
+              getDatos();
+            }}
+          >
+            <label htmlFor="search">Buscar por ID:</label>
+            <input
+              className="BuscadorDeCentrosNegocios"
+              type="text"
+              id="search"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+            <Link
+              className="BotonNuevoCDN"
+              to={"/centro-de-negocios/nuevo-centro-de-negocios"}
+            >
+              <Button variant="danger">Nuevo Centro</Button>
+            </Link>
+          </form>
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Nombre</th>
               </tr>
-            )) : ''}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {centronegocioData.map((CentrodeNegocios) => (
+                    <tr key={CentrodeNegocios.id_cene}>
+                      <td>{CentrodeNegocios.id_cene}</td>
+                      <td>{CentrodeNegocios.nombre}</td>
+                      <Link
+                        to={`/centro-de-negocios/${CentrodeNegocios.id_cene}`}
+                      >
+                        <Button variant="danger">+</Button>
+                      </Link>
+                    </tr>
+                  ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

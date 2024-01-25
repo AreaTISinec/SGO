@@ -12,6 +12,7 @@ import store from './store'
 import DetalleObra from './components/Obras/DetalleObra'
 import CentroDeNegocios from './components/Centro de Negocios/CentroDeNegocios'
 import DetalleCentroDeNegocios from './components/Centro de Negocios/DetalleCentroDeNegocios'
+import NuevoCentroDeNegocios from './components/Centro de Negocios/NuevoCentroDeNegocios'
 
 const App = () => 
 {
@@ -29,6 +30,7 @@ const App = () =>
             <Route  path="/obras/:idObra" element={<DetalleObra />} />
             <Route  path="/centro-de-negocios" element={<CentroDeNegocios />} />
             <Route  path="/centro-de-negocios/:idCentroDeNegocios" element={<DetalleCentroDeNegocios />} />
+            <Route  path="/centro-de-negocios/nuevo-centro-de-negocios" element={<NuevoCentroDeNegocios />} />
             <Route  path="/docs/upload/" element={<UploadFile/>} />
             <Route element={NotFound} />
           </Routes>
