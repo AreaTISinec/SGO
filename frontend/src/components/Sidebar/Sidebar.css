@@ -5,9 +5,9 @@
     justify-content: start;
     width: auto;
     transition: transform 0.3s ease-in-out;
-    background-color: #FFDFE4;
+    background-color: #c20c28;
     height: 100vh;
-    color: #000;
+    color: #fff;
 }
 
 .MenuVisible {
@@ -15,15 +15,14 @@
     flex-direction: column;
     align-content: end;
     justify-content: start;
-    background-color: #FFDFE4;
+    background-color: #c20c28;
     transform: translateX(0);
     width: auto;
-    color: #000;
+    color: #fff;
     height: 100vh;
 }
 
 .BotonMenu{
-    color: #000;
     align-self: end;
 }
 
@@ -41,7 +40,9 @@
 }
 
 .LinksDespliegue{
+    color: #fff;
+    background-color: #c20c28;
     display: flex;
-    
+    align-items: end;
     padding: 10px;
 }
