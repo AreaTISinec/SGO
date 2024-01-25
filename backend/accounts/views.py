@@ -3,7 +3,7 @@ from .serializars import UserSerializer, AuthTokenSerializer
 
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework.generics import CreateAPIView, RetrieveAPIView
+from rest_framework.generics import CreateAPIView, RetrieveUpdateAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authtoken.views import ObtainAuthToken
 # from rest_framework import permissions, status
@@ -19,12 +19,13 @@ class AccountCreateView(CreateAPIView):
     serializer_class = UserSerializer
     
 
-class AccountRetrieveUpdateView(RetrieveAPIView):
+class AccountRetrieveUpdateView(RetrieveUpdateAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = UserSerializer
     
     def get_object(self):
         return self.request.user
+    
     
 class CustomObtainAuthTokenView(ObtainAuthToken):
     serializer_classes = AuthTokenSerializer
