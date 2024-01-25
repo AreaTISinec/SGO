@@ -5,7 +5,7 @@
     justify-content: start;
     width: auto;
     transition: transform 0.3s ease-in-out;
-    background-color: #ff657e;
+    background-color: #c20c28;
     height: 100vh;
     color: #fff;
 }
@@ -15,7 +15,7 @@
     flex-direction: column;
     align-content: end;
     justify-content: start;
-    background-color: #ff657e;
+    background-color: #c20c28;
     transform: translateX(0);
     width: auto;
     color: #fff;
@@ -41,7 +41,7 @@
 
 .LinksDespliegue{
     color: #fff;
-    background-color: #ff657e;
+    background-color: #c20c28;
     display: flex;
     align-items: end;
     padding: 10px;
