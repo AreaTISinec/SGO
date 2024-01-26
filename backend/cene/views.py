@@ -18,16 +18,10 @@ class CeneListView(ListAPIView):
         
         return queryset
 
-class CeneItemByIDView(ListAPIView):
+class CeneItemByIDView(RetrieveAPIView):
     permission_classes = (permissions.AllowAny, )
+    queryset = Cene.objects.all()
     serializer_class = CeneSerializer
-    
-    def get_queryset(self):
-        id_cene = self.kwargs['id_cene']
-    
-        queryset = Cene.objects.filter(id_cene=id_cene) 
-        
-        return queryset
     
 class CeneItemByNameView(ListAPIView):
     permission_classes = (permissions.AllowAny, )
