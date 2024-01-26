@@ -32,7 +32,7 @@ const NavBar = ({ auth: { isAuthenticated, loading }, logout }) => {
           <nav className="navbar">
             <div className="navbar__top">
               <div className="navbar__top__logo">
-                <Navbar.Brand href="home">
+                <Navbar.Brand href="http://localhost:5173/home">
                   <img
                     src={logogrupo}
                     alt="logo"

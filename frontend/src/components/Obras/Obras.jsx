@@ -6,16 +6,6 @@ import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
 
 const Obras = () => {
-  // const [obrasData, setObrasData] = useState([]);
-  // const id = 13
-
-  // const getDatos = async () => {
-  //   const {data} = await axios.get(`http://127.0.0.1:8000/api/obras/${id}`)
-  //   //const {data} = ejemplo
-
-  //   setObrasData(data.results)
-  // }
-
   const [obrasData, setObrasData] = useState([]);
   const [searchTerm, setSearchTerm] = useState(""); // Estado para el término de búsqueda
 
