@@ -18,6 +18,7 @@ const Sidebar = () => {
           <Link className='LinksDespliegue' to="/home">Home</Link>
           <Link className='LinksDespliegue' to="/obras">Obras</Link>
           <Link className='LinksDespliegue' to="/centro-de-negocios">Negocios</Link>
+          <Link className='LinksDespliegue' to="/docs/upload">Subir archivo</Link>
          </div>
       )
     }
