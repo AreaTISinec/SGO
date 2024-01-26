@@ -6,12 +6,13 @@ from rest_framework.views import APIView
 from rest_framework.generics import CreateAPIView, RetrieveUpdateAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authtoken.views import ObtainAuthToken
-# from rest_framework import permissions, status
-# from django.contrib.auth import authenticate
+from rest_framework import  status
 # from django.utils.decorators import method_decorator
 # from django.views.decorators.csrf import ensure_csrf_cookie, csrf_protect
 from django.contrib import auth
 from django.conf import settings
+from django.contrib.auth import authenticate
+from django.contrib.auth.models import update_last_login
 
 from django.contrib.auth.models import User
 
@@ -31,20 +32,33 @@ class CustomObtainAuthTokenView(ObtainAuthToken):
     serializer_classes = AuthTokenSerializer
     
     def  post(self, request, *args, **kwargs):
+        serializer = self.serializer_class(data=request.data, context={'request': request})
+        serializer.is_valid(raise_exception=True)
+        user = authenticate(**serializer.validated_data)
         response = super().post(request, *args, **kwargs)
         
-        if response.status_code == 200:
+        if user and response.status_code == 200:
+            update_last_login(None, user)
+        
             token = response.data.get(settings.AUTH_COOKIE)
-            
-            response.set_cookie(
-                settings.AUTH_COOKIE,
-                token,
-                max_age=settings.AUTH_COOKIE_MAX_AGE,
-                path=settings.AUTH_COOKIE_PATH,
-                secure=settings.AUTH_COOKIE_SECURE,
-                httponly=settings.AUTH_COOKIE_HTTP_ONLY,
-                samesite=settings.AUTH_COOKIE_SAMESITE
-            )
+            print(token)
+            if token:
+                response.set_cookie(
+                    settings.AUTH_COOKIE,
+                    token,
+                    max_age=settings.AUTH_COOKIE_MAX_AGE,
+                    path=settings.AUTH_COOKIE_PATH,
+                    secure=settings.AUTH_COOKIE_SECURE,
+                    httponly=settings.AUTH_COOKIE_HTTP_ONLY,
+                    samesite=settings.AUTH_COOKIE_SAMESITE
+                )
+        return response
+    
+class LogoutView(APIView):
+    def post(self, request, *args, **kwargs):
+        response = Response(status=status.HTTP_200_OK)
+        response.delete_cookie(settings.AUTH_COOKIE)
+        
         return response
     
 # @method_decorator(csrf_protect, name='dispatch')

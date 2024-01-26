@@ -21,10 +21,10 @@ const App = () =>
       <Router>
         <Layout>
           <Routes>
-            {/* <Route  path="/" element={<Navigate to = "/login"/>} /> PRIMERA VISTA SIEMPRE ES EL LOGIN*/}
+            <Route  path="/" element={<Navigate to = "/login"/>} /> 
             <Route  path="/signup" element={<Signup/>} />
             <Route  path="/login" element={<Login/>} />
-            <Route  path="/" element={<Home/>} /> {/* ESTA RUTA ES MOMENTANEA */}
+            {/* <Route  path="/" element={<Home/>} /> ESTA RUTA ES MOMENTANEA */}
             <Route  path="/home" element={<Home/>} /> {/*ACA DEBERIA IR EL LOGIN PARA MOSTRAR AL INGRESAR AL SISTEMA */}
             <Route  path="/obras" element={<Obras/>} />
             <Route  path="/obras/:idObra" element={<DetalleObra />} />

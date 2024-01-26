@@ -9,7 +9,7 @@ import logogrupo from "../../img/logogrupo.png";
 
 const NavBar = ({ auth: { isAuthenticated, loading }, logout }) => {
   const authLinks = (
-    <a className="navbar__top__auth__link" onClick={logout} href="#!">
+    <a className="navbar__top__auth__link" onClick={logout} href="/login">
       Cerrar sesion
     </a>
   );
