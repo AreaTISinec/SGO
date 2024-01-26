@@ -26,7 +26,7 @@ const Sidebar = () => {
   return (
     <div className={` ${openMenu ? 'MenuVisible' : 'MenuContainer'}`}>
       <div>
-        {openMenu ? <div className='BotonMenu'><Button style={ {color: '#fff'}} variant='outline-light' onClick={toggleMenu} >&lt;</Button></div> : <div className='BotonMenu'><Button style={ {color: '#fff'}} variant='outline-light' onClick={toggleMenu} >&gt;</Button></div>  } 
+        {openMenu ? <div className='BotonMenu'><Button style={ {color: '#333333', borderColor: '#333333'}} variant='outline-light' onClick={toggleMenu} >&lt;</Button></div> : <div className='BotonMenu'><Button style={ {color: '#333333', borderColor: '#333333'}} variant='outline-light' onClick={toggleMenu} >&gt;</Button></div>  } 
         {/* importar los iconos desde bootstrap */}
         <div className='Despliegue'><Despliegue/></div>
       </div>

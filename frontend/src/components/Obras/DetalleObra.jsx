@@ -26,6 +26,9 @@ const DetalleObra = () => {
         <div className="Titulo">
           <h1>Detalle de la obra</h1>
         </div>
+        <div className="ContenedorGraficos">
+          graficos
+        </div>
         <div className="TablaDetalle">
           {detalleObra && (
             <table>
