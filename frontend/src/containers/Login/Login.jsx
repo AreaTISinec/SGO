@@ -66,38 +66,48 @@ export default connect(null, { login })(Login);
 */
 
 import {  Link, useNavigate } from "react-router-dom"
-import { connect } from "react-redux"
 import { Helmet } from 'react-helmet'
-import PropTypes from 'prop-types'
 import { login } from "../../actions/auth"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useContext } from "react"
 import './Login.css'
+import AuthContext from "../../context/AuthContext"
 
-const Login = ({ login, isAuthenticated }) => {
-  const [formData, setFormData] = useState({
-    email: '',
-    password: ''
-  });
+const Login = () => {
+  // const [formData, setFormData] = useState({
+  //   email: '',
+  //   password: ''
+  // });
+
+    const {loginUser} = useContext(AuthContext)
+    const handleSubmit = e => {
+      const email = e.target.email.value
+      const password = e.target.password.value
+
+      email.length > 0 && loginUser(email,password)
+
+      console.log(email)
+      console.log(password)
+    }
 
   const navigate = useNavigate()
 
-  const { email, password } = formData
+  //const { email, password } = formData
 
-  const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
+  //const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  const onSubmit = e => {
-    e.preventDefault()
+  // const onSubmit = e => {
+  //   e.preventDefault()
 
-    login(email, password);
+  //   login(email, password);
   
-  };
+  // };
   
-  useEffect(() => {
-    // Check if isAuthenticated has changed
-    if (isAuthenticated) {
-      navigate('/home');
-    }
-  }, [isAuthenticated, navigate]);
+  // useEffect(() => {
+  //   // Check if isAuthenticated has changed
+  //   if (isAuthenticated) {
+  //     navigate('/home');
+  //   }
+  // }, [isAuthenticated, navigate]);
   
 
   
@@ -109,15 +119,15 @@ const Login = ({ login, isAuthenticated }) => {
       </Helmet>
       <h1 className="auth_tittle">Iniciar sesion</h1>
       <p className="auth_lead">Ingresa a tu cuenta</p>
-      <form onSubmit={e => onSubmit(e)}>
+      <form onSubmit={handleSubmit}>
         <div className="auth_form_group">
           <input 
             className="auth_form_input" 
             type="email" 
             placeholder="email" 
             name="email" 
-            value={email} 
-            onChange={e => onChange(e)} 
+            value={loginUser.email} 
+            //onChange={e => onChange(e)} 
             required 
           />
         </div>
@@ -127,8 +137,8 @@ const Login = ({ login, isAuthenticated }) => {
             type="password" 
             placeholder="password" 
             name="password" 
-            value={password} 
-            onChange={e => onChange(e)} 
+            value={loginUser.password} 
+            //onChange={e => onChange(e)} 
             required 
           />
         </div>
@@ -141,13 +151,5 @@ const Login = ({ login, isAuthenticated }) => {
   )
 }
 
-Login.propTypes = {
-  login: PropTypes.func.isRequired,
-  isAuthenticated: PropTypes.bool
-}
 
-const mapStateToProps = state => ({
-  isAuthenticated: state.auth.isAuthenticated
-})
-
-export default connect(mapStateToProps, { login }) (Login)
+export default Login

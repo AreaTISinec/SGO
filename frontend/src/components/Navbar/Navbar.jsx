@@ -1,13 +1,10 @@
 import Navbar from "react-bootstrap/Navbar";
 import { Link } from "react-router-dom";
-import { connect } from "react-redux";
 import { logout } from "../../actions/auth";
-import Alert from "../Alert";
-import PropTypes from "prop-types";
 import "./Navbar.css";
 import logogrupo from "../../img/logogrupo.png";
 
-const NavBar = ({ auth: { isAuthenticated, loading }, logout }) => {
+const NavBar = () => {
   const authLinks = (
     <a className="navbar__top__auth__link" onClick={logout} href="/login">
       Cerrar sesion
@@ -41,7 +38,7 @@ const NavBar = ({ auth: { isAuthenticated, loading }, logout }) => {
                 </Navbar.Brand>
               </div>
               <div className="navbar__top__auth">
-                {!loading && <>{isAuthenticated ? authLinks : guestLinks}</>}
+                {/* {!loading && <>{isAuthenticated ? authLinks : guestLinks}</>} */}
               </div>
             </div>
             
@@ -53,13 +50,6 @@ const NavBar = ({ auth: { isAuthenticated, loading }, logout }) => {
   );
 };
 
-Navbar.propTypes = {
-  logout: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired,
-};
 
-const mapStateToProps = (state) => ({
-  auth: state.auth,
-});
 
-export default connect(mapStateToProps, { logout })(NavBar);
+export default NavBar;
