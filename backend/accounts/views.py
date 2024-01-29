@@ -1,58 +1,91 @@
-#from perfil_usuario.models import UserProfile
-from .serializars import UserSerializer, AuthTokenSerializer
+
 
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework.generics import CreateAPIView, RetrieveUpdateAPIView
+# from rest_framework.generics import CreateAPIView, RetrieveUpdateAPIView
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.authtoken.views import ObtainAuthToken
-from rest_framework import  status
+# from rest_framework.authtoken.views import ObtainAuthToken
+
 # from django.utils.decorators import method_decorator
 # from django.views.decorators.csrf import ensure_csrf_cookie, csrf_protect
-from django.contrib import auth
+# from django.contrib import auth
 from django.conf import settings
-from django.contrib.auth import authenticate
-from django.contrib.auth.models import update_last_login
+# from django.contrib.auth import authenticate
+# from django.contrib.auth.models import update_last_login
 
-from django.contrib.auth.models import User
+from .models import UserAccount
+from .serializars import CustomTokenObtainPairSerializer, RegisterSerializer
 
-class AccountCreateView(CreateAPIView):
-    serializer_class = UserSerializer
+from rest_framework import status, generics
+from rest_framework.response import Response
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework_simplejwt.views import TokenObtainPairView
+
+
+class CustomTokenObtainPairView(TokenObtainPairView):
+    serializer_class = CustomTokenObtainPairSerializer
+    
+class RegisterView(generics.CreateAPIView):
+    queryset = UserAccount.objects.all()
+    permission_classes = (AllowAny, )
+    serializer_class = RegisterSerializer
+    
+@api_view(['GET', 'POST'])
+@permission_classes([IsAuthenticated])
+def dashboard(request):
+    if request.method == "GET":
+        response = f"{request.user}, Estas viendo una respuesta GET"
+        return Response({'response': response}, status=status.HTTP_200_OK)
+    elif request.method == "POST":
+        text = request.POST.get("text")
+        response = f"{request.user}, tu texto es {text}"
+        return Response({'response': response}, status=status.HTTP_200_OK)
+    return Response({}, status=status.HTTP_400_BAD_REQUEST)
     
 
-class AccountRetrieveUpdateView(RetrieveUpdateAPIView):
-    permission_classes = [IsAuthenticated]
-    serializer_class = UserSerializer
+
+
+
+
+
+# class AccountCreateView(CreateAPIView):
+#     serializer_class = UserSerializer
     
-    def get_object(self):
-        return self.request.user
+
+# class AccountRetrieveUpdateView(RetrieveUpdateAPIView):
+#     permission_classes = [IsAuthenticated]
+#     serializer_class = UserSerializer
+    
+#     def get_object(self):
+#         return self.request.user
     
     
-class CustomObtainAuthTokenView(ObtainAuthToken):
-    serializer_classes = AuthTokenSerializer
+# class CustomObtainAuthTokenView(ObtainAuthToken):
+#     serializer_classes = AuthTokenSerializer
     
-    def  post(self, request, *args, **kwargs):
-        serializer = self.serializer_class(data=request.data, context={'request': request})
-        serializer.is_valid(raise_exception=True)
-        user = authenticate(**serializer.validated_data)
-        response = super().post(request, *args, **kwargs)
+#     def  post(self, request, *args, **kwargs):
+#         serializer = self.serializer_class(data=request.data, context={'request': request})
+#         serializer.is_valid(raise_exception=True)
+#         user = authenticate(**serializer.validated_data)
+#         response = super().post(request, *args, **kwargs)
         
-        if user and response.status_code == 200:
-            update_last_login(None, user)
+#         if user and response.status_code == 200:
+#             update_last_login(None, user)
         
-            token = response.data.get(settings.AUTH_COOKIE)
-            print(token)
-            if token:
-                response.set_cookie(
-                    settings.AUTH_COOKIE,
-                    token,
-                    max_age=settings.AUTH_COOKIE_MAX_AGE,
-                    path=settings.AUTH_COOKIE_PATH,
-                    secure=settings.AUTH_COOKIE_SECURE,
-                    httponly=settings.AUTH_COOKIE_HTTP_ONLY,
-                    samesite=settings.AUTH_COOKIE_SAMESITE
-                )
-        return response
+#             token = response.data.get(settings.AUTH_COOKIE)
+#             print(token)
+#             if token:
+#                 response.set_cookie(
+#                     settings.AUTH_COOKIE,
+#                     token,
+#                     max_age=settings.AUTH_COOKIE_MAX_AGE,
+#                     path=settings.AUTH_COOKIE_PATH,
+#                     secure=settings.AUTH_COOKIE_SECURE,
+#                     httponly=settings.AUTH_COOKIE_HTTP_ONLY,
+#                     samesite=settings.AUTH_COOKIE_SAMESITE
+#                 )
+#         return response
     
 class LogoutView(APIView):
     def post(self, request, *args, **kwargs):
