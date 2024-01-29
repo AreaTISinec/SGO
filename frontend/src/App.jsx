@@ -7,35 +7,34 @@ import Obras from './components/Obras/Obras'
 import UploadFile from './containers/UploadFile/UploadFile'
 import NotFound from './components/NotFound'
 import PrivateRoute from '../src/utils/PrivateRoute'
-import AuthProvider from '../src/context/AuthContext'
 import DetalleObra from './components/Obras/DetalleObra'
 import CentroDeNegocios from './components/Centro de Negocios/CentroDeNegocios'
 import DetalleCentroDeNegocios from './components/Centro de Negocios/DetalleCentroDeNegocios'
 import NuevoCentroDeNegocios from './components/Centro de Negocios/NuevoCentroDeNegocios'
+import { AuthProvider } from './context/AuthContext'
 
 const App = () => 
 {
   return (
-    <AuthProvider context>
-      <Router>
+    <Router>
+      <AuthProvider>
         <Layout>
           <Routes>
             <Route  path="/" element={<Navigate to = "/login"/>} /> 
-            <Route  path="/signup" element={<Signup/>} />
             <Route  path="/login" element={<Login/>} />
-            {/* <Route  path="/" element={<Home/>} /> ESTA RUTA ES MOMENTANEA */}
-            <PrivateRoute path="/home" element={<Home/>} /> {/*ACA DEBERIA IR EL LOGIN PARA MOSTRAR AL INGRESAR AL SISTEMA */}
-            <PrivateRoute  path="/obras" element={<Obras/>} />
-            <PrivateRoute  path="/obras/:idObra" element={<DetalleObra />} />
-            <PrivateRoute  path="/centro-de-negocios" element={<CentroDeNegocios />} />
-            <PrivateRoute  path="/centro-de-negocios/:idCentroDeNegocios" element={<DetalleCentroDeNegocios />} />
-            <PrivateRoute  path="/centro-de-negocios/nuevo-centro-de-negocios" element={<NuevoCentroDeNegocios />} />
-            <PrivateRoute  path="/docs/upload/" element={<UploadFile/>} />
-            <Route element={NotFound} />
+            <Route path="/signup" element={<PrivateRoute><Signup/></PrivateRoute>} />
+            <Route path="/home" element={<PrivateRoute><Home /></PrivateRoute>} />
+            <Route path="/obras" element={<PrivateRoute><Obras /></PrivateRoute>} />
+            <Route path="/obras/:idObra" element={<PrivateRoute><DetalleObra /></PrivateRoute>} />
+            <Route path="/centro-de-negocios" element={<PrivateRoute><CentroDeNegocios /></PrivateRoute>} />
+            <Route path="/centro-de-negocios/:idCentroDeNegocios" element={<PrivateRoute><DetalleCentroDeNegocios /></PrivateRoute>} />
+            <Route path="/centro-de-negocios/nuevo-centro-de-negocios" element={<PrivateRoute><NuevoCentroDeNegocios /></PrivateRoute>} />
+            <Route path="/docs/upload/" element={<PrivateRoute><UploadFile /></PrivateRoute>} />
+            <Route path="/*" element={NotFound} />
           </Routes>
         </Layout>
-      </Router>
-    </AuthProvider>
+      </AuthProvider>
+    </Router>
   )
 }
 

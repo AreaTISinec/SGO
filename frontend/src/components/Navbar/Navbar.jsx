@@ -43,7 +43,6 @@ const NavBar = () => {
             </div>
             
           </nav>
-          <Alert />
         
       </Navbar>
     </>
