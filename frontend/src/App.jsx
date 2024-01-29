@@ -3,14 +3,16 @@ import Home from "./containers/Home/Home"
 import Login from "./containers/Login/Login"
 import Signup from "./containers/Signup/Signup"
 import Layout from "./hocs/Layout"
-import Dashboard from './components/Dashboard/Dashboard'
 import Obras from './components/Obras/Obras'
-import Perfil from './components/Perfil/Perfil'
 import { Provider } from 'react-redux'
 import UploadFile from './containers/UploadFile/UploadFile'
 import NotFound from './components/NotFound'
 
 import store from './store'
+import DetalleObra from './components/Obras/DetalleObra'
+import CentroDeNegocios from './components/Centro de Negocios/CentroDeNegocios'
+import DetalleCentroDeNegocios from './components/Centro de Negocios/DetalleCentroDeNegocios'
+import NuevoCentroDeNegocios from './components/Centro de Negocios/NuevoCentroDeNegocios'
 
 const App = () => 
 {
@@ -24,10 +26,11 @@ const App = () =>
             <Route  path="/login" element={<Login/>} />
             <Route  path="/" element={<Home/>} /> {/* ESTA RUTA ES MOMENTANEA */}
             <Route  path="/home" element={<Home/>} /> {/*ACA DEBERIA IR EL LOGIN PARA MOSTRAR AL INGRESAR AL SISTEMA */}
-            {/* <Route  path="/dashboard" element={<Dashboard/>} /> */}
             <Route  path="/obras" element={<Obras/>} />
-            {/* <Route  path="/perfil" element={<Perfil/>} /> */}
-            {/* <Route  path="/documentos" element={</>} /> */}
+            <Route  path="/obras/:idObra" element={<DetalleObra />} />
+            <Route  path="/centro-de-negocios" element={<CentroDeNegocios />} />
+            <Route  path="/centro-de-negocios/:idCentroDeNegocios" element={<DetalleCentroDeNegocios />} />
+            <Route  path="/centro-de-negocios/nuevo-centro-de-negocios" element={<NuevoCentroDeNegocios />} />
             <Route  path="/docs/upload/" element={<UploadFile/>} />
             <Route element={NotFound} />
           </Routes>

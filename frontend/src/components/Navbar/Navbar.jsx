@@ -1,34 +1,5 @@
-/* eslint-disable react-refresh/only-export-components */
-/*
-import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
-import { Link } from 'react-router-dom';
-import './Navbar.css'
-
-const NavBar = () => {
-  return (
-    <Navbar expand="lg" className="bg-body-tertiary">
-      <Container>
-        <Navbar.Brand><Link to={'/'}>NoName</Link></Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto">
-            <Nav.Link><Link to='/'>Inicio</Link></Nav.Link>
-            <Nav.Link><Link to='/login'>Iniciar Sesion</Link></Nav.Link>
-          </Nav>
-        </Navbar.Collapse>
-      </Container>
-    </Navbar>
-  )
-}
-
-export default NavBar
-
-*/
-
 import Navbar from "react-bootstrap/Navbar";
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { logout } from "../../actions/auth";
 import Alert from "../Alert";
@@ -61,7 +32,7 @@ const NavBar = ({ auth: { isAuthenticated, loading }, logout }) => {
           <nav className="navbar">
             <div className="navbar__top">
               <div className="navbar__top__logo">
-                <Navbar.Brand href="home">
+                <Navbar.Brand href="http://localhost:5173/home">
                   <img
                     src={logogrupo}
                     alt="logo"

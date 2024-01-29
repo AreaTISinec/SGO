@@ -1,8 +1,9 @@
 from django.urls import path
-from .views import ObraDetailView, ObraListView, ObraUploadView
+from .views import ObraListSearch, ObraDetailView, ObraListView, ObraUploadView, ObraListByIDView
 
 urlpatterns = [
     path('', ObraListView.as_view()),
     path('<pk>', ObraDetailView.as_view()),
     path('nueva', ObraUploadView.as_view()),
+    path('search/', ObraListSearch.as_view()),
 ]

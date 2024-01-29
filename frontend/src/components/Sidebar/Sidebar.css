@@ -5,9 +5,9 @@
     justify-content: start;
     width: auto;
     transition: transform 0.3s ease-in-out;
-    background-color: #FFDFE4;
-    height: 100vh;
-    color: #000;
+    background-color: #f4f4f4;
+    height: 89vh;
+    color: #333333;
 }
 
 .MenuVisible {
@@ -15,15 +15,14 @@
     flex-direction: column;
     align-content: end;
     justify-content: start;
-    background-color: #FFDFE4;
+    background-color: #f4f4f4;
     transform: translateX(0);
     width: auto;
-    color: #000;
-    height: 100vh;
+    color: #333333;
+    height: 89vh;
 }
 
 .BotonMenu{
-    color: #000;
     align-self: end;
 }
 
@@ -35,13 +34,15 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     padding-top: 200px;
     padding-right: 20px;
 }
 
 .LinksDespliegue{
+    color: #333333;
+    background-color: #f4f4f4;
     display: flex;
-    
+    align-items: end;
     padding: 10px;
 }
