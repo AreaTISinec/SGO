@@ -44,7 +44,7 @@ const CentroDeNegocios = () => {
               getDatos();
             }}
           >
-            <label htmlFor="search">Buscar por ID:</label>
+            <label htmlFor="search">Buscar por nombre:</label>
             <input
               className="BuscadorDeCentrosNegocios"
               type="text"

@@ -43,7 +43,7 @@ const Obras = () => {
               getDatos();
             }}
           >
-            <label htmlFor="search">Buscar por nombre:</label>
+            <label htmlFor="search">Buscar por ID:</label>
             <input
               className="BuscadorDeObras"
               type="text"
