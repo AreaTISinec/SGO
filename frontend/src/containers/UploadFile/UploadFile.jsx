@@ -2,11 +2,10 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { upload } from "../../actions/docs";
 import { useState } from "react";
-import { connect } from "react-redux";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import "./UploadFile.css";
 
-const UploadFile = ({ upload }) => {
+const UploadFile = () => {
   const [formData, setFormData] = useState({
     id_obra: 1,
     tipo: "",
@@ -75,7 +74,7 @@ const UploadFile = ({ upload }) => {
   );
 };
 
-export default connect(null, { upload })(UploadFile);
+export default UploadFile;
 
 /* eslint-disable react-refresh/only-export-components */
 /*

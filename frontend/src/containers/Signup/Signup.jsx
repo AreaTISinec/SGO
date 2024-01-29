@@ -1,13 +1,11 @@
 import { useState, useEffect } from "react";
-import { connect } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { setAlert } from "../../actions/alert";
 import { signup } from "../../actions/auth";
-import PropTypes from "prop-types";
 import "./Singup.css";
 
-const Signup = ({ setAlert, signup, isAuthenticated }) => {
+const Signup = () => {
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -115,14 +113,5 @@ const Signup = ({ setAlert, signup, isAuthenticated }) => {
   )
 }
 
-Signup.propTypes = {
-  setAlert: PropTypes.func.isRequired,
-  signup: PropTypes.func.isRequired,
-  isAuthenticated: PropTypes.bool,
-};
 
-const mapStateToProps = (state) => ({
-  isAuthenticated: state.auth.isAuthenticated,
-});
-
-export default connect(mapStateToProps, { setAlert, signup })(Signup);
+export default Signup
