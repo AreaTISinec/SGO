@@ -34,7 +34,7 @@ const NuevaObra = () => {
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasicPassword">
-              <Form.Label>Nombre del Centro de Negocios</Form.Label>
+              <Form.Label>Nombre de la obra</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="Ingrese el nombre del documento"
