@@ -70,7 +70,7 @@ const Obras = () => {
             />
             <Link
               className="BotonNuevaObra"
-              to={"/centro-de-negocios/nuevo-centro-de-negocios"}
+              to={"/obras/nueva-obra"}
             >
               <Button variant="danger">Nueva Obra</Button>
             </Link>

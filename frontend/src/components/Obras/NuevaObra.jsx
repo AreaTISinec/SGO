@@ -27,24 +27,104 @@ const NuevaObra = () => {
               <Form.Label>Fecha de inicio</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="Ingrese el tipo de documento"
-                name="id"
+                placeholder="Ingrese la fecha de inicio"
+                name="fecha_inicio"
                 onChange={onInputChange}
               />
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasicPassword">
-              <Form.Label>Nombre de la obra</Form.Label>
+              <Form.Label>Fecha  de Termino</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="Ingrese el nombre del documento"
-                name="nombre"
+                placeholder="Ingrese la fecha de termino"
+                name="fecha_termino"
+                onChange={onInputChange}
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="formBasicPassword">
+              <Form.Label>Fecha de Asignacion</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Ingrese la fecha de asignacion"
+                name="fecha_asignacion"
+                onChange={onInputChange}
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="formBasicPassword">
+              <Form.Label>Monto neto</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Ingrese el monto neto de la obra"
+                name="monto_neto"
+                onChange={onInputChange}
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="formBasicPassword">
+              <Form.Label>Empresa</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Ingrese el nombre de la empresa"
+                name="empresa"
+                onChange={onInputChange}
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="formBasicPassword">
+              <Form.Label>Direccion</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Ingrese la direccion de la obra"
+                name="direccion"
+                onChange={onInputChange}
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="formBasicPassword">
+              <Form.Label>Comuna</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Ingrese la comuna de la obra"
+                name="comuna"
+                onChange={onInputChange}
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="formBasicPassword">
+              <Form.Label>Tipo de obra</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Ingrese el tipo de obra"
+                name="tipo_obra"
+                onChange={onInputChange}
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="formBasicPassword">
+              <Form.Label>Estado de obra</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Ingrese el estado de la obra"
+                name="estado_obra"
+                onChange={onInputChange}
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="formBasicPassword">
+              <Form.Label>Observaciones</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Ingrese observaciones de la obra"
+                name="observaciones"
                 onChange={onInputChange}
               />
             </Form.Group>
 
             <Button variant="danger" type="onSubmit">
-              Crear Centro de Negocios
+              Crear Obra
             </Button>
           </Form>
         </div>
