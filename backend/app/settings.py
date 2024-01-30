@@ -87,22 +87,27 @@ WSGI_APPLICATION = 'app.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'nombre_base_de_datos',
-#         'USER': 'usuario',
-#         'PASSWORD': 'SJG75X04066217A0$',
-#         'HOST': 'sinecgestorobras-server.postgres.database.azure.com',
-#         'PORT': '5432',
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'sgo1',
+        'USER': 'SGOsinec',
+        'PASSWORD': 'Sinec2k24',
+        'HOST': 'sgo.mysql.database.azure.com',
+        'PORT': '3306',
+        'OPTIONS': {
+            'ssl':{
+                'ca_path': '../certs/DigiCertGlobalRootCA.crt.pem'
+            }
+        }
+    }
+}
 
 
 # Password validation
