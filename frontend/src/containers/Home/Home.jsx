@@ -1,27 +1,9 @@
-import { useEffect, useState } from "react";
+
 import Sidebar from "../../components/Sidebar/Sidebar.jsx"
-import axios from "axios";
 
 import './Home.css'
 
 const Home = () => {
-  const [userData, setUserData] = useState([])
-
-  const getDatos = async () => {
-    try {
-      const { data } = await axios.get(
-        `http://127.0.0.1:8000/api/accounts/me/`
-      );
-      console.log(data);
-      setUserData(data);
-    } catch (err) {
-      console.error("Error al obtener datos:", err);
-    }
-  };
-
-  useEffect(() => {
-    getDatos()
-  },[])
 
 
   return (

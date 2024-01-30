@@ -1,6 +1,6 @@
 import { createContext, useState, useEffect} from "react";
 import { jwtDecode } from "jwt-decode";
-import {Navigate} from "react-router-dom";
+import {Navigate, useNavigate} from "react-router-dom";
 import swal from 'sweetalert2';
 // import Child from './Child.jsx'
 
@@ -10,6 +10,8 @@ const AuthContext = createContext();
 export default AuthContext
 
 export const AuthProvider = ({ children }) => {
+
+    const navigate = useNavigate()
     const [authTokens, setAuthTokens] = useState(() => 
         localStorage.getItem("authTokens")
             ? JSON.parse(localStorage.getItem("authTokens"))
@@ -39,7 +41,7 @@ export const AuthProvider = ({ children }) => {
             })
         })
         const data = await response.json()
-        console.log(data);
+        
 
         if(response.status === 200){
             console.log("Logged In");
@@ -56,12 +58,12 @@ export const AuthProvider = ({ children }) => {
                 timerProgressBar: true,
                 showConfirmButton: false,
             })
-            return <Navigate to = "/home"/>
+            return navigate('/home')
         } else {    
             console.log(response.status);
             console.log("there was a server issue");
             swal.fire({
-                title: "Username or passowrd does not exists",
+                title: "Username or password does not exists",
                 icon: "error",
                 toast: true,
                 timer: 6000,
@@ -141,10 +143,13 @@ export const AuthProvider = ({ children }) => {
         setLoading(false)
     }, [authTokens, loading])
 
+    console.log('el fin,,,,')
     return (
         <AuthContext.Provider value={contextData}>
             {loading ? null : children}
         </AuthContext.Provider>
     )
+
+    
 
 }
