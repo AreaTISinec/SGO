@@ -8,6 +8,7 @@ import UploadFile from '../containers/UploadFile/UploadFile'
 import NotFound from '../components/NotFound'
 import PrivateRoute from '../utils/PrivateRoute'
 import DetalleObra from '../components/Obras/DetalleObra'
+import NuevaObra from '../components/Obras/NuevaObra'
 import CentroDeNegocios from '../components/Centro de Negocios/CentroDeNegocios'
 import DetalleCentroDeNegocios from '../components/Centro de Negocios/DetalleCentroDeNegocios'
 import NuevoCentroDeNegocios from '../components/Centro de Negocios/NuevoCentroDeNegocios'
@@ -44,6 +45,12 @@ const AppRouter = () => {
             element={
                 <PrivateRoute>
                     <DetalleObra />
+                </PrivateRoute>} 
+        />
+        <Route path="/obras/nueva-obra" 
+            element={
+                <PrivateRoute>
+                    <NuevaObra />
                 </PrivateRoute>} 
         />
         <Route path="/centro-de-negocios" 

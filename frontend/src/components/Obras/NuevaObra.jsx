@@ -1,10 +1,10 @@
 import Sidebar from "../../components/Sidebar/Sidebar.jsx";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import "./NuevoCentroDeNegocios.css";
+import "./NuevaObra.css";
 import useForm from "../../utils/useForm.jsx";
 
-const NuevoCentroDeNegocios = () => {
+const NuevaObra = () => {
   
   const {id, nombre, onInputChange, onResetForm} = useForm({
     id:'',
@@ -24,7 +24,7 @@ const NuevoCentroDeNegocios = () => {
         <div>
           <Form onSubmit={(e) => onSubmit(e)}>
             <Form.Group className="mb-3" controlId="">
-              <Form.Label>ID</Form.Label>
+              <Form.Label>Fecha de inicio</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="Ingrese el tipo de documento"
@@ -53,4 +53,4 @@ const NuevoCentroDeNegocios = () => {
   );
 };
 
-export default NuevoCentroDeNegocios;
+export default NuevaObra;

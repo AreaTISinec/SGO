@@ -1,49 +1,19 @@
-.DetalleCentroNegociosContainer {
-    display: flex;
-  }
-  
-  .RecuadroDetalleCentroNegocios{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    width: 80%;
-    margin: 50px;
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    padding: 20px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-    border-radius: 20px;
-    overflow-x: auto;
-  }
-  
-  .Titulo {
-    padding-bottom: 20px; /* Ajustado el espaciado inferior */
-    top: 0;
-    background-color: #f9f9f9;
-    z-index: 1; /*asegura que el titulo quede encima del contenido*/
-  }
-  
-  .RecuadroDetalleCentroNegocios table {
-    width: 100%;
-    border-collapse: separate;
-    margin: 20px 0;
-  }
-  
-  .RecuadroDetalleCentroNegocios th, .RecuadroDetalleCentroNegocios td {
-    border: 1px solid #0000007a;
-    padding: 18px;
-    text-align: center;
-    border-radius: 10px;
-  }
-  
-  .RecuadroDetalleCentroNegocios td {
-    border: 1px solid #ddd;
-    padding: 12px;
-    text-align: center;
-    border-radius: 10px;
-  }
+.NuevoCentroDeNegociosContainer {
+  display: flex;
+}
 
-  .TablaNombre{
-    width: 700px;
-  }
+.RecuadroNuevoCentroDeNegocios {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 85%;
+  max-height: 80vh;
+  overflow-y: auto;
+  margin: 50px auto;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  padding: 20px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+}

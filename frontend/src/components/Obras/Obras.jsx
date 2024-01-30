@@ -38,6 +38,7 @@ const Obras = () => {
         </div>
         <div>
           <form
+            className="FormularioObra"
             onSubmit={(e) => {
               e.preventDefault();
               getDatos();
@@ -51,6 +52,12 @@ const Obras = () => {
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
+            <Link
+              className="BotonNuevaObra"
+              to={"/centro-de-negocios/nuevo-centro-de-negocios"}
+            >
+              <Button variant="danger">Nueva Obra</Button>
+            </Link>
           </form>
           <table>
             <thead>
