@@ -1,9 +1,8 @@
 import Navbar from "react-bootstrap/Navbar";
-import "./Navbar.css";
 import logogrupo from "../../img/logogrupo.png";
 import { useContext } from "react";
 import AuthContext from "../../context/AuthContext";
-import { Link } from "react-router-dom";
+import "./Navbar.css"
 
 const NavBar = () => {
   const { user, logoutUser } = useContext(AuthContext)
@@ -27,15 +26,10 @@ const NavBar = () => {
                   (
                     <div className="navbar__top__auth">
                       <span>Hola, {user.username}</span>
-                      <button onClick={logoutUser}>Cerrar Sesion</button>
+                      <button className="BotonCerrarSesion" onClick={logoutUser}>Cerrar Sesion</button>
                     </div>
                   ):(
-                    <div className="navbar__top__auth">
-                      <nav>
-                        <Link to='login'>Iniciar Sesion</Link>
-                      </nav>
-                      
-                    </div>
+                    <></>
                   )
                 
               }

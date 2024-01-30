@@ -1,9 +1,17 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import './Sidebar.css'
 
 const Sidebar = () => {
+
+  const navigate = useNavigate()
+
+  const handleNavigation = (path) => {
+    navigate(path)
+    console.log('usando handlenavigate')
+  }
+
   const [openMenu, setOpenMenu] = useState(false);
 
   const toggleMenu = () => {
@@ -15,10 +23,10 @@ const Sidebar = () => {
       return (
 
         <div className='DespliegueContainer'>
-          <Link className='LinksDespliegue' to="/home">Home</Link>
-          <Link className='LinksDespliegue' to="/obras">Obras</Link>
-          <Link className='LinksDespliegue' to="/centro-de-negocios">Negocios</Link>
-          <Link className='LinksDespliegue' to="/docs/upload">Subir archivo</Link>
+          <button className='BotonNavigate' onClick={() => handleNavigation('/home')}>Home</button>
+          <button className='BotonNavigate' onClick={() => handleNavigation('/obras')}>Obras</button>
+          <button className='BotonNavigate' onClick={() => handleNavigation('/centro-de-negocios')}>Negocios</button>
+          <button className='BotonNavigate' onClick={() => handleNavigation('/docs/upload')}>Subir archivo</button>
          </div>
       )
     }
