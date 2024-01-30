@@ -93,7 +93,16 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'nombre_base_de_datos',
+#         'USER': 'usuario',
+#         'PASSWORD': 'SJG75X04066217A0$',
+#         'HOST': 'sinecgestorobras-server.postgres.database.azure.com',
+#         'PORT': '5432',
+#     }
+# }
 
 
 # Password validation

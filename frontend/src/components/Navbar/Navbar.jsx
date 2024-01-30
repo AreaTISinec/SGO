@@ -3,9 +3,12 @@ import logogrupo from "../../img/logogrupo.png";
 import { useContext } from "react";
 import AuthContext from "../../context/AuthContext";
 import "./Navbar.css"
+import dayjs from "dayjs";
 
 const NavBar = () => {
   const { user, logoutUser } = useContext(AuthContext)
+
+  const isExpired = dayjs.unix(user.exp).diff(dayjs()) < 1
 
   return (
     <>
@@ -22,7 +25,7 @@ const NavBar = () => {
                 </Navbar.Brand>
               </div>
               {
-                user ? 
+                !isExpired ? 
                   (
                     <div className="navbar__top__auth">
                       <span>Hola, {user.username}</span>

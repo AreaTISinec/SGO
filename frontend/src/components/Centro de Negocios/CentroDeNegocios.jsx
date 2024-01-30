@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import Sidebar from "../Sidebar/Sidebar";
 import "./CentroDeNegocios.css";
 import { useState, useEffect } from "react";
