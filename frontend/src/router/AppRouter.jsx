@@ -11,7 +11,7 @@ import DetalleObra from '../components/Obras/DetalleObra'
 import CentroDeNegocios from '../components/Centro de Negocios/CentroDeNegocios'
 import DetalleCentroDeNegocios from '../components/Centro de Negocios/DetalleCentroDeNegocios'
 import NuevoCentroDeNegocios from '../components/Centro de Negocios/NuevoCentroDeNegocios'
-import { Route, Routes, Navigate } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 
 const AppRouter = () => {
   return <>

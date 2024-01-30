@@ -85,7 +85,7 @@ export const AuthProvider = ({ children }) => {
             })
         })
         if(response.status === 201){
-            Navigate("/login")
+            navigate("/login")
             swal.fire({
                 title: "Registration Successful, Login Now",
                 icon: "success",
@@ -114,7 +114,7 @@ export const AuthProvider = ({ children }) => {
         setAuthTokens(null)
         setUser(null)
         localStorage.removeItem("authTokens")
-        Navigate("/login")
+        navigate("/login")
         swal.fire({
             title: "YOu have been logged out...",
             icon: "success",

@@ -13,7 +13,7 @@ const Login = () => {
     password: ''
   })
 
-    const {loginUser} = useContext(AuthContext)
+  const {loginUser} = useContext(AuthContext)
   
   const onLogin = (e) => {
     e.preventDefault()

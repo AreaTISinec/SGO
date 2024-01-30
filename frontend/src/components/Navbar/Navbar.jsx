@@ -1,10 +1,13 @@
 import Navbar from "react-bootstrap/Navbar";
-import { Link } from "react-router-dom";
-import { logout } from "../../actions/auth";
 import "./Navbar.css";
 import logogrupo from "../../img/logogrupo.png";
+import { useContext } from "react";
+import AuthContext from "../../context/AuthContext";
+import { Link } from "react-router-dom";
 
 const NavBar = () => {
+  const { user, logoutUser } = useContext(AuthContext)
+
   return (
     <>
       <Navbar expand="lg" className="bg-body-tertiary p-0 m-0">
@@ -19,9 +22,23 @@ const NavBar = () => {
                   />
                 </Navbar.Brand>
               </div>
-              <div className="navbar__top__auth">
-                {/* {!loading && <>{isAuthenticated ? authLinks : guestLinks}</>} */}
-              </div>
+              {
+                user ? 
+                  (
+                    <div className="navbar__top__auth">
+                      <span>Hola, {user.username}</span>
+                      <button onClick={logoutUser}>Cerrar Sesion</button>
+                    </div>
+                  ):(
+                    <div className="navbar__top__auth">
+                      <nav>
+                        <Link to='login'>Iniciar Sesion</Link>
+                      </nav>
+                      
+                    </div>
+                  )
+                
+              }
             </div>
             
           </nav>
