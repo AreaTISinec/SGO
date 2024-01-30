@@ -7,7 +7,7 @@ const PrivateRoute = ({ children }) => {
     let {user} = useContext(AuthContext)
 
     const isExpired = dayjs.unix(user.exp).diff(dayjs()) < 1
-    console.log(isExpired)
+    
     return !isExpired ? children : <Navigate to="/login" replace/>
 };
 export default PrivateRoute

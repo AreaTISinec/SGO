@@ -1,6 +1,7 @@
+/* eslint-disable react/prop-types */
 import { createContext, useState, useEffect} from "react";
 import { jwtDecode } from "jwt-decode";
-import {Navigate, useNavigate} from "react-router-dom";
+import { useNavigate} from "react-router-dom";
 import swal from 'sweetalert2';
 // import Child from './Child.jsx'
 
@@ -50,10 +51,10 @@ export const AuthProvider = ({ children }) => {
             localStorage.setItem("authTokens", JSON.stringify(data))
             
             swal.fire({
-                title: "Login Successful",
+                title: "Sesion iniciada correctamente",
                 icon: "success",
                 toast: true,
-                timer: 6000,
+                timer: 4000,
                 position: 'top-right',
                 timerProgressBar: true,
                 showConfirmButton: false,
@@ -63,10 +64,10 @@ export const AuthProvider = ({ children }) => {
             console.log(response.status);
             console.log("there was a server issue");
             swal.fire({
-                title: "Username or password does not exists",
+                title: "Usuario o contraseña no existe",
                 icon: "error",
                 toast: true,
-                timer: 6000,
+                timer: 4000,
                 position: 'top-right',
                 timerProgressBar: true,
                 showConfirmButton: false,
@@ -90,7 +91,7 @@ export const AuthProvider = ({ children }) => {
                 title: "Registration Successful, Login Now",
                 icon: "success",
                 toast: true,
-                timer: 6000,
+                timer: 4000,
                 position: 'top-right',
                 timerProgressBar: true,
                 showConfirmButton: false,
@@ -99,10 +100,10 @@ export const AuthProvider = ({ children }) => {
             console.log(response.status);
             console.log("there was a server issue");
             swal.fire({
-                title: "An Error Occured " + response.status,
+                title: "A ocurrido un error: " + response.status,
                 icon: "error",
                 toast: true,
-                timer: 6000,
+                timer: 4000,
                 position: 'top-right',
                 timerProgressBar: true,
                 showConfirmButton: false,
@@ -116,10 +117,10 @@ export const AuthProvider = ({ children }) => {
         localStorage.removeItem("authTokens")
         navigate("/login")
         swal.fire({
-            title: "YOu have been logged out...",
+            title: "Sesion cerrada exitosamente...",
             icon: "success",
             toast: true,
-            timer: 6000,
+            timer: 5000,
             position: 'top-right',
             timerProgressBar: true,
             showConfirmButton: false,
