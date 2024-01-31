@@ -19,6 +19,7 @@ const DetalleObra = () => {
     getDatos();
   }, []);
 
+  //REVISAR LAS CLASES QUE NO ESTÁN EN EL CSS
   return (
     <div className="DetalleObraContainer">
       <Sidebar />
@@ -26,9 +27,7 @@ const DetalleObra = () => {
         <div className="Titulo">
           <h1>Detalle de la obra</h1>
         </div>
-        <div className="ContenedorGraficos">
-          graficos
-        </div>
+        <div className="ContenedorGraficos">graficos</div>
         <div className="TablaDetalle">
           {detalleObra && (
             <table>

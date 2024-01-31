@@ -5,24 +5,23 @@ import "./NuevaObra.css";
 import useForm from "../../utils/useForm.jsx";
 
 const NuevaObra = () => {
-  
-  const {id, nombre, onInputChange, onResetForm} = useForm({
-    id:'',
-    nombre:''
-  })
+  const { id, nombre, onInputChange, onResetForm } = useForm({ //agregar correctamente los parametros de la nueva obra
+    id: "",
+    nombre: "",
+  });
 
   const onSubmit = (e) => {
     e.preventDefault();
-    
-    onResetForm()
+    //crear la funcion para guardar los datos
+    onResetForm();
   };
 
   return (
-    <div className="NuevoCentroDeNegociosContainer">
+    <div className="NuevaObra">
       <Sidebar />
-      <div className="RecuadroNuevoCentroDeNegocios">
+      <div className="RecuadroNuevaObra">
         <div>
-          <Form onSubmit={(e) => onSubmit(e)}>
+          <Form className="formularioNuevaObra" onSubmit={(e) => onSubmit(e)}>
             <Form.Group className="mb-3" controlId="">
               <Form.Label>Fecha de inicio</Form.Label>
               <Form.Control
@@ -34,7 +33,7 @@ const NuevaObra = () => {
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasicPassword">
-              <Form.Label>Fecha  de Termino</Form.Label>
+              <Form.Label>Fecha de Termino</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="Ingrese la fecha de termino"
@@ -118,7 +117,7 @@ const NuevaObra = () => {
               <Form.Control
                 type="text"
                 placeholder="Ingrese observaciones de la obra"
-                name="observaciones"
+                name=""
                 onChange={onInputChange}
               />
             </Form.Group>

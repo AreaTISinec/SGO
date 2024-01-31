@@ -1,20 +1,23 @@
-.NuevoCentroDeNegociosContainer {
-    display: flex;
-  }
-  
-  .RecuadroNuevoCentroDeNegocios {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 85%;
-    max-height: 80vh;
-    overflow-y: auto;
-    margin: 50px auto;
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    padding: 20px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-    border-radius: 20px;
-  }
-  
+.NuevaObra {
+  display: flex;
+}
+
+.RecuadroNuevaObra {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 85%;
+  max-height: 80vh;
+  overflow-y: auto;
+  margin: 50px auto;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  padding: 20px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+  box-sizing: border-box;
+}
+.formularioNuevaObra {
+  overflow-y: auto;
+}
