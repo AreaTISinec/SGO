@@ -1,23 +1,26 @@
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { upload } from "../../actions/docs";
-import { useState } from "react";
-import { connect } from "react-redux";
+import { useContext, useState } from "react";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import "./UploadFile.css";
+import AuthContext from "../../context/AuthContext";
 
-const UploadFile = ({ upload }) => {
+const UploadFile = () => {
+
+  const { user } = useContext(AuthContext)
   const [formData, setFormData] = useState({
-    id_obra: 1,
+    id_obra: user.user_id,
     tipo: "",
     doc: null,
   });
 
   const { id_obra, tipo, doc } = formData;
-  console.log(formData);
+  //setFormData({...formData, id_obra: user.id_user})
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   }
+  console.log(formData);
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -75,7 +78,7 @@ const UploadFile = ({ upload }) => {
   );
 };
 
-export default connect(null, { upload })(UploadFile);
+export default UploadFile;
 
 /* eslint-disable react-refresh/only-export-components */
 /*
