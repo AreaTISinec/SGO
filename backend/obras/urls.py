@@ -4,6 +4,6 @@ from .views import ObraListSearch, ObraDetailView, ObraListView, ObraUploadView,
 urlpatterns = [
     path('', ObraListView.as_view()),
     path('<pk>', ObraDetailView.as_view()),
-    path('nueva', ObraUploadView.as_view()),
+    path('nueva/', ObraUploadView.as_view()),
     path('search/', ObraListSearch.as_view()),
 ]

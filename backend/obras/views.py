@@ -1,5 +1,5 @@
 from rest_framework.generics import  ListAPIView, RetrieveAPIView
-from rest_framework import permissions
+from rest_framework import permissions, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .models import Obras
@@ -56,4 +56,12 @@ class ObraListSearch(ListAPIView):
         
         return queryset
         
+class ObraUploadView(APIView):
+    permission_classes = (permissions.AllowAny, )
     
+    def post(self, request, format=None):
+        serializer = ObraSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

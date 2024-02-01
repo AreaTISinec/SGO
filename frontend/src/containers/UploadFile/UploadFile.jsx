@@ -20,16 +20,16 @@ const UploadFile = () => {
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   }
-  console.log(formData);
+
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log('Props antes de ejecutar onSubmit:', upload);
     upload(doc, tipo, id_obra);
   };
 
   const onFileChange = (e) => {
     setFormData({ ...formData, doc: e.target.files[0] });
+    console.log(e.target.files);
   };
 
   return (
