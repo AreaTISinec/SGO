@@ -35,12 +35,7 @@ class ObraListByIDView(ListAPIView):
         except:
             return Response({'error': 'Algo ocurrio mal al intentar checkear el estado de autentificacion'})
         
-    
-class ObraUploadView(APIView):
-    permission_classes = (permissions.AllowAny, )
-    
-    def post(self, request, format=None):
-        data = self.request.data
+
         
 class ObraListSearch(ListAPIView):
     permission_classes = (permissions.AllowAny, )
@@ -63,5 +58,5 @@ class ObraUploadView(APIView):
         serializer = ObraSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            Response(serializer.data, status=status.HTTP_200_OK)
+            return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

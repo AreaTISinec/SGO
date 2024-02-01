@@ -2,7 +2,7 @@ from django.shortcuts import render
 from rest_framework.generics import  ListAPIView, RetrieveAPIView, CreateAPIView
 from rest_framework import permissions, status
 from rest_framework.views import APIView
-from rest_framework.response import Response, status
+from rest_framework.response import Response
 from rest_framework.views import APIView
 from .models import Cene
 from .serializers import CeneSerializer

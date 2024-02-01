@@ -10,7 +10,24 @@ import AuthContext from "../../context/AuthContext.jsx";
 const NuevaObra = () => {
   const {user} = useContext(AuthContext)
   
-  const { fecha_inicio, fecha_termino, fecha_asignacion, monto_neto, empresa, direccion, comuna, tipo_obra, estado_obra, observaciones, porc_avance, monto_facturado, saldo_facturado, id_user, onInputChange, onResetForm } = useForm({ //agregar correctamente los parametros de la nueva obra
+  const { 
+    fecha_inicio, 
+    fecha_termino, 
+    fecha_asignacion,
+    monto_neto, 
+    empresa, 
+    direccion, 
+    comuna, 
+    tipo_obra, 
+    estado_obra, 
+    observaciones, 
+    porc_avance, 
+    monto_facturado, 
+    saldo_facturado, 
+    id_user, 
+    onInputChange, 
+    onResetForm 
+  } = useForm({ //agregar correctamente los parametros de la nueva obra
     fecha_inicio: null,
     fecha_termino: null,
     fecha_asignacion: null,
@@ -29,7 +46,22 @@ const NuevaObra = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    uploadObra(fecha_inicio, fecha_termino, fecha_asignacion, monto_neto, empresa, direccion, comuna, tipo_obra, estado_obra, observaciones, porc_avance, monto_facturado, saldo_facturado, id_user)  
+    uploadObra(
+      fecha_inicio, 
+      fecha_termino, 
+      fecha_asignacion, 
+      monto_neto, 
+      empresa, 
+      direccion, 
+      comuna, 
+      tipo_obra, 
+      estado_obra, 
+      observaciones, 
+      porc_avance, 
+      monto_facturado, 
+      saldo_facturado, 
+      id_user
+    )  
     onResetForm();
   };
 
@@ -39,7 +71,7 @@ const NuevaObra = () => {
       <div className="RecuadroNuevaObra">
         <div>
           <Form className="formularioNuevaObra" onSubmit={onSubmit}>
-            <Form.Group className="mb-3" controlId="">
+            <Form.Group className="mb-3" >
               <Form.Label>Fecha de inicio</Form.Label>
               <Form.Control
                 type="date"
@@ -49,7 +81,7 @@ const NuevaObra = () => {
               />
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="formBasicPassword">
+            <Form.Group className="mb-3" >
               <Form.Label>Fecha de Termino</Form.Label>
               <Form.Control
                 type="date"
@@ -59,7 +91,7 @@ const NuevaObra = () => {
               />
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="formBasicPassword">
+            <Form.Group className="mb-3" >
               <Form.Label>Fecha de Asignacion</Form.Label>
               <Form.Control
                 type="date"
@@ -69,7 +101,7 @@ const NuevaObra = () => {
               />
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="formBasicPassword">
+            <Form.Group className="mb-3" >
               <Form.Label>Monto neto</Form.Label>
               <Form.Control
                 type="text"
@@ -79,7 +111,7 @@ const NuevaObra = () => {
               />
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="formBasicPassword">
+            <Form.Group className="mb-3" >
               <Form.Label>Empresa</Form.Label>
               <Form.Control
                 type="text"
@@ -89,7 +121,7 @@ const NuevaObra = () => {
               />
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="formBasicPassword">
+            <Form.Group className="mb-3" >
               <Form.Label>Direccion</Form.Label>
               <Form.Control
                 type="text"
@@ -99,7 +131,7 @@ const NuevaObra = () => {
               />
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="formBasicPassword">
+            <Form.Group className="mb-3" >
               <Form.Label>Comuna</Form.Label>
               <Form.Control
                 type="text"
@@ -109,7 +141,7 @@ const NuevaObra = () => {
               />
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="formBasicPassword">
+            <Form.Group className="mb-3" >
               <Form.Label>Tipo de obra</Form.Label>
               <Form.Control
                 type="text"
@@ -119,7 +151,7 @@ const NuevaObra = () => {
               />
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="formBasicPassword">
+            <Form.Group className="mb-3" >
               <Form.Label>Estado de obra</Form.Label>
               <Form.Control
                 type="text"
@@ -129,7 +161,7 @@ const NuevaObra = () => {
               />
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="formBasicPassword">
+            <Form.Group className="mb-3" >
               <Form.Label>Observaciones</Form.Label>
               <Form.Control
                 type="text"
