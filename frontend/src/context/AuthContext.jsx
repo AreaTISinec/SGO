@@ -75,14 +75,14 @@ export const AuthProvider = ({ children }) => {
         }
     }
 
-    const registerUser = async (email, username, password, password2) => {
-        const response = await fetch("http://127.0.0.1:8000/api/register/", {
+    const registerUser = async (email, username, rol, password, password2) => {
+        const response = await fetch("http://127.0.0.1:8000/api/accounts/registrar/", {
             method: "POST",
             headers: {
                 "Content-Type":"application/json"
             },
             body: JSON.stringify({
-                email, username, password, password2
+                email, username, rol, password, password2
             })
         })
         if(response.status === 201){
