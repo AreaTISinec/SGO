@@ -3,17 +3,18 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import "./NuevoCentroDeNegocios.css";
 import useForm from "../../utils/useForm.jsx";
+import { uploadCene } from "../../actions/newCene.js"
 
 const NuevoCentroDeNegocios = () => {
   
-  const {id, nombre, onInputChange, onResetForm} = useForm({
-    id:'',
+  const {id_cene, nombre, onInputChange, onResetForm} = useForm({
+    id_cene:'',
     nombre:''
   })
 
   const onSubmit = (e) => {
     e.preventDefault();
-    
+    uploadCene(id_cene,nombre)
     onResetForm()
   };
 
@@ -22,13 +23,13 @@ const NuevoCentroDeNegocios = () => {
       <Sidebar />
       <div className="RecuadroNuevoCentroDeNegocios">
         <div>
-          <Form onSubmit={(e) => onSubmit(e)}>
+          <Form onSubmit={onSubmit}>
             <Form.Group className="mb-3" controlId="">
               <Form.Label>ID</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="Ingrese el tipo de documento"
-                name="id"
+                name="id_cene"
                 onChange={onInputChange}
               />
             </Form.Group>
@@ -43,7 +44,7 @@ const NuevoCentroDeNegocios = () => {
               />
             </Form.Group>
 
-            <Button variant="danger" type="onSubmit">
+            <Button variant="danger" type="submit">
               Crear Centro de Negocios
             </Button>
           </Form>
