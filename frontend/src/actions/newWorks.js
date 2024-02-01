@@ -14,9 +14,11 @@ export const uploadObra = async (fecha_inicio, fecha_termino, fecha_asignacion, 
   };
 
     try {
-      const res = await axios.post('http://127.0.0.1:8000/api/obras/nueva/', body, config)
+        const res = await axios.post('http://127.0.0.1:8000/api/obras/nueva/', body, config)
+        return res
     }catch(err){
         console.error(err)
+        throw err
     }
 
 };
