@@ -9,6 +9,7 @@ import AuthContext from "../../context/AuthContext.jsx";
 
 const NuevaObra = () => {
   const {user} = useContext(AuthContext)
+  
   const { fecha_inicio, fecha_termino, fecha_asignacion, monto_neto, empresa, direccion, comuna, tipo_obra, estado_obra, observaciones, porc_avance, monto_facturado, saldo_facturado, id_user, onInputChange, onResetForm } = useForm({ //agregar correctamente los parametros de la nueva obra
     fecha_inicio: null,
     fecha_termino: null,
@@ -20,15 +21,15 @@ const NuevaObra = () => {
     tipo_obra: '',
     estado_obra: '',
     observaciones: '',
-    porc_avance: 0, 
+    porc_avance: 10, 
     monto_facturado: 0, 
     saldo_facturado: 0, 
-    id_user: user.id
+    id_user: user.user_id
   });
 
   const onSubmit = (e) => {
     e.preventDefault();
-    uploadObra(fecha_inicio, fecha_termino, fecha_asignacion, monto_neto, empresa, direccion, comuna, tipo_obra, estado_obra, observaciones, porc_avance, monto_facturado, saldo_facturado, id_user)
+    uploadObra(fecha_inicio, fecha_termino, fecha_asignacion, monto_neto, empresa, direccion, comuna, tipo_obra, estado_obra, observaciones, porc_avance, monto_facturado, saldo_facturado, id_user)  
     onResetForm();
   };
 
@@ -37,7 +38,7 @@ const NuevaObra = () => {
       <Sidebar />
       <div className="RecuadroNuevaObra">
         <div>
-          <Form className="formularioNuevaObra" onSubmit={(e) => onSubmit(e)}>
+          <Form className="formularioNuevaObra" onSubmit={onSubmit}>
             <Form.Group className="mb-3" controlId="">
               <Form.Label>Fecha de inicio</Form.Label>
               <Form.Control
@@ -133,7 +134,7 @@ const NuevaObra = () => {
               <Form.Control
                 type="text"
                 placeholder="Ingrese observaciones de la obra"
-                name=""
+                name="observaciones"
                 onChange={onInputChange}
               />
             </Form.Group>
