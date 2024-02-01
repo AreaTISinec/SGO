@@ -66,4 +66,4 @@ jobs:
         with:
           app-name: 'sinecgestorobras'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_DC5ED21FB6934F97BFC8F792F2F49D60 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_DAD7675423244FDF878003412B756244 }}
