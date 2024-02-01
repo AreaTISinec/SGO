@@ -24,6 +24,7 @@ class UploadDocumentView(APIView):
         nombre = request.data.get('nombre')
         archivo = request.data.get('doc')
         if nombre and archivo:
+            ##arreglar esto
             id_obra = Obras.objects.get(id=1)
             document = Docs(nombre=nombre, doc=archivo, id_obra=id_obra)
             document.save()
