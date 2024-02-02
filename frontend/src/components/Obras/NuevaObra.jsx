@@ -3,16 +3,65 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import "./NuevaObra.css";
 import useForm from "../../utils/useForm.jsx";
+import { uploadObra } from "../../actions/newWorks.js"
+import { useContext } from "react";
+import AuthContext from "../../context/AuthContext.jsx";
 
 const NuevaObra = () => {
-  const { id, nombre, onInputChange, onResetForm } = useForm({ //agregar correctamente los parametros de la nueva obra
-    id: "",
-    nombre: "",
+  const {user} = useContext(AuthContext)
+  
+  const { 
+    fecha_inicio, 
+    fecha_termino, 
+    fecha_asignacion,
+    monto_neto, 
+    empresa, 
+    direccion, 
+    comuna, 
+    tipo_obra, 
+    estado_obra, 
+    observaciones, 
+    porc_avance, 
+    monto_facturado, 
+    saldo_facturado, 
+    id_user, 
+    onInputChange, 
+    onResetForm 
+  } = useForm({ //agregar correctamente los parametros de la nueva obra
+    fecha_inicio: null,
+    fecha_termino: null,
+    fecha_asignacion: null,
+    monto_neto: 0,
+    empresa: '',
+    direccion: '',
+    comuna: '',
+    tipo_obra: '',
+    estado_obra: '',
+    observaciones: '',
+    porc_avance: 10, 
+    monto_facturado: 0, 
+    saldo_facturado: 0, 
+    id_user: user.user_id
   });
 
   const onSubmit = (e) => {
     e.preventDefault();
-    //crear la funcion para guardar los datos
+    uploadObra(
+      fecha_inicio, 
+      fecha_termino, 
+      fecha_asignacion, 
+      monto_neto, 
+      empresa, 
+      direccion, 
+      comuna, 
+      tipo_obra, 
+      estado_obra, 
+      observaciones, 
+      porc_avance, 
+      monto_facturado, 
+      saldo_facturado, 
+      id_user
+    )  
     onResetForm();
   };
 
@@ -21,38 +70,38 @@ const NuevaObra = () => {
       <Sidebar />
       <div className="RecuadroNuevaObra">
         <div>
-          <Form className="formularioNuevaObra" onSubmit={(e) => onSubmit(e)}>
-            <Form.Group className="mb-3" controlId="">
+          <Form className="formularioNuevaObra" onSubmit={onSubmit}>
+            <Form.Group className="mb-3" >
               <Form.Label>Fecha de inicio</Form.Label>
               <Form.Control
-                type="text"
+                type="date"
                 placeholder="Ingrese la fecha de inicio"
                 name="fecha_inicio"
                 onChange={onInputChange}
               />
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="formBasicPassword">
+            <Form.Group className="mb-3" >
               <Form.Label>Fecha de Termino</Form.Label>
               <Form.Control
-                type="text"
+                type="date"
                 placeholder="Ingrese la fecha de termino"
                 name="fecha_termino"
                 onChange={onInputChange}
               />
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="formBasicPassword">
+            <Form.Group className="mb-3" >
               <Form.Label>Fecha de Asignacion</Form.Label>
               <Form.Control
-                type="text"
+                type="date"
                 placeholder="Ingrese la fecha de asignacion"
                 name="fecha_asignacion"
                 onChange={onInputChange}
               />
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="formBasicPassword">
+            <Form.Group className="mb-3" >
               <Form.Label>Monto neto</Form.Label>
               <Form.Control
                 type="text"
@@ -62,7 +111,7 @@ const NuevaObra = () => {
               />
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="formBasicPassword">
+            <Form.Group className="mb-3" >
               <Form.Label>Empresa</Form.Label>
               <Form.Control
                 type="text"
@@ -72,7 +121,7 @@ const NuevaObra = () => {
               />
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="formBasicPassword">
+            <Form.Group className="mb-3" >
               <Form.Label>Direccion</Form.Label>
               <Form.Control
                 type="text"
@@ -82,7 +131,7 @@ const NuevaObra = () => {
               />
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="formBasicPassword">
+            <Form.Group className="mb-3" >
               <Form.Label>Comuna</Form.Label>
               <Form.Control
                 type="text"
@@ -92,7 +141,7 @@ const NuevaObra = () => {
               />
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="formBasicPassword">
+            <Form.Group className="mb-3" >
               <Form.Label>Tipo de obra</Form.Label>
               <Form.Control
                 type="text"
@@ -102,7 +151,7 @@ const NuevaObra = () => {
               />
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="formBasicPassword">
+            <Form.Group className="mb-3" >
               <Form.Label>Estado de obra</Form.Label>
               <Form.Control
                 type="text"
@@ -112,17 +161,17 @@ const NuevaObra = () => {
               />
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="formBasicPassword">
+            <Form.Group className="mb-3" >
               <Form.Label>Observaciones</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="Ingrese observaciones de la obra"
-                name=""
+                name="observaciones"
                 onChange={onInputChange}
               />
             </Form.Group>
 
-            <Button variant="danger" type="onSubmit">
+            <Button variant="danger" type="submit">
               Crear Obra
             </Button>
           </Form>

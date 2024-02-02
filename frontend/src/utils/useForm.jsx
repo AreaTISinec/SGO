@@ -10,6 +10,8 @@ const useForm = ( initialForm = {} ) => {
             ...formState,
             [ name ]: value
         })
+        console.log(name)
+        console.log(value)
     }
 
     const onResetForm = () => {

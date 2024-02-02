@@ -7,56 +7,28 @@ import AuthContext from '../../context/AuthContext'
 import "./Singup.css";
 
 const Signup = () => {
-  // const [formData, setFormData] = useState({
-  //   username: "",
-  //   email: "",
-  //   password: "",
-  //   re_password: "",
-  //   rol: 1,
-  // });
-
-  // const { username, email, password, re_password, rol } = formData;
 
   const [email, setEmail] = useState("")
   const [username, setUsername] = useState("")
-  const [rol, setRol] = useState("")
+  const [rol, setRol] = useState(1)
   const [password, setPassword] = useState("")
   const [password2, setPassword2] = useState("")
 
   const {registerUser} = useContext(AuthContext)
 
-  console.log(email);
-  console.log(username);
-  console.log(rol);
-  console.log(password);
-  console.log(password2);
-
 
   const handleSubmit = async e => {
     e.preventDefault()
     registerUser(email, username, rol, password, password2)
+    console.log(email, username, rol, password, password2)
   }
 
-  //const navigate = useNavigate();
-
-  // const onChange = (e) =>
-  //   setFormData({ ...formData, [e.target.name]: e.target.value });
-
-  // const onSubmit = (e) => {
-  //   e.preventDefault();
 
     if(password !== password2){
       setAlert("Contraseñas no coinciden", "error");
     }else {
       signup({ email, username, rol, password, password2});
     }
-
-  // useEffect(() => {
-  //   // Check if isAuthenticated has changed
-  //   if (isAuthenticated) {
-  //     navigate("/login");
-  //   }
-  // }, [isAuthenticated, navigate]);
 
   return (
     <div className="auth__">

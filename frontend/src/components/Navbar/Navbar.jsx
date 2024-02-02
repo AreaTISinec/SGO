@@ -8,7 +8,7 @@ import dayjs from "dayjs";
 const NavBar = () => {
   const { user, logoutUser } = useContext(AuthContext);
 
-  const isExpired = dayjs.unix(user.exp).diff(dayjs()) < 1;
+  const isExpired = user && dayjs.unix(user.exp).diff(dayjs()) < 1;
 
   return (
     <>
@@ -24,9 +24,9 @@ const NavBar = () => {
                 />
               </Navbar.Brand>
             </div>
-            {!isExpired ? (
+            {!isExpired && user ? (
               <div className="navbar__top__auth">
-                <span>Hola, {user.username}</span>
+                <span>Hola, {user && user.username}</span>
                 <button className="BotonCerrarSesion" onClick={logoutUser}>
                   Cerrar Sesion
                 </button>

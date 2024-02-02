@@ -1,8 +1,12 @@
 from django.shortcuts import render
-from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView
-from rest_framework import permissions
+from rest_framework.generics import  ListAPIView, RetrieveAPIView, CreateAPIView
+from rest_framework import permissions, status
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework.views import APIView
 from .models import Cene
 from .serializers import CeneSerializer
+from rest_framework.response import Response
 
 class CeneListView(ListAPIView):
     permission_classes = (permissions.AllowAny, )
@@ -33,3 +37,32 @@ class CeneItemByNameView(ListAPIView):
         queryset = Cene.objects.filter(nombre=nombre) 
         
         return queryset
+
+class CeneUploadView(APIView):
+    def post(self, request):
+        try:
+            nombre = request.data.get('nombre')
+            id_cene = request.data.get('id_cene')
+            
+            if nombre and id_cene:
+                data = Cene(nombre=nombre, id_cene=id_cene)
+                data.save()
+                return Response(status=status.HTTP_201_CREATED)
+            else:
+                return Response(status=status.HTTP_400_BAD_REQUEST)
+        except Exception as e:
+            print(f"Error al guardar los datos: {str(e)}")
+            return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    
+class CeneSubirView(APIView):
+    permission_classes = (permissions.AllowAny, )
+    serializer_class = CeneSerializer
+    
+    def post(self, request):
+        id_cene = request.data.get('id_cene')
+        nombre = request.data.get('nombre')
+        if id_cene and nombre:
+            cene = Cene(id_cene=id_cene, nombre=nombre)
+            cene.save()
+            return Response(status=status.HTTP_201_CREATED)
+        return Response(status=status.HTTP_400_BAD_REQUEST)      
