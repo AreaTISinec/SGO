@@ -1,7 +1,6 @@
 from rest_framework.generics import ListAPIView, RetrieveAPIView
 from rest_framework import permissions, status
 from .models import Docs
-from obras.models import Obras
 from .serializers import DocSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
