@@ -11,15 +11,10 @@ const CentroDeNegocios = () => {
   const [searchTerm, setSearchTerm] = useState(""); // Estado para el término de búsqueda
 
   const getDatos = async () => {
-    if (searchTerm.trim() === "") {
-      // Evitar la solicitud si el término de búsqueda está vacío
-      return;
-    }
     try {
       const { data } = await axios.get(
         `http://127.0.0.1:8000/api/cene/search/?search=${searchTerm}`
       );
-      console.log(data);
       setCentronegocioData(data);
     } catch (err) {
       console.error("Error al obtener datos:", err);
@@ -68,7 +63,7 @@ const CentroDeNegocios = () => {
               </tr>
             </thead>
             <tbody>
-              {centronegocioData.map((CentrodeNegocios) => (
+              {centronegocioData?.map((CentrodeNegocios) => (
                     <tr key={CentrodeNegocios.id_cene}>
                       <td>{CentrodeNegocios.id_cene}</td>
                       <td>{CentrodeNegocios.nombre}</td>

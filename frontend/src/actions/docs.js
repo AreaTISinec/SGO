@@ -1,6 +1,4 @@
 import axios from "axios"
-import { setAlert } from "./alert";
-import { UPLOAD_FAIL, UPLOAD_SUCCES } from "./types";
 
 export const upload = async (doc, nombre, tipo) => {
     console.log('holamundo')

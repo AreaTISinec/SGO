@@ -9,6 +9,7 @@ import AuthContext from "../../context/AuthContext";
 const UploadFile = () => {
 
   const { user } = useContext(AuthContext)
+
   const [formData, setFormData] = useState({
     id_obra: user.user_id,
     tipo: "",
@@ -16,7 +17,6 @@ const UploadFile = () => {
   });
 
   const { id_obra, tipo, doc } = formData;
-  //setFormData({...formData, id_obra: user.id_user})
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   }
