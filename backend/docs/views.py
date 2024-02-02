@@ -12,6 +12,13 @@ class DocListView(ListAPIView):
     serializer_class = DocSerializer
     pagination_class = None
     
+class DocListUserView(ListAPIView):
+    permission_classes = (permissions.AllowAny, )
+    serializer_class = DocSerializer
+    pagination_class = None
+    def get_queryset(self):
+        id_obra = self.kwargs['id_obra']
+        return Docs.objects.filter(id_obra=id_obra)
         
 
 class DocView(RetrieveAPIView):
