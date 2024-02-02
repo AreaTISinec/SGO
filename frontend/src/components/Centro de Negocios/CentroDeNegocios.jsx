@@ -12,8 +12,7 @@ const CentroDeNegocios = () => {
 
   const getDatos = async () => {
     if (searchTerm.trim() === "") {
-      // Evitar la solicitud si el término de búsqueda está vacío
-      return;
+      return centronegocioData;
     }
     try {
       const { data } = await axios.get(
@@ -45,7 +44,7 @@ const CentroDeNegocios = () => {
               getDatos();
             }}
           >
-            <label htmlFor="search">Buscar por ID:</label>
+            <label htmlFor="search">Buscar por nombre:</label>
             <input
               className="BuscadorDeCentrosNegocios"
               type="text"
