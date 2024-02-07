@@ -24,65 +24,65 @@ const AppRouter = () => {
           <Route
             path="/home"
             element={
-              // <PrivateRoute>
+              <PrivateRoute>
               <Home />
-              // </PrivateRoute>
+              </PrivateRoute>
             }
           />
           <Route
             path="/obras"
             element={
-              // <PrivateRoute>
+              <PrivateRoute>
               <Obras />
-              // </PrivateRoute>
+              </PrivateRoute>
             }
           />
           <Route
             path="/obras/:idObra"
             element={
-              // <PrivateRoute>
+              <PrivateRoute>
               <DetalleObra />
-              // </PrivateRoute>
+              </PrivateRoute>
             }
           />
           <Route
             path="/obras/nueva-obra"
             element={
-              // <PrivateRoute>
+              <PrivateRoute>
               <NuevaObra />
-              // </PrivateRoute>
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/obras/:idObra/nuevo-documento"
+            element={
+              <PrivateRoute>
+              <UploadFile />
+              </PrivateRoute>
             }
           />
           <Route
             path="/centro-de-negocios"
             element={
-              // <PrivateRoute>
+              <PrivateRoute>
               <CentroDeNegocios />
-              // </PrivateRoute>
+              </PrivateRoute>
             }
           />
           <Route
             path="/centro-de-negocios/:idCentroDeNegocios"
             element={
-              // <PrivateRoute>
+              <PrivateRoute>
               <DetalleCentroDeNegocios />
-              // </PrivateRoute>
+              </PrivateRoute>
             }
           />
           <Route
             path="/centro-de-negocios/nuevo-centro-de-negocios"
             element={
-              // <PrivateRoute>
+              <PrivateRoute>
               <NuevoCentroDeNegocios />
-              // </PrivateRoute>
-            }
-          />
-          <Route
-            path="/docs/upload/"
-            element={
-              // <PrivateRoute>
-              <UploadFile />
-              // </PrivateRoute>
+              </PrivateRoute>
             }
           />
           <Route path="/*" element={NotFound} />
