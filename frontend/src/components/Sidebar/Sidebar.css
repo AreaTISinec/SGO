@@ -6,7 +6,7 @@
   width: auto;
   transition: transform 0.3s ease-in-out;
   background-color: #f4f4f4;
-  height: 89vh;
+  height: 100vh;
   color: #333333;
 }
 
@@ -19,7 +19,7 @@
   transform: translateX(0);
   width: auto;
   color: #333333;
-  height: 89vh;
+  height: 100vh;
 }
 
 .BotonMenu {
