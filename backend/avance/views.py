@@ -1,7 +1,9 @@
 from rest_framework.views import APIView
 from rest_framework import	permissions, status
+from rest_framework.generics import ListAPIView
 from rest_framework.response import Response
 from .serializers import AProyectadoSerializer, ARealSerializer
+from .models import AvanceProyectado, AvanceReal
 
 # Create your views here.
 class UploadAvanceReal(APIView):
@@ -21,3 +23,15 @@ class UploadAvanceProyectado(APIView):
             serializer.save()
             return Response(status=status.HTTP_201_CREATED)
         return Response(status=status.HTTP_400_BAD_REQUEST)
+    
+class AvanceProyectadoView(ListAPIView):
+    permission_classes = (permissions.AllowAny, )
+    queryset = AvanceProyectado.objects.all()
+    serializer_class = AProyectadoSerializer
+    pagination_class = None
+    
+class AvanceRealView(ListAPIView):
+    permission_classes = (permissions.AllowAny, )
+    queryset = AvanceReal.objects.all()
+    serializer_class = ARealSerializer
+    pagination_class = None

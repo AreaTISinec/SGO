@@ -1,7 +1,7 @@
 import { useParams, Link } from "react-router-dom";
 import { useState, useEffect } from 'react';
-// import { PowerBIEmbed } from 'powerbi-client-react';
-// import models from 'powerbi-client';
+import { PowerBIEmbed } from 'powerbi-client-react';
+import { models } from 'powerbi-client';
 import axios from "axios";
 import Sidebar from "../Sidebar/Sidebar";
 import Button from "react-bootstrap/Button";
@@ -22,6 +22,7 @@ const DetalleObra = () => {
 
   useEffect(() => {
     getDatos();
+    console.log('useeeffeccc')
   }, []); // Ejecutar efecto solo en el montaje inicial del componente
 
 
@@ -36,40 +37,40 @@ const DetalleObra = () => {
           </Link>
         </div>
         <div>
-          {/* <PowerBIEmbed
-            embedConfig = {{
-              type: 'report',   // Supported types: report, dashboard, tile, visual, qna, paginated report and create
-              id: 'b3687150-71b5-423d-8530-2377bce7ec67',
-              embedUrl: 'https://app.powerbi.com/reportEmbed?reportId=b3687150-71b5-423d-8530-2377bce7ec67&config=eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly9XQUJJLVNPVVRILUNFTlRSQUwtVVMtcmVkaXJlY3QuYW5hbHlzaXMud2luZG93cy5uZXQiLCJlbWJlZEZlYXR1cmVzIjp7InVzYWdlTWV0cmljc1ZOZXh0Ijp0cnVlLCJkaXNhYmxlQW5ndWxhckpTQm9vdHN0cmFwUmVwb3J0RW1iZWQiOnRydWV9fQ%3d%3d',
-              accessToken: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6ImtXYmthYTZxczh3c1RuQndpaU5ZT2hIYm5BdyIsImtpZCI6ImtXYmthYTZxczh3c1RuQndpaU5ZT2hIYm5BdyJ9.eyJhdWQiOiJodHRwczovL2FuYWx5c2lzLndpbmRvd3MubmV0L3Bvd2VyYmkvYXBpIiwiaXNzIjoiaHR0cHM6Ly9zdHMud2luZG93cy5uZXQvYmEyNTdjMzQtMDdkOS00NjAxLWIwODQtODY1Y2QzZjJlMzYyLyIsImlhdCI6MTcwNzIyNTE1OCwibmJmIjoxNzA3MjI1MTU4LCJleHAiOjE3MDcyMzAxNDcsImFjY3QiOjAsImFjciI6IjEiLCJhaW8iOiJBVFFBeS84VkFBQUFKOW5OcWF3Z1ZmUVBGUzIvVlgvZVcyOGcxYUU0UGhVRVhRaVEzazFaM2xHSTZheVBWWVV0TFc4WDl2a09sYlFyIiwiYW1yIjpbInB3ZCJdLCJhcHBpZCI6Ijg3MWMwMTBmLTVlNjEtNGZiMS04M2FjLTk4NjEwYTdlOTExMCIsImFwcGlkYWNyIjoiMCIsImZhbWlseV9uYW1lIjoiRFJPR1VFVFQgR0FSQVRFIiwiZ2l2ZW5fbmFtZSI6IkxVQ0FTIEJFTkpBTUlOIiwiaXBhZGRyIjoiMTkwLjE1MS44OC4yMTAiLCJuYW1lIjoiTFVDQVMgQkVOSkFNSU4gRFJPR1VFVFQgR0FSQVRFIiwib2lkIjoiNTQ0MzYzOTktODQzZi00OWIwLWE0NjMtZTQ1M2YyYjRmYjBlIiwib25wcmVtX3NpZCI6IlMtMS01LTIxLTIwNzMyMjUyNDYtNDg3MjY1MDY5LTE3NDMzMzEzNzktMTgyODAiLCJwdWlkIjoiMTAwMzIwMDBBOTFBN0IwNyIsInJoIjoiMC5BU1VBTkh3bHV0a0hBVWF3aElaYzBfTGpZZ2tBQUFBQUFBQUF3QUFBQUFBQUFBQWxBQ1UuIiwic2NwIjoidXNlcl9pbXBlcnNvbmF0aW9uIiwic3ViIjoiYnY3WjJFYXhqNHpQQl9YM0N6NTl0cWRiRFVYdHhZcThRU0phZ0lvcndhQSIsInRpZCI6ImJhMjU3YzM0LTA3ZDktNDYwMS1iMDg0LTg2NWNkM2YyZTM2MiIsInVuaXF1ZV9uYW1lIjoibGRyb2d1ZXR0QHV0ZW0uY2wiLCJ1cG4iOiJsZHJvZ3VldHRAdXRlbS5jbCIsInV0aSI6Ind1RjUzc2VPalVlSmhhbkkxUUVsQUEiLCJ2ZXIiOiIxLjAiLCJ3aWRzIjpbImI3OWZiZjRkLTNlZjktNDY4OS04MTQzLTc2YjE5NGU4NTUwOSJdfQ.P0MV8RJbvlPqgbY6WPZXspYJw4Gi_9OilcTj0nIiQpE9qalA8yIWcHCnbd0WSOGdrAVW68GpUwSuc_0fD5A0i9g6-tZX3REqFnQPCXTDDEfCp8CCcuFd40HQhOW7GwuoT_i7iry5vetTEwGxE5Al3blIYr9iHmGvxjh_VechT2WEx1gTW1eL2coJboC7eZdzsUahywGdXtQV8seygsvI-gO-vx-e8_ZuaZUpPO2BWVxCH-veBU9nkDo29LC0m9DiEaS9Z4WZ7pmaQQI9ia24IE1OiSrA_f2vJtzt4yZVe6wJBfx7XoaukvL93DU7pyWZYp60Ce7LP8Ll4dLEzMxwCw',
-              tokenType: models.TokenType.Aad, // Use models.TokenType.Aad for SaaS embed
-              settings: {
-                panes: {
-                  filters: {
-                    expanded: false,
-                    visible: false
-                  }
-                },
-                background: models.BackgroundType.Transparent,
-              }
-            }}
-
-            eventHandlers = {
-              new Map([
-                ['loaded', function () {console.log('Report loaded');}],
-                ['rendered', function () {console.log('Report rendered');}],
-                ['error', function (event) {console.log(event.detail);}],
-                ['visualClicked', () => console.log('visual clicked')],
-                ['pageChanged', (event) => console.log(event)],
-              ])
+        <PowerBIEmbed
+          embedConfig = {{
+            type: 'report',   // Supported types: report, dashboard, tile, visual, qna, paginated report and create
+            id: '5c607318-8d82-49bf-a371-7e0edf855485',
+            embedUrl: 'https://app.powerbi.com/reportEmbed?reportId=5c607318-8d82-49bf-a371-7e0edf855485&config=eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly9XQUJJLVBBQVMtMS1TQ1VTLXJlZGlyZWN0LmFuYWx5c2lzLndpbmRvd3MubmV0IiwiZW1iZWRGZWF0dXJlcyI6eyJ1c2FnZU1ldHJpY3NWTmV4dCI6dHJ1ZSwiZGlzYWJsZUFuZ3VsYXJKU0Jvb3RzdHJhcFJlcG9ydEVtYmVkIjp0cnVlfX0%3d',
+            accessToken: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6ImtXYmthYTZxczh3c1RuQndpaU5ZT2hIYm5BdyIsImtpZCI6ImtXYmthYTZxczh3c1RuQndpaU5ZT2hIYm5BdyJ9.eyJhdWQiOiJodHRwczovL2FuYWx5c2lzLndpbmRvd3MubmV0L3Bvd2VyYmkvYXBpIiwiaXNzIjoiaHR0cHM6Ly9zdHMud2luZG93cy5uZXQvYTFhZTMwMTEtNDgwMS00OTBiLWExMDctOWNkOGFiNmQ1ODE3LyIsImlhdCI6MTcwNzMxMjE1MiwibmJmIjoxNzA3MzEyMTUyLCJleHAiOjE3MDczMTcyNjQsImFjY3QiOjAsImFjciI6IjEiLCJhaW8iOiJFMlZnWU5nbldhU2QvVHZsZEhkTGFhdHBqcFpnaHZLTWlWem1RWnZOZGdjNlNRYW9QSTExV3NreHIyZURjQ2xuaWNZaWpXZmlBQT09IiwiYW1yIjpbInB3ZCJdLCJhcHBpZCI6Ijg3MWMwMTBmLTVlNjEtNGZiMS04M2FjLTk4NjEwYTdlOTExMCIsImFwcGlkYWNyIjoiMCIsImZhbWlseV9uYW1lIjoiRXNwaW5vemEiLCJnaXZlbl9uYW1lIjoiRGllZ28iLCJpcGFkZHIiOiIxOTAuMTUxLjg4LjIxMCIsIm5hbWUiOiJEaWVnbyBFc3Bpbm96YSIsIm9pZCI6Ijk5YzRhNzc0LWQ5M2ItNDA5My04NWVlLTY1OTUyYzA5NTVlZCIsInB1aWQiOiIxMDAzMjAwMjg5OTk3N0UyIiwicmgiOiIwLkFTWUFFVEN1b1FGSUMwbWhCNXpZcTIxWUZ3a0FBQUFBQUFBQXdBQUFBQUFBQUFBbUFMay4iLCJzY3AiOiJ1c2VyX2ltcGVyc29uYXRpb24iLCJzdWIiOiJWX3l1UXZnRmhfYU9qdGZDRG9GbGpBS3RXMnFpLU9tcjJsZTRzUXFXV3drIiwidGlkIjoiYTFhZTMwMTEtNDgwMS00OTBiLWExMDctOWNkOGFiNmQ1ODE3IiwidW5pcXVlX25hbWUiOiJkZXNwaW5vemFAc2luZWNzYS5vbm1pY3Jvc29mdC5jb20iLCJ1cG4iOiJkZXNwaW5vemFAc2luZWNzYS5vbm1pY3Jvc29mdC5jb20iLCJ1dGkiOiJubE9GcDVfbzNVeUNTT3pZV1NkUEFBIiwidmVyIjoiMS4wIiwid2lkcyI6WyJmMjhhMWY1MC1mNmU3LTQ1NzEtODE4Yi02YTEyZjJhZjZiNmMiLCJmMDIzZmQ4MS1hNjM3LTRiNTYtOTVmZC03OTFhYzAyMjYwMzMiLCIyOTIzMmNkZi05MzIzLTQyZmQtYWRlMi0xZDA5N2FmM2U0ZGUiLCJmZTkzMGJlNy01ZTYyLTQ3ZGItOTFhZi05OGMzYTQ5YTM4YjEiLCJiNzlmYmY0ZC0zZWY5LTQ2ODktODE0My03NmIxOTRlODU1MDkiXX0.Ay73izn3cDHfXefhb_Bsw_TFX9wHrzrBgyyGYqEZaqB0OSmuD2IlXTRu6XnoiqYl6A4oJtp22AQ_TqdV2vjkI9THKRoMXOxKMR9Q_pHpM5AlWg-ejOLQoTuMv7uq5TeDcWpOVvzZ0sZbvzI7hKhKYF6JHyLxhR9DdBlQXTOIuIgHLUxL0GujqnViPaiLw2xwXzX3Tsw9VBAyxqzUFZP0lOTtu5pP8fV6D5gDUBQoW2ECxKzgpii96_2UFJD91DI1-ScNmFcarqi85R0ERzSwKQa1k-R_clwYyW29i_F5vMgQZD4IRguhuW_Ha4Pbk67oin51hW4fRwlftX8WP6WQyA',
+            tokenType: models.TokenType.Aad, // Use models.TokenType.Aad for SaaS embed
+            settings: {
+              panes: {
+                filters: {
+                  expanded: false,
+                  visible: false
+                }
+              },
+              background: models.BackgroundType.Transparent,
             }
+          }}
 
-            cssClassName = { "reportClass" }
+          eventHandlers = {
+            new Map([
+              ['loaded', function () {console.log('Report loaded');}],
+              ['rendered', function () {console.log('Report rendered');}],
+              ['error', function (event) {console.log(event.detail);}],
+              ['visualClicked', () => console.log('visual clicked')],
+              ['pageChanged', (event) => console.log(event)],
+            ])
+          }
 
-            getEmbeddedComponent = { (embeddedReport) => {
-              window.report = embeddedReport;
-            }}
-          /> */}
+          cssClassName = { "reportClass" }
+
+          getEmbeddedComponent = { (embeddedReport) => {
+            window.report = embeddedReport ;
+          }}
+        />
         </div>
         <div className="TablaDetalle">
           {detalleObra && (
