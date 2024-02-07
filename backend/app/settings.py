@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'ventas',
     'perfil_usuario',
     'cene',
+    'avance',
 ]
 
 MIDDLEWARE = [

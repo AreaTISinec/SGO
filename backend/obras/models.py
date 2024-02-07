@@ -17,8 +17,16 @@ class Obras(models.Model):
     observaciones = models.TextField()
     
     #calculado
-    porc_avance = models.DecimalField(max_digits=5, decimal_places=1)
-    monto_facturado = models.IntegerField()
-    saldo_facturado = models.IntegerField(null = True)
+    porc_avance = models.IntegerField()
+    monto_facturado = models.IntegerField(null=True)
+    saldo_facturado = models.IntegerField(null=True)
+    
+    def calcular_monto_facturado():
+        
+        pass
+    
+    def calcular_saldo_facturado():
+        
+        pass
     
     
