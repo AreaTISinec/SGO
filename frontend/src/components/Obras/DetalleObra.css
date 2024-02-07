@@ -18,9 +18,12 @@
   border-radius: 20px;
   overflow-x: auto;
 }
+.reportClass{
+  height: 700px;
+  width: 1000px;
+}
 
 .Titulo {
-  padding-bottom: 20px; /* Ajustado el espaciado inferior */
   top: 0;
   background-color: #f9f9f9;
   z-index: 1; /*asegura que el titulo quede encima del contenido*/
@@ -46,8 +49,9 @@
   border-radius: 10px;
 }
 
-/*
-TITULO???
-TABLA DETALLE??
-CONTENEDOR GRAFICOS???
-*/
+.BotonNuevaObra {
+  display: flex;
+  justify-content: center;
+  background-color: transparent;
+  padding-top: 30px;
+}
