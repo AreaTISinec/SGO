@@ -15,6 +15,7 @@ urlpatterns = [
     path('api/obras/', include('obras.urls')),
     path('api/cene/', include('cene.urls')),
     path('api/avance/', include('avance.urls')),
+    path('api/powerbi/', include('powerbi.urls')),
     path('admin/', admin.site.urls),
 ] 
 static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

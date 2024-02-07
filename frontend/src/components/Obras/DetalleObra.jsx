@@ -19,12 +19,38 @@ const DetalleObra = () => {
     console.log(detalleObra)
   };
  
+  const [accessToken, setAccessToken] = useState('');
+
+  useEffect(() => {
+    console.log('useEffect del accessToken')
+    const fetchAccessToken = async () => {
+      try {
+        // Realiza una solicitud a tu backend para obtener un nuevo token de acceso
+        const response = await fetch('http://127.0.0.1:8000/api/powerbi/getAccessToken/');
+        const data = await response.json();
+        // Actualiza el estado del token de acceso con el nuevo token
+        setAccessToken(data.accessToken);
+        
+        console.log(accessToken)
+      } catch (error) {
+        console.error('Error al obtener el token de acceso:', error);
+      }
+    };
+    fetchAccessToken()
+    // Refresca el token de acceso cada hora (3600000 milisegundos)
+    const intervalId = setInterval(fetchAccessToken, 3600000);
+
+    // Limpia el intervalo cuando el componente se desmonta
+    return () => clearInterval(intervalId);
+  }, []); // Ejecutar efecto solo en el montaje inicial del componente
+
 
   useEffect(() => {
     getDatos();
-    console.log('useeeffeccc')
+    console.log('useEffect del getdatos')
   }, []); // Ejecutar efecto solo en el montaje inicial del componente
 
+  console.log(accessToken)
 
   return (
     <div className="DetalleObraContainer">
@@ -35,6 +61,9 @@ const DetalleObra = () => {
           <Link className="BotonNuevaObra" to={"./nuevo-documento"}>
             <Button variant="danger">Subir documento</Button>
           </Link>
+          <Link className="BotonNuevaObra" to={"./documentos"}> {/*ver la url */}
+            <Button variant="danger">Ver documentos</Button>
+          </Link>
         </div>
         <div>
         <PowerBIEmbed
@@ -42,7 +71,7 @@ const DetalleObra = () => {
             type: 'report',   // Supported types: report, dashboard, tile, visual, qna, paginated report and create
             id: '5c607318-8d82-49bf-a371-7e0edf855485',
             embedUrl: 'https://app.powerbi.com/reportEmbed?reportId=5c607318-8d82-49bf-a371-7e0edf855485&config=eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly9XQUJJLVBBQVMtMS1TQ1VTLXJlZGlyZWN0LmFuYWx5c2lzLndpbmRvd3MubmV0IiwiZW1iZWRGZWF0dXJlcyI6eyJ1c2FnZU1ldHJpY3NWTmV4dCI6dHJ1ZSwiZGlzYWJsZUFuZ3VsYXJKU0Jvb3RzdHJhcFJlcG9ydEVtYmVkIjp0cnVlfX0%3d',
-            accessToken: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6ImtXYmthYTZxczh3c1RuQndpaU5ZT2hIYm5BdyIsImtpZCI6ImtXYmthYTZxczh3c1RuQndpaU5ZT2hIYm5BdyJ9.eyJhdWQiOiJodHRwczovL2FuYWx5c2lzLndpbmRvd3MubmV0L3Bvd2VyYmkvYXBpIiwiaXNzIjoiaHR0cHM6Ly9zdHMud2luZG93cy5uZXQvYTFhZTMwMTEtNDgwMS00OTBiLWExMDctOWNkOGFiNmQ1ODE3LyIsImlhdCI6MTcwNzMxMjE1MiwibmJmIjoxNzA3MzEyMTUyLCJleHAiOjE3MDczMTcyNjQsImFjY3QiOjAsImFjciI6IjEiLCJhaW8iOiJFMlZnWU5nbldhU2QvVHZsZEhkTGFhdHBqcFpnaHZLTWlWem1RWnZOZGdjNlNRYW9QSTExV3NreHIyZURjQ2xuaWNZaWpXZmlBQT09IiwiYW1yIjpbInB3ZCJdLCJhcHBpZCI6Ijg3MWMwMTBmLTVlNjEtNGZiMS04M2FjLTk4NjEwYTdlOTExMCIsImFwcGlkYWNyIjoiMCIsImZhbWlseV9uYW1lIjoiRXNwaW5vemEiLCJnaXZlbl9uYW1lIjoiRGllZ28iLCJpcGFkZHIiOiIxOTAuMTUxLjg4LjIxMCIsIm5hbWUiOiJEaWVnbyBFc3Bpbm96YSIsIm9pZCI6Ijk5YzRhNzc0LWQ5M2ItNDA5My04NWVlLTY1OTUyYzA5NTVlZCIsInB1aWQiOiIxMDAzMjAwMjg5OTk3N0UyIiwicmgiOiIwLkFTWUFFVEN1b1FGSUMwbWhCNXpZcTIxWUZ3a0FBQUFBQUFBQXdBQUFBQUFBQUFBbUFMay4iLCJzY3AiOiJ1c2VyX2ltcGVyc29uYXRpb24iLCJzdWIiOiJWX3l1UXZnRmhfYU9qdGZDRG9GbGpBS3RXMnFpLU9tcjJsZTRzUXFXV3drIiwidGlkIjoiYTFhZTMwMTEtNDgwMS00OTBiLWExMDctOWNkOGFiNmQ1ODE3IiwidW5pcXVlX25hbWUiOiJkZXNwaW5vemFAc2luZWNzYS5vbm1pY3Jvc29mdC5jb20iLCJ1cG4iOiJkZXNwaW5vemFAc2luZWNzYS5vbm1pY3Jvc29mdC5jb20iLCJ1dGkiOiJubE9GcDVfbzNVeUNTT3pZV1NkUEFBIiwidmVyIjoiMS4wIiwid2lkcyI6WyJmMjhhMWY1MC1mNmU3LTQ1NzEtODE4Yi02YTEyZjJhZjZiNmMiLCJmMDIzZmQ4MS1hNjM3LTRiNTYtOTVmZC03OTFhYzAyMjYwMzMiLCIyOTIzMmNkZi05MzIzLTQyZmQtYWRlMi0xZDA5N2FmM2U0ZGUiLCJmZTkzMGJlNy01ZTYyLTQ3ZGItOTFhZi05OGMzYTQ5YTM4YjEiLCJiNzlmYmY0ZC0zZWY5LTQ2ODktODE0My03NmIxOTRlODU1MDkiXX0.Ay73izn3cDHfXefhb_Bsw_TFX9wHrzrBgyyGYqEZaqB0OSmuD2IlXTRu6XnoiqYl6A4oJtp22AQ_TqdV2vjkI9THKRoMXOxKMR9Q_pHpM5AlWg-ejOLQoTuMv7uq5TeDcWpOVvzZ0sZbvzI7hKhKYF6JHyLxhR9DdBlQXTOIuIgHLUxL0GujqnViPaiLw2xwXzX3Tsw9VBAyxqzUFZP0lOTtu5pP8fV6D5gDUBQoW2ECxKzgpii96_2UFJD91DI1-ScNmFcarqi85R0ERzSwKQa1k-R_clwYyW29i_F5vMgQZD4IRguhuW_Ha4Pbk67oin51hW4fRwlftX8WP6WQyA',
+            accessToken: accessToken,
             tokenType: models.TokenType.Aad, // Use models.TokenType.Aad for SaaS embed
             settings: {
               panes: {
@@ -122,3 +151,4 @@ const DetalleObra = () => {
 };
 
 export default DetalleObra;
+
