@@ -38,12 +38,6 @@ const Sidebar = () => {
           >
             Negocios
           </button>
-          <button
-            className="BotonNavigate"
-            onClick={() => handleNavigation("/docs/upload")}
-          >
-            Subir archivo
-          </button>
         </div>
       );
     }
@@ -73,7 +67,6 @@ const Sidebar = () => {
             </Button>
           </div>
         )}
-        {/* importar los iconos desde bootstrap */}
         <div className="Despliegue">
           <Despliegue />
         </div>
