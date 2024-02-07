@@ -3,6 +3,7 @@ import Sidebar from "../Sidebar/Sidebar";
 import "./DetalleObra.css";
 import axios from "axios";
 import { useState, useEffect } from "react";
+import UploadFile from "../../containers/UploadFile/UploadFile";
 
 const DetalleObra = () => {
   const { idObra } = useParams();
@@ -29,7 +30,8 @@ const DetalleObra = () => {
         </div>
         <div className="ContenedorGraficos">graficos</div>
         <div className="TablaDetalle">
-          {detalleObra && (
+          {detalleObra && (<>
+
             <table>
               <thead>
                 <tr>
@@ -68,6 +70,8 @@ const DetalleObra = () => {
                 </tr>
               </tbody>
             </table>
+            <UploadFile id={idObra}/>
+          </>
           )}
         </div>
       </div>
