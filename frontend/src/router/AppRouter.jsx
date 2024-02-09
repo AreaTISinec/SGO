@@ -13,8 +13,12 @@ import CentroDeNegocios from "../components/Centro de Negocios/CentroDeNegocios"
 import DetalleCentroDeNegocios from "../components/Centro de Negocios/DetalleCentroDeNegocios";
 import NuevoCentroDeNegocios from "../components/Centro de Negocios/NuevoCentroDeNegocios";
 import { Route, Routes } from "react-router-dom";
+import { useContext } from "react";
+import AuthContext from "../context/AuthContext";
+import ReqFiles from "../containers/UploadFile/ReqFiles";
 
 const AppRouter = () => {
+
   return (
     <>
       <Layout>
@@ -26,7 +30,7 @@ const AppRouter = () => {
             path="/home"
             element={
               <PrivateRoute>
-              <Home />
+                <Home />
               </PrivateRoute>
             }
           />
@@ -34,7 +38,7 @@ const AppRouter = () => {
             path="/obras"
             element={
               <PrivateRoute>
-              <Obras />
+                <Obras />
               </PrivateRoute>
             }
           />
@@ -42,7 +46,7 @@ const AppRouter = () => {
             path="/obras/:idObra"
             element={
               <PrivateRoute>
-              <DetalleObra />
+                <DetalleObra />
               </PrivateRoute>
             }
           />
@@ -50,7 +54,7 @@ const AppRouter = () => {
             path="/obras/nueva-obra"
             element={
               <PrivateRoute>
-              <NuevaObra />
+                <NuevaObra />
               </PrivateRoute>
             }
           />
@@ -58,7 +62,15 @@ const AppRouter = () => {
             path="/obras/:idObra/nuevo-documento"
             element={
               <PrivateRoute>
-              <UploadFile />
+                <UploadFile />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/obras/:idObra/req-documento"
+            element={
+              <PrivateRoute>
+                <ReqFiles />
               </PrivateRoute>
             }
           />
@@ -74,7 +86,7 @@ const AppRouter = () => {
             path="/centro-de-negocios"
             element={
               <PrivateRoute>
-              <CentroDeNegocios />
+                <CentroDeNegocios />
               </PrivateRoute>
             }
           />
@@ -82,7 +94,7 @@ const AppRouter = () => {
             path="/centro-de-negocios/:idCentroDeNegocios"
             element={
               <PrivateRoute>
-              <DetalleCentroDeNegocios />
+                <DetalleCentroDeNegocios />
               </PrivateRoute>
             }
           />

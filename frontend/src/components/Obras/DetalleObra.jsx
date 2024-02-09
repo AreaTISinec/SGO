@@ -50,7 +50,6 @@ const DetalleObra = () => {
     console.log('useEffect del getdatos')
   }, []); // Ejecutar efecto solo en el montaje inicial del componente
 
-  console.log(accessToken)
 
   return (
     <div className="DetalleObraContainer">
@@ -58,9 +57,17 @@ const DetalleObra = () => {
       <div className="RecuadroDetalleObra">
         <div className="Titulo">
           <h1>Detalle de la obra</h1>
-          <Link className="BotonNuevaObra" to={"./nuevo-documento"}>
-            <Button variant="danger">Subir documento</Button>
-          </Link>
+          {
+            detalleObra && detalleObra.gantt && detalleObra.presupuesto ? 
+            <Link className="BotonNuevaObra" to={"./nuevo-documento"}>
+              <Button variant="danger">Subir documento</Button>
+            </Link>
+            :
+            <Link className="BotonNuevaObra" to={"./req-documento"}>
+              <Button variant="danger">Subir documento</Button>
+            </Link>
+
+          }
           <Link className="BotonNuevaObra" to={"./documentos"}> {/*ver la url */}
             <Button variant="danger">Ver documentos</Button>
           </Link>
