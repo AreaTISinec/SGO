@@ -13,6 +13,7 @@ class uploadFileView(APIView):
     def post(self, request, *args, **kwargs):
         file = request.FILES['doc']
         tipo = request.data['tipo']
+        print(tipo)
         id_obra = request.data['id_obra']
         file_name = file.name
         ext = Path(file_name).suffix
