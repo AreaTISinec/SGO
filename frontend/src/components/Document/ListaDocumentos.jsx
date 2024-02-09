@@ -53,6 +53,9 @@ const ListaDocumentos = () => {
     <div className="ListaDocumentoContainer">
       <Sidebar />
       <div className="RecuadroListaDocumentos">
+        <div className="Titulo">
+          <h1>Documentos de la obra</h1>
+        </div>
         <Accordion className="AcordeonListaDocumentos">
           <Accordion.Item eventKey="0">
             <Accordion.Header>Cartas Gantt</Accordion.Header>
