@@ -18,7 +18,6 @@ def actualizar_porcentaje_avance(sender, instance, created, **kwargs):
 def actualizar_req_files(sender, instance, created, **kwargs):
     if created:
         obra = instance.id_obra
-        print(instance.tipo)
         if instance.tipo == 'gantt':
             obra.gantt = True
         elif instance.tipo == 'presupuesto':
