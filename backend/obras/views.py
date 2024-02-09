@@ -25,6 +25,7 @@ class ObrasUsuarioAPIView(ListAPIView):
     def get_queryset(self):
         usuario_id = self.kwargs['id_user']  # Obtener el ID del usuario desde la URL
         return Obras.objects.filter(id_user=usuario_id)
+        
 
         
 class ObraListSearch(ListAPIView):

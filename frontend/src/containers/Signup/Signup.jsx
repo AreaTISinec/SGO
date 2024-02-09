@@ -1,8 +1,6 @@
 import { useState, useContext } from "react";
 import { Link,  } from "react-router-dom";
 import { Helmet } from "react-helmet";
-import { setAlert } from "../../actions/alert";
-import { signup } from "../../actions/auth";
 import AuthContext from '../../context/AuthContext'
 import "./Singup.css";
 
@@ -24,11 +22,6 @@ const Signup = () => {
   }
 
 
-    if(password !== password2){
-      setAlert("Contraseñas no coinciden", "error");
-    }else {
-      signup({ email, username, rol, password, password2});
-    }
 
   return (
     <div className="auth__">

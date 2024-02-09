@@ -11,6 +11,9 @@ const CentroDeNegocios = () => {
   const [searchTerm, setSearchTerm] = useState(""); // Estado para el término de búsqueda
 
   const getDatos = async () => {
+    if (searchTerm.trim() === "") {
+      return centronegocioData;
+    }
     try {
       const { data } = await axios.get(
         `http://127.0.0.1:8000/api/cene/search/?search=${searchTerm}`
