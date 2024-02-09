@@ -12,12 +12,13 @@ class uploadFileView(APIView):
     
     def post(self, request, *args, **kwargs):
         file = request.FILES['doc']
+        tipo = request.data['tipo']
+        id_obra = request.data['id_obra']
         file_name = file.name
         ext = Path(file_name).suffix
-        file_object = upload_file_to_blob(file)
+        file_object = upload_file_to_blob(file, tipo, id_obra)
         file_object.file_name = file_name
         file_object.file_extention = ext
-        messages.success(request, f'archivo {file_name} subido correctamente ')
         return Response(status=status.HTTP_201_CREATED) 
         
         
