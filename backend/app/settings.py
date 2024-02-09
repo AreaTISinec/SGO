@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     #'rest_framework.authtoken',
     'accounts',
-    'docs',
+    'files',
     'obras',
     'ventas',
     'perfil_usuario',

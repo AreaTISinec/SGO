@@ -14,7 +14,10 @@ class Obras(models.Model):
     comuna = models.CharField(max_length=45)
     tipo_obra = models.CharField(max_length=45)
     estado_obra = models.CharField(max_length=45)
-    observaciones = models.TextField()
+    observaciones = models.TextField(null=True)
+    
+    gantt = models.BooleanField(default=False)
+    presupuesto = models.BooleanField(default=False)
     
     #calculado
     porc_avance = models.IntegerField()
