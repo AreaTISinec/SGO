@@ -1,8 +1,9 @@
 from .models import File
 from pathlib import Path
 from django.contrib import messages
-from rest_framework import status
+from rest_framework import status, permissions
 from rest_framework.views import APIView
+from rest_framework.generics import ListAPIView
 from rest_framework.response import Response
 from django.http import HttpResponse
 
@@ -14,12 +15,14 @@ from django.shortcuts import render, HttpResponse, Http404
 from django.contrib import messages
 from . import models
 import mimetypes
+from .serializers import FileSerializer
 
 class uploadFileView(APIView):
     
     def post(self, request, *args, **kwargs):
         file = request.FILES['doc']
         tipo = request.data['tipo']
+        print(tipo)
         id_obra = request.data['id_obra']
         file_name = file.name
         ext = Path(file_name).suffix
@@ -39,7 +42,7 @@ class ListFilesView(View):
 
 class DownloadFileView(View):
     def get(self, request, file_id):
-        file = models.File.objects.get(pk=file_id)
+        file = File.objects.get(pk=file_id)
         file_name = file.file_name
         file_type, _ = mimetypes.guess_type(file_name)
         url = file.file_url
