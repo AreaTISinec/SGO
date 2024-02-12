@@ -1,10 +1,8 @@
-import { useState, useEffect, useContext } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Accordion from 'react-bootstrap/Accordion';
 import ListGroup from 'react-bootstrap/ListGroup';
 import axios from "axios";
-import AuthContext from "../../context/AuthContext";
 import Sidebar from "../Sidebar/Sidebar";
 import "./ListaDocumentos.css";
 
@@ -14,7 +12,7 @@ const ListaDocumentos = () => {
   useEffect(() => {
     async function fetchListadoDocumentos() {
       try {
-        const response = await axios.get("http://127.0.0.1:8000/api/files/list/")
+        const response = await axios.get('http://127.0.0.1:8000/api/files/list/')
         console.log('response data')
         console.log(response)
         setListadoDeDocumentos(response)

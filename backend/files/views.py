@@ -33,7 +33,7 @@ class uploadFileView(APIView):
 
 class ListFilesView(View):
     def get(self, request):
-        files = models.File.objects.filter(deleted=0)
+        files = models.File.objects.filter(is_deleted=0)
         context = {"files": files}
         return context
 
