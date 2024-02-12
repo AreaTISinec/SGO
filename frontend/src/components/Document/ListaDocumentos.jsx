@@ -1,10 +1,8 @@
-import { useState, useEffect, useContext } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Accordion from 'react-bootstrap/Accordion';
 import ListGroup from 'react-bootstrap/ListGroup';
 import axios from "axios";
-import AuthContext from "../../context/AuthContext";
 import Sidebar from "../Sidebar/Sidebar";
 import "./ListaDocumentos.css";
 
@@ -15,9 +13,7 @@ const ListaDocumentos = () => {
     async function fetchListadoDocumentos() {
       try {
         const response = await axios.get("http://127.0.0.1:8000/api/files/list/")
-        console.log('response data')
-        console.log(response)
-        setListadoDeDocumentos(response)
+        setListadoDeDocumentos(response.data)
       } catch (error){
         console.error('Error fetching de documentos', error)
       }
@@ -28,15 +24,21 @@ const ListaDocumentos = () => {
 
   const handleDownload = async (documentId) => {
     try {
-      const response = await axios.get(`http://127.0.0.1:8000/api/files/download/${documentId}`, {
+      const response = await axios.get(`http://127.0.0.1:8000/api/files/download/${documentId}/`, {
         responseType: 'blob',
       });
       const url = window.URL.createObjectURL(new Blob([response.data]));
+      console.log('url: ')
+      console.log(url)
+      console.log('response: ')
+      console.log(response)
       const link = document.createElement('a');
       link.href = url;
       link.setAttribute('download','document.pdf');
       document.body.appendChild(link);
       link.click();
+
+      window.URL.revokeObjectURL(url);
     }catch (error){
       console.error('Error en la descarga del documento', error)
     }
@@ -56,22 +58,11 @@ const ListaDocumentos = () => {
               <ListGroup>
                 {listadoDeDocumentos?.map( document => (
                   <ListGroup.Item className="ListaDocumentosDisponibles" key={document.id}>
-                    {document.name}
+                    {document.file_name}
                     <Button variant="danger" onClick={() => handleDownload(document.id)}>Descargar</Button>
                   </ListGroup.Item>
                 ))}
-                <ListGroup.Item className="ListaDocumentosDisponibles">
-                  Carta Gantt 1
-                  <Button variant="danger">Descargar</Button>  
-                </ListGroup.Item>
-                <ListGroup.Item className="ListaDocumentosDisponibles">
-                  Carta Gantt 2
-                  <Button variant="danger">Descargar</Button>
-                </ListGroup.Item>
-                <ListGroup.Item className="ListaDocumentosDisponibles">
-                  Carta Gantt 3
-                  <Button variant="danger">Descargar</Button>
-                </ListGroup.Item>
+                
               </ListGroup>
             </Accordion.Body>
           </Accordion.Item>
