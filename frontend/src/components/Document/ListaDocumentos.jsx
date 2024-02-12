@@ -7,18 +7,12 @@ import Sidebar from "../Sidebar/Sidebar";
 import "./ListaDocumentos.css";
 
 const ListaDocumentos = () => {
-  const [listadoDeDocumentos, setListadoDeDocumentos] = useState([]);
+  const [listadoDeDocumentos, setListadoDeDocumentos] = useState([])
 
   useEffect(() => {
     async function fetchListadoDocumentos() {
       try {
-<<<<<<< HEAD
-        const response = await axios.get('http://127.0.0.1:8000/api/files/list/')
-        console.log('response data')
-        console.log(response.data)
-=======
         const response = await axios.get("http://127.0.0.1:8000/api/files/list/")
->>>>>>> 9576442c190101f123373009f3abf0fb5bd6d07d
         setListadoDeDocumentos(response.data)
       } catch (error){
         console.error('Error fetching de documentos', error)
@@ -61,42 +55,32 @@ const ListaDocumentos = () => {
           <Accordion.Item eventKey="0">
             <Accordion.Header>Cartas Gantt</Accordion.Header>
             <Accordion.Body>
-              {listadoDeDocumentos.length > 0 && (
-                <ListGroup>
-                {listadoDeDocumentos?.map( document => (
+              <ListGroup>
+                {listadoDeDocumentos?.map( document => 
+                  {if(document.tipo == 'gantt')
+                    return (
                   <ListGroup.Item className="ListaDocumentosDisponibles" key={document.id}>
-<<<<<<< HEAD
-                    {document.id_obra}
-                    <Button variant="danger" onClick={() => handleDownload(document.id)}>Descargar</Button>
-                  </ListGroup.Item>
-                ))}
-=======
                     {document.file_name}
                     <Button variant="danger" onClick={() => handleDownload(document.id)}>Descargar</Button>
-                  </ListGroup.Item>
-                ))}
-                
->>>>>>> 9576442c190101f123373009f3abf0fb5bd6d07d
+                  </ListGroup.Item> )
+                }
+                )}
               </ListGroup>
-              )}
             </Accordion.Body>
           </Accordion.Item>
           <Accordion.Item eventKey="1">
             <Accordion.Header>Cubicaciones</Accordion.Header>
             <Accordion.Body>
               <ListGroup>
-                <ListGroup.Item className="ListaDocumentosDisponibles">
-                  Cubicacion 1
-                  <Button variant="danger">Descargar</Button>
-                </ListGroup.Item>
-                <ListGroup.Item className="ListaDocumentosDisponibles">
-                  Cubicacion 2
-                  <Button variant="danger">Descargar</Button>
-                </ListGroup.Item>
-                <ListGroup.Item className="ListaDocumentosDisponibles">
-                  Cubicacion 3
-                  <Button variant="danger">Descargar</Button>
-                </ListGroup.Item>
+              {listadoDeDocumentos?.map( document => 
+                  {if(document.tipo == 'cubicacion')
+                    return (
+                  <ListGroup.Item className="ListaDocumentosDisponibles" key={document.id}>
+                    {document.file_name}
+                    <Button variant="danger" onClick={() => handleDownload(document.id)}>Descargar</Button>
+                  </ListGroup.Item> )
+                }
+                )}
               </ListGroup>
             </Accordion.Body>
           </Accordion.Item>
@@ -104,18 +88,15 @@ const ListaDocumentos = () => {
             <Accordion.Header>Facturas</Accordion.Header>
             <Accordion.Body>
               <ListGroup>
-                <ListGroup.Item className="ListaDocumentosDisponibles">
-                  Factura 1
-                  <Button variant="danger">Descargar</Button>
-                </ListGroup.Item>
-                <ListGroup.Item className="ListaDocumentosDisponibles">
-                  Factura 2
-                  <Button variant="danger">Descargar</Button>
-                </ListGroup.Item>
-                <ListGroup.Item className="ListaDocumentosDisponibles">
-                  Factura 3
-                  <Button variant="danger">Descargar</Button>
-                </ListGroup.Item>
+              {listadoDeDocumentos?.map( document => 
+                  {if(document.tipo == 'facturacion')
+                    return (
+                  <ListGroup.Item className="ListaDocumentosDisponibles" key={document.id}>
+                    {document.file_name}
+                    <Button variant="danger" onClick={() => handleDownload(document.id)}>Descargar</Button>
+                  </ListGroup.Item> )
+                }
+                )}
               </ListGroup>
             </Accordion.Body>
           </Accordion.Item>
@@ -123,18 +104,15 @@ const ListaDocumentos = () => {
             <Accordion.Header>Presupuestos</Accordion.Header>
             <Accordion.Body>
               <ListGroup>
-                <ListGroup.Item className="ListaDocumentosDisponibles">
-                  Presupuesto 1
-                  <Button variant="danger">Descargar</Button>
-                </ListGroup.Item>
-                <ListGroup.Item className="ListaDocumentosDisponibles">
-                  Presupuesto 2
-                  <Button variant="danger">Descargar</Button>
-                </ListGroup.Item>
-                <ListGroup.Item className="ListaDocumentosDisponibles">
-                  Presupuesto 3
-                  <Button variant="danger">Descargar</Button>
-                </ListGroup.Item>
+              {listadoDeDocumentos?.map( document => 
+                  {if(document.tipo == 'presupuesto')
+                    return (
+                  <ListGroup.Item className="ListaDocumentosDisponibles" key={document.id}>
+                    {document.file_name}
+                    <Button variant="danger" onClick={() => handleDownload(document.id)}>Descargar</Button>
+                  </ListGroup.Item> )
+                }
+                )}
               </ListGroup>
             </Accordion.Body>
           </Accordion.Item>
