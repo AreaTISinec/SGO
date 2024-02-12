@@ -8,7 +8,7 @@ from rest_framework.response import Response
 from django.http import HttpResponse
 
 
-from .azure_file_controller import ALLOWED_EXTENTIONS, upload_file_to_blob
+from .azure_file_controller import ALLOWED_EXTENTIONS, upload_file_to_blob, download_blob
 
 from django.views import View
 from django.shortcuts import render, HttpResponse, Http404
@@ -32,13 +32,13 @@ class uploadFileView(APIView):
         return Response(status=status.HTTP_201_CREATED) 
 
 
-
-
-class ListFilesView(View):
-    def get(self, request):
-        files = models.File.objects.filter(is_deleted=0)
-        context = {"files": files}
-        return context
+class ListFilesView(ListAPIView):
+    permission_classes = (permissions.AllowAny,)
+    serializer_class = FileSerializer
+    pagination_class = None
+    def get_queryset(self):
+        queryset = File.objects.filter(is_deleted=0)
+        return queryset
 
 class DownloadFileView(View):
     def get(self, request, file_id):

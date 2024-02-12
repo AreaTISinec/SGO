@@ -7,15 +7,15 @@ import Sidebar from "../Sidebar/Sidebar";
 import "./ListaDocumentos.css";
 
 const ListaDocumentos = () => {
-  const [listadoDeDocumentos, setListadoDeDocumentos] = useState([])
+  const [listadoDeDocumentos, setListadoDeDocumentos] = useState([]);
 
   useEffect(() => {
     async function fetchListadoDocumentos() {
       try {
         const response = await axios.get('http://127.0.0.1:8000/api/files/list/')
         console.log('response data')
-        console.log(response)
-        setListadoDeDocumentos(response)
+        console.log(response.data)
+        setListadoDeDocumentos(response.data)
       } catch (error){
         console.error('Error fetching de documentos', error)
       }
@@ -51,26 +51,16 @@ const ListaDocumentos = () => {
           <Accordion.Item eventKey="0">
             <Accordion.Header>Cartas Gantt</Accordion.Header>
             <Accordion.Body>
-              <ListGroup>
+              {listadoDeDocumentos.length > 0 && (
+                <ListGroup>
                 {listadoDeDocumentos?.map( document => (
                   <ListGroup.Item className="ListaDocumentosDisponibles" key={document.id}>
-                    {document.name}
+                    {document.id_obra}
                     <Button variant="danger" onClick={() => handleDownload(document.id)}>Descargar</Button>
                   </ListGroup.Item>
                 ))}
-                <ListGroup.Item className="ListaDocumentosDisponibles">
-                  Carta Gantt 1
-                  <Button variant="danger">Descargar</Button>  
-                </ListGroup.Item>
-                <ListGroup.Item className="ListaDocumentosDisponibles">
-                  Carta Gantt 2
-                  <Button variant="danger">Descargar</Button>
-                </ListGroup.Item>
-                <ListGroup.Item className="ListaDocumentosDisponibles">
-                  Carta Gantt 3
-                  <Button variant="danger">Descargar</Button>
-                </ListGroup.Item>
               </ListGroup>
+              )}
             </Accordion.Body>
           </Accordion.Item>
           <Accordion.Item eventKey="1">
