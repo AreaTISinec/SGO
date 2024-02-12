@@ -9,45 +9,38 @@ import Sidebar from "../Sidebar/Sidebar";
 import "./ListaDocumentos.css";
 
 const ListaDocumentos = () => {
-  // const [obrasData, setObrasData] = useState([]);
-  // const [searchTerm, setSearchTerm] = useState(""); // Estado para el término de búsqueda
+  const [listadoDeDocumentos, setListadoDeDocumentos] = useState([])
 
-  // const { user } = useContext(AuthContext);
+  useEffect(() => {
+    async function fetchListadoDocumentos() {
+      try {
+        const response = await axios.get("http://127.0.0.1:8000/api/files/list/")
+        console.log('response data')
+        console.log(response)
+        setListadoDeDocumentos(response)
+      } catch (error){
+        console.error('Error fetching de documentos', error)
+      }
+    }
+    fetchListadoDocumentos();
+    console.log(listadoDeDocumentos)
+  }, []);
 
-  // const filterObrasByDirec = (searchTerm) => {
-  //   if (!Array.isArray(obrasData)) {
-  //     return [];
-  //   }
-  //   if (searchTerm.trim() === "") {
-  //     return obrasData;
-  //   } else {
-  //     return obrasData.filter((obra) =>
-  //       obra.direccion.toLowerCase().includes(searchTerm.toLowerCase())
-  //     );
-  //   }
-  // };
-
-  // const getDatos = async () => {
-  //   try {
-  //     const id = user.user_id
-  //     if (user.rol == 1 || user.rol == 2 || user.rol == 5) {
-  //       const { data } = await axios.get(`http://127.0.0.1:8000/api/obras/`);
-  //       setObrasData(data);
-  //     } else {
-  //       const { data } = await axios.get(
-  //         `http://127.0.0.1:8000/api/obras/user/${id}/`
-  //       );
-  //       setObrasData(data);
-  //       console.log(obrasData)
-  //     }
-  //   } catch (err) {
-  //     console.error("Error al obtener datos:", err);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   getDatos();
-  // }, [searchTerm]);
+  const handleDownload = async (documentId) => {
+    try {
+      const response = await axios.get(`http://127.0.0.1:8000/api/files/download/${documentId}`, {
+        responseType: 'blob',
+      });
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download','document.pdf');
+      document.body.appendChild(link);
+      link.click();
+    }catch (error){
+      console.error('Error en la descarga del documento', error)
+    }
+  }
 
   return (
     <div className="ListaDocumentoContainer">
@@ -61,6 +54,12 @@ const ListaDocumentos = () => {
             <Accordion.Header>Cartas Gantt</Accordion.Header>
             <Accordion.Body>
               <ListGroup>
+                {listadoDeDocumentos?.map( document => (
+                  <ListGroup.Item className="ListaDocumentosDisponibles" key={document.id}>
+                    {document.name}
+                    <Button variant="danger" onClick={() => handleDownload(document.id)}>Descargar</Button>
+                  </ListGroup.Item>
+                ))}
                 <ListGroup.Item className="ListaDocumentosDisponibles">
                   Carta Gantt 1
                   <Button variant="danger">Descargar</Button>  

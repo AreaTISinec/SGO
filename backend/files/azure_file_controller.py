@@ -2,8 +2,6 @@ from io import BytesIO
 import uuid
 from pathlib import Path
 
-from azure.identity import DefaultAzureCredential
-from azure.keyvault.secrets import SecretClient
 from azure.storage.blob import BlobClient, BlobServiceClient
 
 from django.conf import settings
@@ -40,4 +38,9 @@ def upload_file_to_blob(file, tipo, id_obra):
     file_object = save_file_url_to_db(blob_client.url, tipo, obra)
     return file_object
     
-    
+def download_blob(file):
+    blob_client = create_blob_client(file)
+    if not blob_client.exists():
+        return
+    blob_content = blob_client.download_blob()
+    return blob_content
