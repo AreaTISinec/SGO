@@ -12,9 +12,13 @@ const ListaDocumentos = () => {
   useEffect(() => {
     async function fetchListadoDocumentos() {
       try {
+<<<<<<< HEAD
         const response = await axios.get('http://127.0.0.1:8000/api/files/list/')
         console.log('response data')
         console.log(response.data)
+=======
+        const response = await axios.get("http://127.0.0.1:8000/api/files/list/")
+>>>>>>> 9576442c190101f123373009f3abf0fb5bd6d07d
         setListadoDeDocumentos(response.data)
       } catch (error){
         console.error('Error fetching de documentos', error)
@@ -26,15 +30,21 @@ const ListaDocumentos = () => {
 
   const handleDownload = async (documentId) => {
     try {
-      const response = await axios.get(`http://127.0.0.1:8000/api/files/download/${documentId}`, {
+      const response = await axios.get(`http://127.0.0.1:8000/api/files/download/${documentId}/`, {
         responseType: 'blob',
       });
       const url = window.URL.createObjectURL(new Blob([response.data]));
+      console.log('url: ')
+      console.log(url)
+      console.log('response: ')
+      console.log(response)
       const link = document.createElement('a');
       link.href = url;
       link.setAttribute('download','document.pdf');
       document.body.appendChild(link);
       link.click();
+
+      window.URL.revokeObjectURL(url);
     }catch (error){
       console.error('Error en la descarga del documento', error)
     }
@@ -55,10 +65,18 @@ const ListaDocumentos = () => {
                 <ListGroup>
                 {listadoDeDocumentos?.map( document => (
                   <ListGroup.Item className="ListaDocumentosDisponibles" key={document.id}>
+<<<<<<< HEAD
                     {document.id_obra}
                     <Button variant="danger" onClick={() => handleDownload(document.id)}>Descargar</Button>
                   </ListGroup.Item>
                 ))}
+=======
+                    {document.file_name}
+                    <Button variant="danger" onClick={() => handleDownload(document.id)}>Descargar</Button>
+                  </ListGroup.Item>
+                ))}
+                
+>>>>>>> 9576442c190101f123373009f3abf0fb5bd6d07d
               </ListGroup>
               )}
             </Accordion.Body>
