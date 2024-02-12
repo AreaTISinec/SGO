@@ -70,9 +70,13 @@ const Obras = () => {
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
-            <Link className="BotonNuevaObra" to={"/obras/nueva-obra"}>
-              <Button variant="danger">Nueva Obra</Button>
-            </Link>
+            {user.rol == 1 || user.rol == 2 || user.rol == 5 ?
+              <Link className="BotonNuevaObra" to={"/obras/nueva-obra"}>
+                <Button variant="danger">Nueva Obra</Button>
+              </Link>
+              :
+              <></>
+            }
           </form>
           <table>
             <thead>

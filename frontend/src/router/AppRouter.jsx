@@ -3,6 +3,7 @@ import Login from "../containers/Login/Login";
 import Signup from "../containers/Signup/Signup";
 import Layout from "../hocs/Layout";
 import Obras from "../components/Obras/Obras";
+import ListaDocumentos from "../components/Document/ListaDocumentos";
 import UploadFile from "../containers/UploadFile/UploadFile";
 import NotFound from "../components/NotFound";
 import PrivateRoute from "../utils/PrivateRoute";
@@ -70,6 +71,14 @@ const AppRouter = () => {
             element={
               <PrivateRoute>
                 <ReqFiles />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/obras/:idObra/documentos"
+            element={
+              <PrivateRoute>
+              <ListaDocumentos />
               </PrivateRoute>
             }
           />

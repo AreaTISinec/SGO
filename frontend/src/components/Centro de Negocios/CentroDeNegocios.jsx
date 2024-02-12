@@ -1,14 +1,17 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import Sidebar from "../Sidebar/Sidebar";
 import "./CentroDeNegocios.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
+import AuthContext from "../../context/AuthContext";
 
 const CentroDeNegocios = () => {
   const [centronegocioData, setCentronegocioData] = useState([]);
   const [searchTerm, setSearchTerm] = useState(""); // Estado para el término de búsqueda
+
+  const { user } = useContext(AuthContext)
 
   const getDatos = async () => {
     if (searchTerm.trim() === "") {
@@ -51,12 +54,14 @@ const CentroDeNegocios = () => {
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
-            <Link
-              className="BotonNuevoCDN"
-              to={"/centro-de-negocios/nuevo-centro-de-negocios"}
-            >
-              <Button variant="danger">Nuevo Centro</Button>
-            </Link>
+            
+            { user.rol == 1 || user.rol == 2 || user.rol == 5 ?
+                <Link className="BotonNuevoCDN" to={"/centro-de-negocios/nuevo-centro-de-negocios"}>
+                  <Button variant="danger">Nuevo Centro</Button>
+                </Link>
+                :
+                <></>
+            }
           </form>
           <table>
             <thead>
