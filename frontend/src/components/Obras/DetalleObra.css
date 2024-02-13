@@ -79,3 +79,9 @@
 .Dato strong{
   align-self: center;
 }
+
+.boton-avance{
+  width: 30%;
+  align-self: center;
+  margin-right: 10px;
+}

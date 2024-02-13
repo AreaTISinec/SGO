@@ -5,11 +5,19 @@ import { models } from 'powerbi-client';
 import axios from "axios";
 import Sidebar from "../Sidebar/Sidebar";
 import Button from "react-bootstrap/Button";
+import Modal from 'react-bootstrap/Modal';
+import Form from "react-bootstrap/Form";
 import "./DetalleObra.css";
 
 const DetalleObra = () => {
   const { idObra } = useParams();
   const [detalleObra, setDetalleObra] = useState('');
+
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
 
   const getDatos = async () => {
     const { data } = await axios.get(
@@ -87,7 +95,45 @@ const DetalleObra = () => {
               <div className="Dato"><strong>Tipo de Obra</strong><strong>{detalleObra.tipo_obra}</strong></div>
               <div className="Dato"><strong>Estado de Obra</strong><strong>{detalleObra.estado_obra}</strong></div>
               <div className="Dato"><strong>Observaciones</strong><strong>{detalleObra.observaciones}</strong></div>
-              <div className="Dato"><strong>Porcentaje de Avance</strong><strong>{detalleObra.porc_avance}</strong></div>
+              <div className="Dato"><strong>Porcentaje de Avance</strong><strong>{detalleObra.porc_avance}</strong>
+              <>
+                <Button onClick={handleShow} variant="danger" className="boton-avance">subir avance</Button>
+                <Modal show={show} onHide={handleClose}>
+                  <Modal.Header closeButton>
+                    <Modal.Title>Ingrese el Avance</Modal.Title>
+                  </Modal.Header>
+                  <Modal.Body>
+                    <Form>
+                      <Form.Group>
+                        <Form.Label></Form.Label>
+                        <Form.Control 
+                          type="date"
+                          name="Fecha del avance"
+                          required
+                        />
+                      </Form.Group>
+                      <Form.Group>
+                        <Form.Label></Form.Label>
+                        <Form.Control 
+                          type="number"
+                          name="porcentaje"
+                          placeholder="Ingrese el porcentaje de avance "
+                          required
+                        />
+                      </Form.Group>
+                    </Form>
+                  </Modal.Body>
+                  <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                      Close
+                    </Button>
+                    <Button variant="primary" onClick={handleClose}>
+                      Guardar Avance
+                    </Button>
+                  </Modal.Footer>
+                </Modal>
+              </>
+              </div>
               <div className="Dato"><strong>Monto Facturado</strong><strong>{detalleObra.monto_facturado}</strong></div>
               <div className="Dato"><strong>Saldo Facturado</strong><strong>{detalleObra.saldo_facturado}</strong></div>
               <div className="reportClass">  
