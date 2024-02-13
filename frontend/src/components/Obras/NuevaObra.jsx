@@ -4,12 +4,78 @@ import Form from "react-bootstrap/Form";
 import "./NuevaObra.css";
 import useForm from "../../utils/useForm.jsx";
 import { uploadObra } from "../../actions/newWorks.js"
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import AuthContext from "../../context/AuthContext.jsx";
+import axios from "axios";
+import dataComunas from '../../utils/comunas.json'
 
 const NuevaObra = () => {
-  const {user} = useContext(AuthContext)
+  const {user} = useContext(AuthContext);
+
+  const [empresas, setEmpresas] = useState([]);
+  const [tiposObra, setTiposObra] = useState([]);
+  const [estadosObra, setEstadosObra] = useState([]);
+  const [indexReg, setIndexReg] = useState(0)
+  const [comunas, setComunas] = useState([])
+  const [cenes, setCene] = useState([])
+
+  const { regiones } = dataComunas
+
+
   
+  
+  // const getRegiones = async () => {
+  //   try {
+  //     const res = await axios.get('https://apis.modernizacion.cl/dpa/regiones')
+  //     consol
+  //   } catch (error) {
+  //     console.error(error)
+  //   }
+  // }
+
+  const getEmpresas = async () => {
+    try {
+      const res = await axios.get('http://127.0.0.1:8000/api/empresas/')
+      setEmpresas(res.data)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  const getTiposObra = async () => {
+    try {
+      const res = await axios.get('http://127.0.0.1:8000/api/tipos-obra/')
+      setTiposObra(res.data)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  const getEstadosObra = async () => {
+    try {
+      const res = await axios.get('http://127.0.0.1:8000/api/estados-obra/')
+      setEstadosObra(res.data)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+  const getCeNe = async () => {    try {
+      const { data } = await axios.get(
+        `http://127.0.0.1:8000/api/cene/`
+      );
+      setCene(data);
+    } catch (err) {
+      console.error("Error al obtener datos:", err);
+    }
+  };
+
+  useEffect(()=> {
+    getEmpresas()
+    getTiposObra()
+    getEstadosObra()
+    getCeNe()
+  },[])
+
   const { 
     fecha_inicio, 
     fecha_termino, 
@@ -65,6 +131,12 @@ const NuevaObra = () => {
     onResetForm();
   };
 
+  const onChangeSelect = ({target}) => {
+    const {value } = target
+    setIndexReg(value)
+    setComunas(regiones[value].comunas)
+  }
+  console.log(comunas)
   return (
     <div className="NuevaObra">
       <Sidebar />
@@ -105,6 +177,7 @@ const NuevaObra = () => {
               <Form.Label>Monto neto</Form.Label>
               <Form.Control
                 type="text"
+                pattern="[0-9]*"
                 placeholder="Ingrese el monto neto de la obra"
                 name="monto_neto"
                 onChange={onInputChange}
@@ -112,13 +185,25 @@ const NuevaObra = () => {
             </Form.Group>
 
             <Form.Group className="mb-3" >
+              <Form.Label>Centro de Negocios</Form.Label>
+              <Form.Select>
+                {
+                  cenes.map((cene) => 
+                    <option key={cene.id} value={cene.id}>{cene.nombre}</option>
+                  )
+                }
+              </Form.Select>
+            </Form.Group>
+
+            <Form.Group className="mb-3" >
               <Form.Label>Empresa</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Ingrese el nombre de la empresa"
-                name="empresa"
-                onChange={onInputChange}
-              />
+              <Form.Select>
+                {
+                  empresas.map((empresa)=>(
+                    <option key={empresa.id} value={empresa.id}>{empresa.nombre}</option>
+                  ))
+                }
+              </Form.Select>
             </Form.Group>
 
             <Form.Group className="mb-3" >
@@ -130,34 +215,49 @@ const NuevaObra = () => {
                 onChange={onInputChange}
               />
             </Form.Group>
+            
+            <Form.Group className="mb-3" >
+              <Form.Label>Region</Form.Label>
+              <Form.Select onChange={onChangeSelect}>
+                {regiones.map((region, indice) => 
+                   <option key={indice} value={indice}>{region.region}</option>
+                )
+                }
+              </Form.Select>
+            </Form.Group>
 
             <Form.Group className="mb-3" >
               <Form.Label>Comuna</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Ingrese la comuna de la obra"
-                name="comuna"
-                onChange={onInputChange}
-              />
+              <Form.Select>
+                {
+                  comunas.map((comuna)=>
+                    <option key={comuna} value={comuna}>{comuna}</option>
+                  )
+                }
+              </Form.Select>
             </Form.Group>
 
             <Form.Group className="mb-3" >
               <Form.Label>Tipo de obra</Form.Label>
-              <Form.Select> {/*revisar */}
-                <option value="AP">Alumbrado Publico</option>
-                <option value="CMBT">Construccion en Media y Baja Tension</option>
-                <option value="EMP">Empalme</option>
+              <Form.Select> 
+              {
+                tiposObra?.map((tipo)=>(
+                  <option key={tipo.id} value={tipo.id}>{tipo.nombre}</option>
+                ))
+              }
+                
               </Form.Select>
             </Form.Group>
 
             <Form.Group className="mb-3" >
               <Form.Label>Estado de obra</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Ingrese el estado de la obra"
-                name="estado_obra"
-                onChange={onInputChange}
-              />
+              <Form.Select>
+                {
+                  estadosObra.map((estado)=>(
+                    <option key={estado.id} value={estado.id}>{estado.estado}</option>
+                  ))
+                }
+              </Form.Select>
             </Form.Group>
 
             <Form.Group className="mb-3" >

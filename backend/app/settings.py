@@ -52,6 +52,9 @@ INSTALLED_APPS = [
     'cene',
     'avance',
     'powerbi',
+    'empresas',
+    'estado_obras',
+    'tipo_obras',
 ]
 
 MIDDLEWARE = [
