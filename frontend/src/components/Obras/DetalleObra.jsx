@@ -9,14 +9,15 @@ import "./DetalleObra.css";
 
 const DetalleObra = () => {
   const { idObra } = useParams();
-  const [detalleObra, setDetalleObra] = useState();
+  const [detalleObra, setDetalleObra] = useState('');
 
   const getDatos = async () => {
     const { data } = await axios.get(
       `http://127.0.0.1:8000/api/obras/${idObra}`
     );
     setDetalleObra(data);
-    console.log(detalleObra)
+    console.log('detalleObra')
+    console.log(detalleObra.id)
   };
  
   const [accessToken, setAccessToken] = useState('');
@@ -31,7 +32,7 @@ const DetalleObra = () => {
         // Actualiza el estado del token de acceso con el nuevo token
         setAccessToken(data.accessToken);
         
-        console.log(accessToken)
+        //console.log(accessToken)
       } catch (error) {
         console.error('Error al obtener el token de acceso:', error);
       }
@@ -72,90 +73,64 @@ const DetalleObra = () => {
             <Button variant="danger">Ver documentos</Button>
           </Link>
         </div>
-        <div>
-        <PowerBIEmbed
-          embedConfig = {{
-            type: 'report',   // Supported types: report, dashboard, tile, visual, qna, paginated report and create
-            id: '5c607318-8d82-49bf-a371-7e0edf855485',
-            embedUrl: 'https://app.powerbi.com/reportEmbed?reportId=5c607318-8d82-49bf-a371-7e0edf855485&config=eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly9XQUJJLVBBQVMtMS1TQ1VTLXJlZGlyZWN0LmFuYWx5c2lzLndpbmRvd3MubmV0IiwiZW1iZWRGZWF0dXJlcyI6eyJ1c2FnZU1ldHJpY3NWTmV4dCI6dHJ1ZSwiZGlzYWJsZUFuZ3VsYXJKU0Jvb3RzdHJhcFJlcG9ydEVtYmVkIjp0cnVlfX0%3d',
-            accessToken: accessToken,
-            tokenType: models.TokenType.Aad, // Use models.TokenType.Aad for SaaS embed
-            settings: {
-              panes: {
-                filters: {
-                  expanded: false,
-                  visible: false
+        <>
+          {detalleObra &&  (
+            <div className="DetalleDeLaObra">
+              <div className="Dato"><strong>ID de la obra</strong><strong>{detalleObra.id}</strong></div>
+              <div className="Dato"><strong>Fecha de Inicio</strong><strong>{detalleObra.fecha_inicio}</strong></div>
+              <div className="Dato"><strong>Termino</strong><strong>{detalleObra.fecha_termino}</strong></div>
+              <div className="Dato"><strong>Asignacion</strong><strong>{detalleObra.fecha_asignacion}</strong></div>
+              <div className="Dato"><strong>Monto Neto</strong><strong>{detalleObra.monto_neto}</strong></div>
+              <div className="Dato"><strong>Empresa</strong><strong>{detalleObra.empresa}</strong></div>
+              <div className="Dato"><strong>Direccion</strong><strong>{detalleObra.direccion}</strong></div>
+              <div className="Dato"><strong>Comuna</strong><strong>{detalleObra.comuna}</strong></div>
+              <div className="Dato"><strong>Tipo de Obra</strong><strong>{detalleObra.tipo_obra}</strong></div>
+              <div className="Dato"><strong>Estado de Obra</strong><strong>{detalleObra.estado_obra}</strong></div>
+              <div className="Dato"><strong>Observaciones</strong><strong>{detalleObra.observaciones}</strong></div>
+              <div className="Dato"><strong>Porcentaje de Avance</strong><strong>{detalleObra.porc_avance}</strong></div>
+              <div className="Dato"><strong>Monto Facturado</strong><strong>{detalleObra.monto_facturado}</strong></div>
+              <div className="Dato"><strong>Saldo Facturado</strong><strong>{detalleObra.saldo_facturado}</strong></div>
+              <div className="reportClass">  
+                <PowerBIEmbed
+                embedConfig = {{
+                  type: 'report',   // Supported types: report, dashboard, tile, visual, qna, paginated report and create
+                  id: '5c607318-8d82-49bf-a371-7e0edf855485',
+                  embedUrl: 'https://app.powerbi.com/reportEmbed?reportId=5c607318-8d82-49bf-a371-7e0edf855485&config=eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly9XQUJJLVBBQVMtMS1TQ1VTLXJlZGlyZWN0LmFuYWx5c2lzLndpbmRvd3MubmV0IiwiZW1iZWRGZWF0dXJlcyI6eyJ1c2FnZU1ldHJpY3NWTmV4dCI6dHJ1ZSwiZGlzYWJsZUFuZ3VsYXJKU0Jvb3RzdHJhcFJlcG9ydEVtYmVkIjp0cnVlfX0%3d',
+                  accessToken: accessToken,
+                  tokenType: models.TokenType.Aad, // Use models.TokenType.Aad for SaaS embed
+                  settings: {
+                    panes: {
+                      filters: {
+                        expanded: false,
+                        visible: false
+                      }
+                    },
+                    background: models.BackgroundType.Transparent,
+                  }
+                }}
+
+                eventHandlers = {
+                  new Map([
+                    ['loaded', function () {console.log('Report loaded');}],
+                    ['rendered', function () {console.log('Report rendered');}],
+                    ['error', function (event) {console.log(event.detail);}],
+                    ['visualClicked', () => console.log('visual clicked')],
+                    ['pageChanged', (event) => console.log(event)],
+                  ])
                 }
-              },
-              background: models.BackgroundType.Transparent,
-            }
-          }}
-
-          eventHandlers = {
-            new Map([
-              ['loaded', function () {console.log('Report loaded');}],
-              ['rendered', function () {console.log('Report rendered');}],
-              ['error', function (event) {console.log(event.detail);}],
-              ['visualClicked', () => console.log('visual clicked')],
-              ['pageChanged', (event) => console.log(event)],
-            ])
-          }
-
-          cssClassName = { "reportClass" }
-
-          getEmbeddedComponent = { (embeddedReport) => {
-            window.report = embeddedReport ;
-          }}
-        />
-        </div>
-        <div className="TablaDetalle">
-          {detalleObra && (
-            <>
-              <table>
-                <thead>
-                  <tr>
-                    <th>ID</th>
-                    <th>Inicio</th>
-                    <th>Termino</th>
-                    <th>Asignacion</th>
-                    <th>Monto Neto</th> {/*NETO*/}
-                    <th>Empresa</th>
-                    <th>Direccion</th>
-                    <th>Comuna</th>
-                    <th>Tpo Obra</th>
-                    <th>Est Obra</th>
-                    <th>Obs</th>
-                    <th>% Avance</th>
-                    <th>Monto fact</th>
-                    <th>Saldo fact</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr key={detalleObra.id}>
-                    <td>{detalleObra.id}</td>
-                    <td>{detalleObra.fecha_inicio}</td>
-                    <td>{detalleObra.fecha_termino}</td>
-                    <td>{detalleObra.fecha_asignacion}</td>
-                    <td>{detalleObra.monto_neto}</td>
-                    <td>{detalleObra.empresa}</td>
-                    <td>{detalleObra.direccion}</td>
-                    <td>{detalleObra.comuna}</td>
-                    <td>{detalleObra.tipo_obra}</td>
-                    <td>{detalleObra.estado_obra}</td>
-                    <td>{detalleObra.observaciones}</td>
-                    <td>{detalleObra.porc_avance}</td>
-                    <td>{detalleObra.monto_facturado}</td>
-                    <td>{detalleObra.saldo_facturado}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </>
+                
+                cssClassName = { "reportClass" }
+                getEmbeddedComponent = { (embeddedReport) => {
+                  window.report = embeddedReport ;
+                }}
+                />
+              </div>
+            </div>
           )}
-        </div>
+        </>
       </div>
     </div>
   );
 };
 
 export default DetalleObra;
-
