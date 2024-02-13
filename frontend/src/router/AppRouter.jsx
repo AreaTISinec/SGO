@@ -45,9 +45,10 @@ const AppRouter = () => {
           <Route
             path="/obras/:idObra"
             element={
-              <PrivateRoute>
-                <DetalleObra />
-              </PrivateRoute>
+              <DetalleObra />
+              // <PrivateRoute>
+                
+              // </PrivateRoute>
             }
           />
           <Route

@@ -55,5 +55,3 @@ class DownloadFileView(APIView):
         response['Content-Disposition'] = f'attachment; filename="{file_name}"'
         
         return response
-        
- 
