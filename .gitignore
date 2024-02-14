@@ -1,5 +1,5 @@
 # Byte-compiled / optimized / DLL files
-
+**/__pycache__/
 backend/__pycache__/
 backend/*/__pycache__/
 backend/*/migrations/__pycache__/
@@ -12,6 +12,11 @@ backend/db.sqlite3
 # C extensions
 backend/*.so
 /*/*/__pycache__/
+
+backend/accounts/migrations/
+backend/obras/migrations/
+backend/perfil_usuario/migrations/
+backend/ventas/migrations/
 
 # Distribution / packaging
 backend/.Python

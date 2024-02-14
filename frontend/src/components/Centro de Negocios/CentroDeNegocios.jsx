@@ -14,14 +14,19 @@ const CentroDeNegocios = () => {
   const { user } = useContext(AuthContext)
 
   const getDatos = async () => {
-    if (searchTerm.trim() === "") {
-      return centronegocioData;
-    }
     try {
-      const { data } = await axios.get(
-        `http://127.0.0.1:8000/api/cene/search/?search=${searchTerm}`
-      );
-      setCentronegocioData(data);
+      if (searchTerm.trim() === "") {
+        const { data } = await axios.get(
+          `http://127.0.0.1:8000/api/cene/`
+        );
+        setCentronegocioData(data);
+      }else{
+        const { data } = await axios.get(
+          `http://127.0.0.1:8000/api/cene/search/?search=${searchTerm}`
+          );
+          setCentronegocioData(data);
+      }
+      
     } catch (err) {
       console.error("Error al obtener datos:", err);
     }
