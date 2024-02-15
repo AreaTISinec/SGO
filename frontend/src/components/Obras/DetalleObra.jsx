@@ -1,5 +1,5 @@
 import { useParams, Link } from "react-router-dom";
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { PowerBIEmbed } from 'powerbi-client-react';
 import { models } from 'powerbi-client';
 import axios from "axios";
@@ -89,8 +89,8 @@ const DetalleObra = () => {
         <div className="Titulo">
           <h1>Detalle de la obra</h1>
           {
-            detalleObra && detalleObra.gantt && detalleObra.presupuesto ? 
-            <Link className="BotonNuevaObra" to={"./nuevo-documento"}>
+            detalleObra && detalleObra.gantt && detalleObra.presupuesto ? //agregar detalleObra.cubicacion pq es obligatorio
+            <Link  className="BotonNuevaObra" to={"./nuevo-documento"}>
               <Button variant="danger">Subir documento</Button>
             </Link>
             :
