@@ -15,7 +15,6 @@ const NuevaObra = () => {
   const [empresas, setEmpresas] = useState([]);
   const [tiposObra, setTiposObra] = useState([]);
   const [estadosObra, setEstadosObra] = useState([]);
-  const [indexReg, setIndexReg] = useState(0)
   const [comunas, setComunas] = useState([])
   const [cenes, setCene] = useState([])
 
@@ -90,7 +89,8 @@ const NuevaObra = () => {
     porc_avance, 
     monto_facturado, 
     saldo_facturado, 
-    id_user, 
+    id_user,
+    id_cene,
     onInputChange, 
     onResetForm 
   } = useForm({ //agregar correctamente los parametros de la nueva obra
@@ -104,10 +104,11 @@ const NuevaObra = () => {
     tipo_obra: '',
     estado_obra: '',
     observaciones: '',
-    porc_avance: 10, 
+    porc_avance: 0, 
     monto_facturado: 0, 
     saldo_facturado: 0, 
-    id_user: user.user_id
+    id_user: user.user_id,
+    id_cene: ''
   });
 
   const onSubmit = (e) => {
@@ -126,17 +127,18 @@ const NuevaObra = () => {
       porc_avance, 
       monto_facturado, 
       saldo_facturado, 
-      id_user
+      id_user,
+      id_cene
     )  
     onResetForm();
   };
 
   const onChangeSelect = ({target}) => {
     const {value } = target
-    setIndexReg(value)
     setComunas(regiones[value].comunas)
   }
-  console.log(comunas)
+ 
+
   return (
     <div className="NuevaObra">
       <Sidebar />
@@ -186,10 +188,13 @@ const NuevaObra = () => {
 
             <Form.Group className="mb-3" >
               <Form.Label>Centro de Negocios</Form.Label>
-              <Form.Select>
+              <Form.Select
+               name='id_cene'
+               onChange={onInputChange}
+               >
                 {
                   cenes.map((cene) => 
-                    <option key={cene.id} value={cene.id}>{cene.nombre}</option>
+                    <option key={cene.id_cene}  value={cene.id_cene}>{cene.nombre}</option>
                   )
                 }
               </Form.Select>
@@ -197,10 +202,13 @@ const NuevaObra = () => {
 
             <Form.Group className="mb-3" >
               <Form.Label>Empresa</Form.Label>
-              <Form.Select>
+              <Form.Select
+                onChange={onInputChange}
+                name="empresa"
+              >
                 {
                   empresas.map((empresa)=>(
-                    <option key={empresa.id} value={empresa.id}>{empresa.nombre}</option>
+                    <option key={empresa.id} value={empresa.nombre}>{empresa.nombre}</option>
                   ))
                 }
               </Form.Select>
@@ -228,7 +236,10 @@ const NuevaObra = () => {
 
             <Form.Group className="mb-3" >
               <Form.Label>Comuna</Form.Label>
-              <Form.Select>
+              <Form.Select
+                name="comuna"
+                onChange={onInputChange}
+              >
                 {
                   comunas.map((comuna)=>
                     <option key={comuna} value={comuna}>{comuna}</option>
@@ -239,10 +250,13 @@ const NuevaObra = () => {
 
             <Form.Group className="mb-3" >
               <Form.Label>Tipo de obra</Form.Label>
-              <Form.Select> 
+              <Form.Select
+                onChange={onInputChange}
+                name="tipo_obra"
+              > 
               {
                 tiposObra?.map((tipo)=>(
-                  <option key={tipo.id} value={tipo.id}>{tipo.nombre}</option>
+                  <option key={tipo.id} value={tipo.nombre}>{tipo.nombre}</option>
                 ))
               }
                 
@@ -251,10 +265,13 @@ const NuevaObra = () => {
 
             <Form.Group className="mb-3" >
               <Form.Label>Estado de obra</Form.Label>
-              <Form.Select>
+              <Form.Select
+                onChange={onInputChange}
+                name="estado_obra"
+              >
                 {
                   estadosObra.map((estado)=>(
-                    <option key={estado.id} value={estado.id}>{estado.estado}</option>
+                    <option key={estado.id} value={estado.estado}>{estado.estado}</option>
                   ))
                 }
               </Form.Select>

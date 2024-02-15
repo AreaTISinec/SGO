@@ -1,6 +1,6 @@
 from rest_framework.views import APIView
 from rest_framework import	permissions, status
-from rest_framework.generics import ListAPIView
+from rest_framework.generics import ListAPIView, DestroyAPIView
 from rest_framework.response import Response
 from .serializers import AProyectadoSerializer, ARealSerializer
 from .models import AvanceProyectado, AvanceReal
@@ -35,3 +35,10 @@ class AvanceRealView(ListAPIView):
     queryset = AvanceReal.objects.all()
     serializer_class = ARealSerializer
     pagination_class = None
+    
+class EliminarAvance(DestroyAPIView):
+    serializer_class = ARealSerializer
+    def get_queryset(self):
+        id_obra = self.kwargs["pk"]
+        queryset = AvanceReal.objects.filter(id=id_obra) 
+        return queryset

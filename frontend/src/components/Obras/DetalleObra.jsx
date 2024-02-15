@@ -1,5 +1,5 @@
 import { useParams, Link } from "react-router-dom";
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { PowerBIEmbed } from 'powerbi-client-react';
 import { models } from 'powerbi-client';
 import axios from "axios";
@@ -8,16 +8,38 @@ import Button from "react-bootstrap/Button";
 import Modal from 'react-bootstrap/Modal';
 import Form from "react-bootstrap/Form";
 import "./DetalleObra.css";
+import  useForm  from '../../utils/useForm'
+import { uploadAvance } from "../../actions/newAvance";
 
 const DetalleObra = () => {
   const { idObra } = useParams();
-  const [detalleObra, setDetalleObra] = useState('');
-
+  const [detalleObra, setDetalleObra] = useState({});
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  const { fecha, porcentaje, onInputChange, onResetForm } = useForm({
+    fecha: null,
+    porcentaje: 0
+  })
+  
+
+
+  const avanceSubmit = (e) => {
+    e.preventDefault(); 
+    if(porcentaje <= detalleObra.porc_avance || porcentaje > 100){
+      console.log('Ingrese el porcentaje correcto')
+    }else{
+      uploadAvance(fecha, porcentaje, idObra)
+      setDetalleObra((prevState)=> ({
+        ...prevState,
+        porc_avance: porcentaje
+      }))
+    }
+    onResetForm()
+    handleClose()
+  }
 
   const getDatos = async () => {
     const { data } = await axios.get(
@@ -95,7 +117,7 @@ const DetalleObra = () => {
               <div className="Dato"><strong>Tipo de Obra</strong><strong>{detalleObra.tipo_obra}</strong></div>
               <div className="Dato"><strong>Estado de Obra</strong><strong>{detalleObra.estado_obra}</strong></div>
               <div className="Dato"><strong>Observaciones</strong><strong>{detalleObra.observaciones}</strong></div>
-              <div className="Dato"><strong>Porcentaje de Avance</strong><strong>{detalleObra.porc_avance}</strong>
+              <div className="Dato"><strong>Porcentaje de Avance</strong><strong>{detalleObra.porc_avance} %</strong>
               <>
                 <Button onClick={handleShow} variant="danger" className="boton-avance">subir avance</Button>
                 <Modal show={show} onHide={handleClose}>
@@ -103,12 +125,13 @@ const DetalleObra = () => {
                     <Modal.Title>Ingrese el Avance</Modal.Title>
                   </Modal.Header>
                   <Modal.Body>
-                    <Form>
+                    <Form onSubmit={avanceSubmit}>
                       <Form.Group>
                         <Form.Label></Form.Label>
                         <Form.Control 
                           type="date"
-                          name="Fecha del avance"
+                          name="fecha"
+                          onChange={onInputChange}
                           required
                         />
                       </Form.Group>
@@ -118,19 +141,15 @@ const DetalleObra = () => {
                           type="number"
                           name="porcentaje"
                           placeholder="Ingrese el porcentaje de avance "
+                          onChange={onInputChange}
                           required
                         />
                       </Form.Group>
-                    </Form>
-                  </Modal.Body>
-                  <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
-                      Close
-                    </Button>
-                    <Button variant="primary" onClick={handleClose}>
+                    <Button variant="primary" type="onSubmit" >
                       Guardar Avance
                     </Button>
-                  </Modal.Footer>
+                    </Form>
+                  </Modal.Body>
                 </Modal>
               </>
               </div>

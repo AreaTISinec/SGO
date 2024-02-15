@@ -7,14 +7,21 @@ import { uploadCene } from "../../actions/newCene.js"
 
 const NuevoCentroDeNegocios = () => {
   
-  const {id_cene, nombre, onInputChange, onResetForm} = useForm({
+  const {id_cene, nombre, empresa, onInputChange, onResetForm} = useForm({
     id_cene:'',
-    nombre:''
+    nombre:'',
+    empresa: 'sinelec'
   })
+
+  const ceneRegex = /^[0-9a-zA-Z]*$/;
 
   const onSubmit = (e) => {
     e.preventDefault();
-    uploadCene(id_cene,nombre)
+    if(ceneRegex.test(e.target["id_cene"].value)){
+      uploadCene(id_cene,nombre, empresa)
+    }else{
+      console.log('no es valido')
+    }
     onResetForm()
   };
 
@@ -30,7 +37,7 @@ const NuevoCentroDeNegocios = () => {
                 type="text"
                 placeholder="Ingrese el tipo de documento"
                 name="id_cene"
-                onChange={onInputChange}
+                onChange={ onInputChange }
               />
             </Form.Group>
 
