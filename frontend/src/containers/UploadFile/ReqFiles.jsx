@@ -21,7 +21,7 @@ const ReqFiles = () => {
 
   return (
     <>
-        <Form onSubmit={(e)=> onSubmit(e, 'gantt')}>
+        <Form onSubmit={(e)=> onSubmit(e, 'gantts')}>
             <Form.Group className="mb-3" controlId="formBasicPassword">
                 <Form.Label>Carta Gantt</Form.Label>
                 <Form.Control
@@ -35,7 +35,7 @@ const ReqFiles = () => {
             </Button>
 
         </Form>
-        <Form onSubmit={(e)=> onSubmit(e, 'presupuesto')}>
+        <Form onSubmit={(e)=> onSubmit(e, 'presupuestos')}>
             <Form.Group className="mb-3" controlId="formBasicPassword">
                 <Form.Label>Presupuesto</Form.Label>
                 <Form.Control

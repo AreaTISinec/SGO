@@ -44,10 +44,10 @@ const UploadFile = () => {
           <Form.Group className="mb-3" >
               <Form.Label>Tipo de obra</Form.Label>
               <Form.Select name = "tipo" onChange={(e) => onChange(e)}>
-                <option value="presupuesto">Presupuesto</option>
-                <option value="gantt">Carta Gantt</option>
-                <option value="facturacion">Factura</option>
-                <option value="cubicacion">Cubicacion</option>
+                <option value="presupuestos">Presupuesto</option>
+                <option value="gantts">Carta Gantt</option>
+                <option value="facturas">Factura</option>
+                <option value="cubicaciones">Cubicacion</option>
               </Form.Select>
             </Form.Group>
 

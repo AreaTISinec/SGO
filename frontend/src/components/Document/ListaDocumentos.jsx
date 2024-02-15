@@ -57,7 +57,7 @@ const ListaDocumentos = () => {
             <Accordion.Body>
               <ListGroup>
                 {listadoDeDocumentos?.map( document => 
-                  {if(document.tipo == 'gantt')
+                  {if(document.tipo == 'gantts')
                     return (
                   <ListGroup.Item className="ListaDocumentosDisponibles" key={document.id}>
                     {document.file_name}
@@ -73,7 +73,7 @@ const ListaDocumentos = () => {
             <Accordion.Body>
               <ListGroup>
               {listadoDeDocumentos?.map( document => 
-                  {if(document.tipo == 'cubicacion')
+                  {if(document.tipo == 'cubicaciones')
                     return (
                   <ListGroup.Item className="ListaDocumentosDisponibles" key={document.id}>
                     {document.file_name}
@@ -89,7 +89,7 @@ const ListaDocumentos = () => {
             <Accordion.Body>
               <ListGroup>
               {listadoDeDocumentos?.map( document => 
-                  {if(document.tipo == 'facturacion')
+                  {if(document.tipo == 'facturas')
                     return (
                   <ListGroup.Item className="ListaDocumentosDisponibles" key={document.id}>
                     {document.file_name}
@@ -105,7 +105,7 @@ const ListaDocumentos = () => {
             <Accordion.Body>
               <ListGroup>
               {listadoDeDocumentos?.map( document => 
-                  {if(document.tipo == 'presupuesto')
+                  {if(document.tipo == 'presupuestos')
                     return (
                   <ListGroup.Item className="ListaDocumentosDisponibles" key={document.id}>
                     {document.file_name}
