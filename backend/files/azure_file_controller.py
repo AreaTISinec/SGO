@@ -24,8 +24,8 @@ def create_blob_client(file_name):
     blob_client = blob_service_client.get_blob_client(container=container_name, blob=file_name)
     return blob_client
 
-def save_file_url_to_db(file_url, tipo, id_obra):
-    new_file = File.objects.create(file_url=file_url, tipo=tipo, id_obra=id_obra)
+def save_file_url_to_db(file_url, tipo, id_obra, blob_name):
+    new_file = File.objects.create(file_url=file_url, tipo=tipo, id_obra=id_obra, blob_name=blob_name)
     new_file.save()
     return new_file
     
@@ -38,7 +38,7 @@ def upload_file_to_blob(file, tipo, id_obra):
     file_io = BytesIO(file.read())
     blob_client = create_blob_client(blob_name)
     blob_client.upload_blob(data=file_io)
-    file_object = save_file_url_to_db(blob_client.url, tipo, obra)
+    file_object = save_file_url_to_db(blob_client.url, tipo, obra, blob_name)
     return file_object
     
 def download_blob_to_file(  container_name, blob_name):
