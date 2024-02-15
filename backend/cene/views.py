@@ -43,9 +43,10 @@ class CeneUploadView(APIView):
         try:
             nombre = request.data.get('nombre')
             id_cene = request.data.get('id_cene')
+            empresa = request.data.get('empresa')
             
             if nombre and id_cene:
-                data = Cene(nombre=nombre, id_cene=id_cene)
+                data = Cene(nombre=nombre, id_cene=id_cene, empresa=empresa)
                 data.save()
                 return Response(status=status.HTTP_201_CREATED)
             else:

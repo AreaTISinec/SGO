@@ -13,6 +13,8 @@ backend/db.sqlite3
 backend/*.so
 /*/*/__pycache__/
 
+backend/files/migrations/
+backend/cene/migrations/
 backend/accounts/migrations/
 backend/obras/migrations/
 backend/perfil_usuario/migrations/
