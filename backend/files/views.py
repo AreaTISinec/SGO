@@ -42,7 +42,6 @@ class ListFilesView(ListAPIView):
     def get_queryset(self):
         queryset = File.objects.filter(is_deleted=0)
         return queryset
-
 class DownloadFileView(APIView):
     permission_classes = (permissions.AllowAny,)
     serializer_class = FileSerializer
