@@ -31,6 +31,7 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
     
     email = models.EmailField(max_length=255, unique=True)
     is_active = models.BooleanField(default=True)
+    is_connected = models.BooleanField(default=False)
     rol = models.PositiveSmallIntegerField(choices=USER_TYPE_CHOICES)
     username = models.CharField(max_length=20, blank=True, null=True)
     is_staff = models.BooleanField(default=False)

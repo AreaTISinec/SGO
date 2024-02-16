@@ -3,6 +3,7 @@ import Login from "../containers/Login/Login";
 import Signup from "../containers/Signup/Signup";
 import Layout from "../hocs/Layout";
 import Obras from "../components/Obras/Obras";
+import ListaDocumentos from "../components/Document/ListaDocumentos";
 import UploadFile from "../containers/UploadFile/UploadFile";
 import NotFound from "../components/NotFound";
 import PrivateRoute from "../utils/PrivateRoute";
@@ -12,8 +13,6 @@ import CentroDeNegocios from "../components/Centro de Negocios/CentroDeNegocios"
 import DetalleCentroDeNegocios from "../components/Centro de Negocios/DetalleCentroDeNegocios";
 import NuevoCentroDeNegocios from "../components/Centro de Negocios/NuevoCentroDeNegocios";
 import { Route, Routes } from "react-router-dom";
-import { useContext } from "react";
-import AuthContext from "../context/AuthContext";
 import ReqFiles from "../containers/UploadFile/ReqFiles";
 
 const AppRouter = () => {
@@ -74,6 +73,14 @@ const AppRouter = () => {
             }
           />
           <Route
+            path="/obras/:idObra/documentos"
+            element={
+              <PrivateRoute>
+                <ListaDocumentos />
+              </PrivateRoute>
+            }
+          />
+          <Route
             path="/centro-de-negocios"
             element={
               <PrivateRoute>
@@ -93,7 +100,7 @@ const AppRouter = () => {
             path="/centro-de-negocios/nuevo-centro-de-negocios"
             element={
               <PrivateRoute>
-              <NuevoCentroDeNegocios />
+                <NuevoCentroDeNegocios />
               </PrivateRoute>
             }
           />

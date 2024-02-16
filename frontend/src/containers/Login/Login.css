@@ -61,3 +61,8 @@
 .auth_authtext_link:hover{
     color: #ce0e2d;
 }
+
+.spinnerLoading{
+    display: flex;
+    justify-content: center;
+}

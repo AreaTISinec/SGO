@@ -1,10 +1,13 @@
 from django.db import models
 from accounts.models import UserAccount
+from cene.models import Cene
 
 # Create your models here.
 
 class Obras(models.Model):
     id_user = models.ForeignKey(UserAccount, on_delete=models.DO_NOTHING)
+    id_cene = models.ForeignKey(Cene, on_delete=models.DO_NOTHING, default=0)
+    
     fecha_inicio = models.DateField()
     fecha_termino = models.DateField()
     fecha_asignacion = models.DateField()

@@ -10,6 +10,7 @@ const NavBar = () => {
 
   const isExpired = user && dayjs.unix(user.exp).diff(dayjs()) < 1;
 
+
   return (
     <>
       <Navbar expand="lg" className="bg-body-tertiary p-0 m-0">
@@ -27,7 +28,7 @@ const NavBar = () => {
             {!isExpired && user ? (
               <div className="navbar__top__auth">
                 <span>Hola, {user && user.username}</span>
-                <button className="BotonCerrarSesion" onClick={logoutUser}>
+                <button className="BotonCerrarSesion" onClick={ () => logoutUser(user.user_id)}>
                   Cerrar Sesion
                 </button>
               </div>
