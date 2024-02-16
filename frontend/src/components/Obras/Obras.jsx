@@ -13,6 +13,9 @@ const Obras = () => {
   const { user } = useContext(AuthContext);
 
   const filterObrasByDirec = (searchTerm) => {
+    if (!Array.isArray(obrasData)) {
+      return [];
+    }
     if (searchTerm.trim() === "") {
       return obrasData;
     } else {
@@ -23,16 +26,17 @@ const Obras = () => {
   };
 
   const getDatos = async () => {
-    //if (searchTerm.trim() === "") {return;}
     try {
+      const id = user.user_id
       if (user.rol == 1 || user.rol == 2 || user.rol == 5) {
         const { data } = await axios.get(`http://127.0.0.1:8000/api/obras/`);
         setObrasData(data);
       } else {
         const { data } = await axios.get(
-          `http://127.0.0.1:8000/api/obras/${user.user_id}`
+          `http://127.0.0.1:8000/api/obras/user/${id}/`
         );
         setObrasData(data);
+        console.log(obrasData)
       }
     } catch (err) {
       console.error("Error al obtener datos:", err);
@@ -40,9 +44,8 @@ const Obras = () => {
   };
 
   useEffect(() => {
-    //Con este hook la búsqueda se hace en tiempo real
     getDatos();
-  }, []);
+  }, [searchTerm]);
 
   return (
     <div className="ObrasContainer">
@@ -82,7 +85,7 @@ const Obras = () => {
               </tr>
             </thead>
             <tbody>
-              {filterObrasByDirec(searchTerm).map((obra) => (
+              {obrasData.length > 0 && filterObrasByDirec(searchTerm).map((obra) => (
                 <tr key={obra.id}>
                   <td>{obra.id}</td>
                   <td>{obra.fecha_inicio}</td>

@@ -143,12 +143,11 @@ const NuevaObra = () => {
 
             <Form.Group className="mb-3" >
               <Form.Label>Tipo de obra</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Ingrese el tipo de obra"
-                name="tipo_obra"
-                onChange={onInputChange}
-              />
+              <Form.Select> {/*revisar */}
+                <option value="AP">Alumbrado Publico</option>
+                <option value="CMBT">Construccion en Media y Baja Tension</option>
+                <option value="EMP">Empalme</option>
+              </Form.Select>
             </Form.Group>
 
             <Form.Group className="mb-3" >

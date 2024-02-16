@@ -45,11 +45,13 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     #'rest_framework.authtoken',
     'accounts',
-    'docs',
+    'files',
     'obras',
     'ventas',
     'perfil_usuario',
     'cene',
+    'avance',
+    'powerbi',
 ]
 
 MIDDLEWARE = [
@@ -216,3 +218,10 @@ AUTH_USER_MODEL = 'accounts.UserAccount'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+#CREDENCIAL AZURE
+AZURE_AD_CREDENTIALS = {
+    'TENANT_ID': 'a1ae3011-4801-490b-a107-9cd8ab6d5817',
+    'CLIENT_ID': '4b10663a-043e-42b7-abd5-4b6a2f9db7a7',
+    'CLIENT_SECRET': 'xWo8Q~ic_fwxyjrqyTyeKxKvgryTXQRmaiwKIblQ',
+}

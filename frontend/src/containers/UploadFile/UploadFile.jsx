@@ -2,21 +2,20 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { upload } from "../../actions/docs";
 import {  useState } from "react";
+import { useParams } from "react-router-dom";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import "./UploadFile.css";
 
-const UploadFile = ({ id }) => {
+const UploadFile = () => {
+  const { idObra } = useParams();
 
-  
-  
-  
   const [formData, setFormData] = useState({
     nombre: '',
-    id_obra: id,
+    id_obra: idObra,
     tipo: "",
     doc: null,
   });
-  const { nombre, tipo, doc, id_obra } = formData;
+  const { tipo, doc, id_obra } = formData;
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   }
@@ -24,9 +23,12 @@ const UploadFile = ({ id }) => {
   
   const onSubmit = (e) => {
     e.preventDefault();
-    upload(doc,nombre, tipo, id_obra);
-    console.log(id_obra)
+    const hoy = new Date();
+    const nuevoNombre = `${tipo}_${doc.name}_${hoy.toISOString()}`
+    upload(doc, nuevoNombre, tipo, id_obra);
+    
   };
+
 
   const onFileChange = (e) => {
     setFormData({ ...formData, doc: e.target.files[0] });
@@ -39,14 +41,14 @@ const UploadFile = ({ id }) => {
       <div className="RecuadroUploadFiles">
         <div>
           <Form onSubmit={(e) => onSubmit(e)}>
-            <Form.Group className="mb-3" controlId="">
-              <Form.Label>Tipo de Documento</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Ingrese el tipo de documento"
-                name="tipo"
-                onChange={(e) => onChange(e)}
-              />
+          <Form.Group className="mb-3" >
+              <Form.Label>Tipo de obra</Form.Label>
+              <Form.Select name = "tipo" onChange={(e) => onChange(e)}>
+                <option value="presupuesto">Presupuesto</option>
+                <option value="gantt">Carta Gantt</option>
+                <option value="facturacion">Factura</option>
+                <option value="cubicacion">Cubicacion</option>
+              </Form.Select>
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -56,6 +58,7 @@ const UploadFile = ({ id }) => {
                 placeholder="Ingrese el nombre del documento"
                 name="nombre"
                 onChange={(e) => onChange(e)}
+                disabled
               />
             </Form.Group>
 

@@ -1,7 +1,7 @@
 import { useParams, Link } from "react-router-dom";
 import { useState, useEffect } from 'react';
-// import { PowerBIEmbed } from 'powerbi-client-react';
-// import models from 'powerbi-client';
+import { PowerBIEmbed } from 'powerbi-client-react';
+import { models } from 'powerbi-client';
 import axios from "axios";
 import Sidebar from "../Sidebar/Sidebar";
 import Button from "react-bootstrap/Button";
@@ -19,9 +19,35 @@ const DetalleObra = () => {
     console.log(detalleObra)
   };
  
+  const [accessToken, setAccessToken] = useState('');
+
+  useEffect(() => {
+    console.log('useEffect del accessToken')
+    const fetchAccessToken = async () => {
+      try {
+        // Realiza una solicitud a tu backend para obtener un nuevo token de acceso
+        const response = await fetch('http://127.0.0.1:8000/api/powerbi/getAccessToken/');
+        const data = await response.json();
+        // Actualiza el estado del token de acceso con el nuevo token
+        setAccessToken(data.accessToken);
+        
+        console.log(accessToken)
+      } catch (error) {
+        console.error('Error al obtener el token de acceso:', error);
+      }
+    };
+    fetchAccessToken()
+    // Refresca el token de acceso cada hora (3600000 milisegundos)
+    const intervalId = setInterval(fetchAccessToken, 3600000);
+
+    // Limpia el intervalo cuando el componente se desmonta
+    return () => clearInterval(intervalId);
+  }, []); // Ejecutar efecto solo en el montaje inicial del componente
+
 
   useEffect(() => {
     getDatos();
+    console.log('useEffect del getdatos')
   }, []); // Ejecutar efecto solo en el montaje inicial del componente
 
 
@@ -31,45 +57,56 @@ const DetalleObra = () => {
       <div className="RecuadroDetalleObra">
         <div className="Titulo">
           <h1>Detalle de la obra</h1>
-          <Link className="BotonNuevaObra" to={"./nuevo-documento"}>
-            <Button variant="danger">Subir documento</Button>
+          {
+            detalleObra && detalleObra.gantt && detalleObra.presupuesto ? 
+            <Link className="BotonNuevaObra" to={"./nuevo-documento"}>
+              <Button variant="danger">Subir documento</Button>
+            </Link>
+            :
+            <Link className="BotonNuevaObra" to={"./req-documento"}>
+              <Button variant="danger">Subir documento</Button>
+            </Link>
+
+          }
+          <Link className="BotonNuevaObra" to={"./documentos"}> {/*ver la url */}
+            <Button variant="danger">Ver documentos</Button>
           </Link>
         </div>
         <div>
-          {/* <PowerBIEmbed
-            embedConfig = {{
-              type: 'report',   // Supported types: report, dashboard, tile, visual, qna, paginated report and create
-              id: 'b3687150-71b5-423d-8530-2377bce7ec67',
-              embedUrl: 'https://app.powerbi.com/reportEmbed?reportId=b3687150-71b5-423d-8530-2377bce7ec67&config=eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly9XQUJJLVNPVVRILUNFTlRSQUwtVVMtcmVkaXJlY3QuYW5hbHlzaXMud2luZG93cy5uZXQiLCJlbWJlZEZlYXR1cmVzIjp7InVzYWdlTWV0cmljc1ZOZXh0Ijp0cnVlLCJkaXNhYmxlQW5ndWxhckpTQm9vdHN0cmFwUmVwb3J0RW1iZWQiOnRydWV9fQ%3d%3d',
-              accessToken: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6ImtXYmthYTZxczh3c1RuQndpaU5ZT2hIYm5BdyIsImtpZCI6ImtXYmthYTZxczh3c1RuQndpaU5ZT2hIYm5BdyJ9.eyJhdWQiOiJodHRwczovL2FuYWx5c2lzLndpbmRvd3MubmV0L3Bvd2VyYmkvYXBpIiwiaXNzIjoiaHR0cHM6Ly9zdHMud2luZG93cy5uZXQvYmEyNTdjMzQtMDdkOS00NjAxLWIwODQtODY1Y2QzZjJlMzYyLyIsImlhdCI6MTcwNzIyNTE1OCwibmJmIjoxNzA3MjI1MTU4LCJleHAiOjE3MDcyMzAxNDcsImFjY3QiOjAsImFjciI6IjEiLCJhaW8iOiJBVFFBeS84VkFBQUFKOW5OcWF3Z1ZmUVBGUzIvVlgvZVcyOGcxYUU0UGhVRVhRaVEzazFaM2xHSTZheVBWWVV0TFc4WDl2a09sYlFyIiwiYW1yIjpbInB3ZCJdLCJhcHBpZCI6Ijg3MWMwMTBmLTVlNjEtNGZiMS04M2FjLTk4NjEwYTdlOTExMCIsImFwcGlkYWNyIjoiMCIsImZhbWlseV9uYW1lIjoiRFJPR1VFVFQgR0FSQVRFIiwiZ2l2ZW5fbmFtZSI6IkxVQ0FTIEJFTkpBTUlOIiwiaXBhZGRyIjoiMTkwLjE1MS44OC4yMTAiLCJuYW1lIjoiTFVDQVMgQkVOSkFNSU4gRFJPR1VFVFQgR0FSQVRFIiwib2lkIjoiNTQ0MzYzOTktODQzZi00OWIwLWE0NjMtZTQ1M2YyYjRmYjBlIiwib25wcmVtX3NpZCI6IlMtMS01LTIxLTIwNzMyMjUyNDYtNDg3MjY1MDY5LTE3NDMzMzEzNzktMTgyODAiLCJwdWlkIjoiMTAwMzIwMDBBOTFBN0IwNyIsInJoIjoiMC5BU1VBTkh3bHV0a0hBVWF3aElaYzBfTGpZZ2tBQUFBQUFBQUF3QUFBQUFBQUFBQWxBQ1UuIiwic2NwIjoidXNlcl9pbXBlcnNvbmF0aW9uIiwic3ViIjoiYnY3WjJFYXhqNHpQQl9YM0N6NTl0cWRiRFVYdHhZcThRU0phZ0lvcndhQSIsInRpZCI6ImJhMjU3YzM0LTA3ZDktNDYwMS1iMDg0LTg2NWNkM2YyZTM2MiIsInVuaXF1ZV9uYW1lIjoibGRyb2d1ZXR0QHV0ZW0uY2wiLCJ1cG4iOiJsZHJvZ3VldHRAdXRlbS5jbCIsInV0aSI6Ind1RjUzc2VPalVlSmhhbkkxUUVsQUEiLCJ2ZXIiOiIxLjAiLCJ3aWRzIjpbImI3OWZiZjRkLTNlZjktNDY4OS04MTQzLTc2YjE5NGU4NTUwOSJdfQ.P0MV8RJbvlPqgbY6WPZXspYJw4Gi_9OilcTj0nIiQpE9qalA8yIWcHCnbd0WSOGdrAVW68GpUwSuc_0fD5A0i9g6-tZX3REqFnQPCXTDDEfCp8CCcuFd40HQhOW7GwuoT_i7iry5vetTEwGxE5Al3blIYr9iHmGvxjh_VechT2WEx1gTW1eL2coJboC7eZdzsUahywGdXtQV8seygsvI-gO-vx-e8_ZuaZUpPO2BWVxCH-veBU9nkDo29LC0m9DiEaS9Z4WZ7pmaQQI9ia24IE1OiSrA_f2vJtzt4yZVe6wJBfx7XoaukvL93DU7pyWZYp60Ce7LP8Ll4dLEzMxwCw',
-              tokenType: models.TokenType.Aad, // Use models.TokenType.Aad for SaaS embed
-              settings: {
-                panes: {
-                  filters: {
-                    expanded: false,
-                    visible: false
-                  }
-                },
-                background: models.BackgroundType.Transparent,
-              }
-            }}
-
-            eventHandlers = {
-              new Map([
-                ['loaded', function () {console.log('Report loaded');}],
-                ['rendered', function () {console.log('Report rendered');}],
-                ['error', function (event) {console.log(event.detail);}],
-                ['visualClicked', () => console.log('visual clicked')],
-                ['pageChanged', (event) => console.log(event)],
-              ])
+        <PowerBIEmbed
+          embedConfig = {{
+            type: 'report',   // Supported types: report, dashboard, tile, visual, qna, paginated report and create
+            id: '5c607318-8d82-49bf-a371-7e0edf855485',
+            embedUrl: 'https://app.powerbi.com/reportEmbed?reportId=5c607318-8d82-49bf-a371-7e0edf855485&config=eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly9XQUJJLVBBQVMtMS1TQ1VTLXJlZGlyZWN0LmFuYWx5c2lzLndpbmRvd3MubmV0IiwiZW1iZWRGZWF0dXJlcyI6eyJ1c2FnZU1ldHJpY3NWTmV4dCI6dHJ1ZSwiZGlzYWJsZUFuZ3VsYXJKU0Jvb3RzdHJhcFJlcG9ydEVtYmVkIjp0cnVlfX0%3d',
+            accessToken: accessToken,
+            tokenType: models.TokenType.Aad, // Use models.TokenType.Aad for SaaS embed
+            settings: {
+              panes: {
+                filters: {
+                  expanded: false,
+                  visible: false
+                }
+              },
+              background: models.BackgroundType.Transparent,
             }
+          }}
 
-            cssClassName = { "reportClass" }
+          eventHandlers = {
+            new Map([
+              ['loaded', function () {console.log('Report loaded');}],
+              ['rendered', function () {console.log('Report rendered');}],
+              ['error', function (event) {console.log(event.detail);}],
+              ['visualClicked', () => console.log('visual clicked')],
+              ['pageChanged', (event) => console.log(event)],
+            ])
+          }
 
-            getEmbeddedComponent = { (embeddedReport) => {
-              window.report = embeddedReport;
-            }}
-          /> */}
+          cssClassName = { "reportClass" }
+
+          getEmbeddedComponent = { (embeddedReport) => {
+            window.report = embeddedReport ;
+          }}
+        />
         </div>
         <div className="TablaDetalle">
           {detalleObra && (
@@ -121,3 +158,4 @@ const DetalleObra = () => {
 };
 
 export default DetalleObra;
+

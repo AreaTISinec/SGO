@@ -10,10 +10,12 @@ urlpatterns = [
     path('api/token/', CustomTokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/accounts/', include('accounts.urls')),
-    path('api/docs/', include('docs.urls')),
     path('api/ventas/', include('ventas.urls')),
     path('api/obras/', include('obras.urls')),
     path('api/cene/', include('cene.urls')),
+    path('api/avance/', include('avance.urls')),
+    path('api/files/', include('files.urls')),
+    path('api/powerbi/', include('powerbi.urls')),
     path('admin/', admin.site.urls),
 ] 
 static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

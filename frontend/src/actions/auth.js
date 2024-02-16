@@ -1,39 +1,11 @@
 import axios from 'axios'
-import { setAlert } from './alert'
-import {
-    SIGNUP_FAIL,
-    SIGNUP_SUCCES,
-    LOGIN_FAIL,
-    LOGIN_SUCCES,
-    LOGOUT_FAIL,
-    LOGOUT_SUCCESS
-} from './types'
 
 
-// const getCSRFToken = () => async dispatch => {
-//     const csrfCookie = await axios.get('http://127.0.0.1:8000/api/accounts/csrfcookie')
-//     console.log(csrfCookie)
-//     return csrfCookie
 
-//   };
-
-// export const user = () => {
-//     const config = {
-//         headers: {
-//             'Content-Type': 'application/json',
-//         }
-//     }
-
-// }
-
-export const login = (username, password ) => async dispatch => {
-    //getCSRFToken()
+export const login = async (username, password ) => {
     const config = {
         headers: {
             'Content-Type': 'application/json',
-
-            //'X-CSRFToken': getCSRFToken()
-
         }
     }
 
@@ -47,31 +19,16 @@ export const login = (username, password ) => async dispatch => {
 
             document.cookie = `token=${token}; max-age=${60*60}; path=/`
         }
-        
-
-        dispatch({
-            type: LOGIN_SUCCES,
-            payload: res.data
-        });
-
-        dispatch(setAlert('Authenticated successfully', 'success'));
     
     }catch(err ){
-        dispatch({
-            type: LOGIN_FAIL
-        });
-
-        dispatch(setAlert('Error en  la autentificacion', 'error'));
-
+        console.error(err)
     }
 } 
 
-export const signup = ({ username, email, password, re_password, rol }) => async dispatch => {
+export const signup = async ({ username, email, password, re_password, rol })    => {
     const config = {
         headers: {
             'Content-Type': 'application/json',
-
-           // 'X-CSRFToken': getCSRFToken(),
 
         }
     }
@@ -81,23 +38,13 @@ export const signup = ({ username, email, password, re_password, rol }) => async
     try {
         const res = await axios.post('http://127.0.0.1:8000/api/accounts/registrar/', body, config);
 
-        dispatch({
-            type: SIGNUP_SUCCES,
-            payload: res.data
-        });
-
         //dispatch(login(email, password));
     }catch(err ){
-        dispatch({
-            type: SIGNUP_FAIL
-        });
-
-        dispatch(setAlert('Error al registrar usuario', 'error'));
-
+        console.error(err)
     }
 } 
 
-export const logout = () => async dispatch => {
+export const logout = async () => {
     console.log(document.cookie)
     const config = {
         headers: {
@@ -112,20 +59,10 @@ export const logout = () => async dispatch => {
         if (res.status === 200) {
             // Eliminar la cookie del navegador
             document.cookie = `token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
-            
-            // Despachar una acción de logout exitoso
-            dispatch({ type: 'LOGOUT_SUCCESS' });
-            
-            // Mostrar una alerta de éxito
-            dispatch(setAlert('Sesión cerrada exitosamente', 'success'));
         }
 
         //dispatch(login(email, password));
     }catch(err ){
-        dispatch({
-            type: LOGOUT_FAIL
-        });
+        console.error(err)
     }
-    dispatch(setAlert('sesion cerrada exitosamente', 'success'));
-    dispatch({ type: LOGOUT_SUCCESS })
 }
