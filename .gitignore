@@ -11,7 +11,8 @@ backend/db.sqlite3
 */__pycache__/
 # C extensions
 backend/*.so
-
+backend/accounts/migrations/
+backend/cene/migrations/
 # Distribution / packaging
 backend/.Python
 backend/build/
