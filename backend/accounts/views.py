@@ -14,9 +14,9 @@ from django.conf import settings
 # from django.contrib.auth.models import update_last_login
 
 from .models import UserAccount
-from .serializars import CustomTokenObtainPairSerializer, RegisterSerializer
+from .serializars import CustomTokenObtainPairSerializer, RegisterSerializer, LogoutSerializer
 
-from rest_framework import status, generics
+from rest_framework import status, generics, permissions
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny, IsAuthenticated
@@ -88,11 +88,15 @@ def dashboard(request):
 #         return response
     
 class LogoutView(APIView):
-    def post(self, request, *args, **kwargs):
-        response = Response(status=status.HTTP_200_OK)
-        response.delete_cookie(settings.AUTH_COOKIE)
-        
-        return response
+    permission_classes = (permissions.AllowAny,)
+    def patch(self, request, *args, **kwargs):
+        id_user = self.kwargs['id']
+        objeto = UserAccount.objects.get(id=id_user)
+        serializer = LogoutSerializer(objeto, data = request.data, partial = True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 # @method_decorator(csrf_protect, name='dispatch')
 # class CheckAuthenticatedView(APIView):

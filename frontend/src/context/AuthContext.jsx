@@ -3,6 +3,7 @@ import { createContext, useState, useEffect} from "react";
 import { jwtDecode } from "jwt-decode";
 import { useNavigate} from "react-router-dom";
 import swal from 'sweetalert2';
+import axios from "axios";
 // import Child from './Child.jsx'
 
 
@@ -32,6 +33,7 @@ export const AuthProvider = ({ children }) => {
     //const history = useNavigate();
 
     const loginUser = async (email, password) => {
+
         const response = await fetch("http://127.0.0.1:8000/api/token/", {
             method: "POST",
             headers:{
@@ -43,13 +45,14 @@ export const AuthProvider = ({ children }) => {
         })
         const data = await response.json()
         
+        
 
         if(response.status === 200){
             console.log("Logged In");
             setAuthTokens(data)
             setUser(jwtDecode(data.access))
             localStorage.setItem("authTokens", JSON.stringify(data))
-            
+            console.log(user)
             swal.fire({
                 title: "Sesion iniciada correctamente",
                 icon: "success",
@@ -111,7 +114,25 @@ export const AuthProvider = ({ children }) => {
         }
     }
 
-    const logoutUser = () => {
+
+
+
+    const logoutUser = async (id) => {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        }
+
+        const body = JSON.stringify({'is_connected': false})
+        console.log('user.id')
+        console.log(id)
+        try {
+            const response = await axios.patch(`http://127.0.0.1:8000/api/accounts/logout/${id}/`, body, config)
+            console.log('en el try')
+        } catch (error) {
+            console.error(error)
+        }
         setAuthTokens(null)
         setUser(null)
         localStorage.removeItem("authTokens")

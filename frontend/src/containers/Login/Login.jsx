@@ -4,21 +4,23 @@ import { useContext, useState } from "react"
 import './Login.css'
 import AuthContext from "../../context/AuthContext"
 import useForm from '../../utils/useForm'
+import axios from 'axios';
 
 
 const Login = () => {
    
   const { email, password, onInputChange, onResetForm } = useForm({
     email: '',
-    password: ''
+    password: '',
   })
 
   const {loginUser} = useContext(AuthContext)
   
-  const onLogin = (e) => {
+  const onLogin = async (e) => {
     e.preventDefault()
 
     loginUser(email, password)
+    
     onResetForm()
   }
 
