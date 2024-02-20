@@ -143,8 +143,6 @@ export const AuthProvider = ({ children }) => {
         }
         setLoading(false)
     }, [authTokens, loading])
-
-    console.log('el fin,,,,')
     return (
         <AuthContext.Provider value={contextData}>
             {loading ? null : children}

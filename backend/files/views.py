@@ -48,8 +48,9 @@ class DownloadFileView(APIView):
     
     def get(self, request, file_id):
         file = File.objects.get(pk=file_id)
-        file_name = file.file_name + '.pdf'
-        stream = download_blob_to_stream('documentos', file_name)
+        file_name = file.blob_name
+        container = file.tipo
+        stream = download_blob_to_stream(container, file_name)
         response = StreamingHttpResponse(stream, content_type='application/octet-stream')
         response['Content-Disposition'] = f'attachment; filename="{file_name}"'
         

@@ -22,6 +22,8 @@ class Obras(models.Model):
     gantt = models.BooleanField(default=False)
     presupuesto = models.BooleanField(default=False)
     
+    is_avance = models.BooleanField(default=False)
+    
     #calculado
     porc_avance = models.IntegerField()
     monto_facturado = models.IntegerField(null=True)

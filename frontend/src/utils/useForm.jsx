@@ -16,6 +16,29 @@ const useForm = ( initialForm = {} ) => {
         console.log(value)
     }
 
+    const onArrayChange = (name, index, newValue) => {
+      setFormState(prevState => ({
+        ...prevState,
+        [name]: prevState[name].map((item, i) =>
+          i === index ? { ...item, ...newValue } : item
+        )
+      }));
+    };
+
+    const onAddItem = (name, newItem) => {
+      setFormState(prevState => ({
+        ...prevState,
+        [name]: [...prevState[name], newItem]
+      }));
+    };
+
+    const onRemoveItem = (name, index) => {
+      setFormState(prevState => ({
+        ...prevState,
+        [name]: prevState[name].filter((_, i) => i !== index)
+      }));
+    };
+
     const onResetForm = () => {
         setFormState(initialForm);
     }
@@ -25,6 +48,9 @@ const useForm = ( initialForm = {} ) => {
     formState,
     onInputChange,
     onResetForm,
+    onArrayChange,
+    onAddItem,
+    onRemoveItem,
   }
 }
 

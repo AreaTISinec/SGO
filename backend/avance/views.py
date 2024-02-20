@@ -17,8 +17,10 @@ class UploadAvanceReal(APIView):
     
 class UploadAvanceProyectado(APIView):
     permission_classes = (permissions.AllowAny, )
+    
     def post(self, request):
         serializer = AProyectadoSerializer(data=request.data)
+        print(serializer)
         if serializer.is_valid():
             serializer.save()
             return Response(status=status.HTTP_201_CREATED)
