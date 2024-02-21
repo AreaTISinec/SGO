@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'empresas',
     'estado_obras',
     'tipo_obras',
+    'asignaciones',
 ]
 
 MIDDLEWARE = [

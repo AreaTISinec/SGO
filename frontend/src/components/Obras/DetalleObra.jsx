@@ -9,7 +9,7 @@ import Modal from 'react-bootstrap/Modal';
 import Form from "react-bootstrap/Form";
 import "./DetalleObra.css";
 import  useForm  from '../../utils/useForm'
-import { uploadAvanceReal, uploadAvanceProyectado } from "../../actions/newAvance";
+import { uploadAvanceReal, uploadAvanceProyectado } from "../../actions/newAvance"; 
 
 const DetalleObra = () => {
   const { idObra } = useParams();
@@ -51,40 +51,6 @@ const DetalleObra = () => {
     onResetForm()
     handleCloseAR()
   }
-
-  // const onChangeProyectado = (e, index) => {
-  //   const { name, value } = e.target;
-  //   const nuevosErrores = [...errores];
-
-  //   setHitos(prevState => {
-
-  //     if(name === 'fecha')
-  //       if(prevState[prevState.length -2 ] && prevState[prevState.length -2 ].fecha >= value || 
-  //           hitos[hitos.length -1].fecha >= value ){
-            
-  //         console.log('ingrese una fecha mayor a la anterior')
-  //         error[index] = 'ingrese una fecha mayor a la anterior'
-  //       }else{
-  //         error[index] = ''
-  //       }
-      
-  //     if(name == 'porcentaje')
-  //       if(prevState[prevState.length -2 ] && prevState[prevState.length -2 ].porcentaje >= value){
-  //         console.log('ingrese un porcentaje mayor al anterior')
-  //         error[index] = 'ingrese un porcentaje mayor al anterior'
-  //       }else{
-  //         error[index] = ''
-  //       }
-      
-  //     setErrores(error)
-  //     const nuevosHitos = [...prevState];
-  //     nuevosHitos[index] = {
-  //       ...nuevosHitos[index],
-  //       [name]: value
-  //     };
-  //     return nuevosHitos;
-  //   });
-  // }
 
   const onChangeProyectado = (e, index) => {
     const { name, value } = e.target;
