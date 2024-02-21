@@ -1,6 +1,6 @@
 from rest_framework import permissions, status
 from rest_framework.response import Response
-from rest_framework.generics import ListAPIView
+from rest_framework.generics import UpdateAPIView
 from rest_framework.views import APIView
 from .serializers import UserProfileSerializer
 from .models import UserProfile
@@ -25,3 +25,16 @@ class UserProfileView(APIView):
         serializer = UserProfileSerializer(user)
         
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class UserProfileUpdateView(UpdateAPIView):
+    permission_classes = (permissions.AllowAny, )
+    
+    def patch(self, request, *args, **kwargs):
+        id_user = self.kwargs['id_user']
+        usuario = UserProfile.objects.get(id=id_user)
+        serializer = UserProfileSerializer(usuario, data = request.data, partial = True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response (serializer.errors, status=status.HTTP_400_BAD_REQUEST)
