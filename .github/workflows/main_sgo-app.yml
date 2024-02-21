@@ -66,4 +66,4 @@ jobs:
         with:
           app-name: 'sgo-app'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_492CB5358F6C44BBBBD953A862E7E34F }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_2D97D32352654821AE61564EE8D416A5 }}
