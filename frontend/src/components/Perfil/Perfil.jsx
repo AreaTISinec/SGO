@@ -6,13 +6,23 @@ import { useEffect, useState } from "react"
 import Button from "react-bootstrap/Button";
 import Modal from 'react-bootstrap/Modal';
 import Form from "react-bootstrap/Form";
+import  useForm  from '../../utils/useForm'
+import { uploadDataUser } from "../../actions/newDataUsers"
 
 const Perfil = () => {
   const { idUsuario } = useParams()
 
-  const [infoUser, setInfoUser] = useState({})
-  const [infoEmpresa, setInfoEmpresa] = useState([])
+  const [infoUser, setInfoUser] = useState({});
+  const [infoEmpresa, setInfoEmpresa] = useState({});
+  const [empresas, setEmpresas] = useState([]);
   const [showAP, setShowAP] = useState(false);
+
+  const { nombre, apellido, numero, empresa, onInputChange, onResetForm } = useForm({
+    nombre: '',
+    apellido: '',
+    numero: '',
+    empresa: 0
+  })
 
   const handleCloseAP = () => setShowAP(false);
   const handleShowAP = () => setShowAP(true);
@@ -25,25 +35,47 @@ const Perfil = () => {
     } catch (error) {
       console.error(error)
     }
-    
-    console.log('infoUser')
-    console.log(infoUser)
+
   };
 
-  const getDatosEmpresa = async () => {
+  const getEmpresasUser= async () => {
     try {
-      const { data } = await axios.get('http://127.0.0.1:8000/api/empresas/')
-      setInfoEmpresa(data);
+        const { data } = await axios.get(`http://127.0.0.1:8000/api/empresas/${infoUser?.empresa}/`)
+        setInfoEmpresa(data);      
     } catch (error) {
       console.error(error)
     }
-    console.log(infoEmpresa)
-  };
+  }
 
+ 
+  const getEmpresas = async () => {
+    try {
+      const response = await axios.get('http://127.0.0.1:8000/api/empresas/')
+      setEmpresas(response.data)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  const newDataSubmit = (e) => {
+    e.preventDefault()
+
+    uploadDataUser(idUsuario, nombre, apellido, numero, empresa)
+    setInfoUser({nombre: nombre, apellido: apellido, numero: numero, empresa: empresa})
+    setInfoEmpresa({...infoEmpresa, nombre: empresa})
+
+    onResetForm()
+  }
+  
   useEffect(() => {
     getDatosUser();
-    getDatosEmpresa();
+    //getEmpresasUser();
+    getEmpresas();
   }, []);
+  
+   useEffect(() => {
+    getEmpresasUser();
+  }, [infoUser]);
 
   return (
     <div className="PerfilContainer">
@@ -51,10 +83,12 @@ const Perfil = () => {
       <div className="RecuadroPerfil">
         <div className="Titulo">
           <h1>Perfil de Usuario</h1>
+        </div>
+        <div className="DatosDelPerfil">
           <span>nombre= {infoUser.nombre}</span>
           <span>apellido= {infoUser.apellido}</span>
-          <span>empresa= { (infoUser && infoEmpresa && infoUser.empresa == infoEmpresa[infoUser.empresa - 1].id) ? infoEmpresa[infoUser.empresa - 1].nombre : 'error'}</span>
-          <span>celular= {infoUser.numero}</span>
+          <span>empresa= {infoEmpresa.nombre}</span>
+          <span>numero= {infoUser.numero}</span>
           {
             infoUser ?
             <>
@@ -64,12 +98,13 @@ const Perfil = () => {
                       <Modal.Title>Editar perfil</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                      <Form >
+                      <Form onSubmit={newDataSubmit}>
                         <Form.Group>
                           <Form.Label>Ingresa tu nombre</Form.Label>
                           <Form.Control 
                             type="text"
-                            name="hitos"
+                            name="nombre"
+                            onChange={onInputChange}
                             required
                           />
                         </Form.Group>
@@ -78,7 +113,8 @@ const Perfil = () => {
                           <Form.Label>Ingresa tu apellido</Form.Label>
                           <Form.Control 
                             type="text"
-                            name="hitos"
+                            name="apellido"
+                            onChange={onInputChange}
                             required
                           />
                         </Form.Group>
@@ -87,18 +123,25 @@ const Perfil = () => {
                           <Form.Label>Ingresa tu celular</Form.Label>
                           <Form.Control 
                             type="text"
-                            name="hitos"
+                            name="numero"
+                            onChange={onInputChange}
                             required
                           />
                         </Form.Group>
 
                         <Form.Group>
                           <Form.Label>¿A que empresa perteneces?</Form.Label>
-                          <Form.Control 
-                            type="text"
-                            name="hitos"
+                          <Form.Select 
+                            name="empresa"
+                            onChange={onInputChange}
                             required
-                          />
+                          >
+                            {
+                              empresas?.map((empresa) => (
+                                <option key={empresa.id} value={empresa.nombre}> {empresa.nombre} </option>
+                              ))
+                            }
+                          </Form.Select>
                         </Form.Group>
 
                         <Button variant="danger" type="onSubmit">
@@ -111,6 +154,7 @@ const Perfil = () => {
             <></>
           }
         </div>
+        <>.</>  
       </div>
     </div>
   )
