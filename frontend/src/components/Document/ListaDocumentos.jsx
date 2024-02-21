@@ -5,14 +5,16 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import axios from "axios";
 import Sidebar from "../Sidebar/Sidebar";
 import "./ListaDocumentos.css";
+import { useParams } from "react-router-dom";
 
 const ListaDocumentos = () => {
   const [listadoDeDocumentos, setListadoDeDocumentos] = useState([])
+  const { idObra } = useParams()
 
   useEffect(() => {
     async function fetchListadoDocumentos() {
       try {
-        const response = await axios.get("http://127.0.0.1:8000/api/files/list/")
+        const response = await axios.get(`http://127.0.0.1:8000/api/files/list/${idObra}/`)
         setListadoDeDocumentos(response.data)
       } catch (error){
         console.error('Error fetching de documentos', error)
