@@ -13,9 +13,8 @@ import CentroDeNegocios from "../components/Centro de Negocios/CentroDeNegocios"
 import DetalleCentroDeNegocios from "../components/Centro de Negocios/DetalleCentroDeNegocios";
 import NuevoCentroDeNegocios from "../components/Centro de Negocios/NuevoCentroDeNegocios";
 import { Route, Routes } from "react-router-dom";
-import { useContext } from "react";
-import AuthContext from "../context/AuthContext";
 import ReqFiles from "../containers/UploadFile/ReqFiles";
+import Perfil from "../components/Perfil/Perfil";
 
 const AppRouter = () => {
 
@@ -45,10 +44,9 @@ const AppRouter = () => {
           <Route
             path="/obras/:idObra"
             element={
-              <DetalleObra />
-              // <PrivateRoute>
-                
-              // </PrivateRoute>
+              <PrivateRoute>
+                <DetalleObra />
+              </PrivateRoute>
             }
           />
           <Route
@@ -79,7 +77,7 @@ const AppRouter = () => {
             path="/obras/:idObra/documentos"
             element={
               <PrivateRoute>
-              <ListaDocumentos />
+                <ListaDocumentos />
               </PrivateRoute>
             }
           />
@@ -103,7 +101,15 @@ const AppRouter = () => {
             path="/centro-de-negocios/nuevo-centro-de-negocios"
             element={
               <PrivateRoute>
-              <NuevoCentroDeNegocios />
+                <NuevoCentroDeNegocios />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/perfil/:idUsuario"
+            element={
+              <PrivateRoute>
+                <Perfil />
               </PrivateRoute>
             }
           />

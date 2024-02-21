@@ -1,27 +1,38 @@
-
+import Spinner from 'react-bootstrap/Spinner';
 import { Helmet } from 'react-helmet'
-import { useContext } from "react"
+import { useContext, useState } from "react"
 import './Login.css'
 import AuthContext from "../../context/AuthContext"
 import useForm from '../../utils/useForm'
+import axios from 'axios';
 
 
 const Login = () => {
    
   const { email, password, onInputChange, onResetForm } = useForm({
     email: '',
-    password: ''
+    password: '',
   })
 
   const {loginUser} = useContext(AuthContext)
   
-  const onLogin = (e) => {
+  const onLogin = async (e) => {
     e.preventDefault()
 
     loginUser(email, password)
+    
     onResetForm()
   }
 
+  const [loading, setLoading] = useState(false)
+
+  const handleClick = () => {
+    if(email !== '' && password !== '')
+      setLoading(true)
+    setTimeout(() => {
+      setLoading(false);
+    }, 2650);
+  }
 
   return (
     <div className="auth_">
@@ -54,7 +65,16 @@ const Login = () => {
             required
           />
         </div>
-        <button className="auth_form_button" type="submit">Iniciar Sesion</button>
+        <button className="auth_form_button" type="submit" onClick={handleClick}>
+          Iniciar Sesion
+        </button>
+        <div className='spinnerLoading'>
+          { loading ?
+            <Spinner animation="border" variant="danger" className='spinnerLoading' />
+          :
+            <></>
+          }
+        </div>
       </form>
     </div>
   )

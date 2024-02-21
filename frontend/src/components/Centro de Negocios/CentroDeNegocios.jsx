@@ -72,6 +72,7 @@ const CentroDeNegocios = () => {
             <thead>
               <tr>
                 <th>ID</th>
+                <th>Empresa</th>
                 <th>Nombre</th>
               </tr>
             </thead>
@@ -79,6 +80,7 @@ const CentroDeNegocios = () => {
               {centronegocioData?.map((CentrodeNegocios) => (
                     <tr key={CentrodeNegocios.id_cene}>
                       <td>{CentrodeNegocios.id_cene}</td>
+                      <td>{CentrodeNegocios.empresa}</td>
                       <td>{CentrodeNegocios.nombre}</td>
                       <Link
                         to={`/centro-de-negocios/${CentrodeNegocios.id_cene}`}

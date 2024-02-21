@@ -6,6 +6,12 @@ from django.contrib.auth.password_validation import validate_password
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework import serializers
 from .models import UserAccount
+
+class LogoutSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = get_user_model()
+        fields = ['username', 'rol', 'email', 'is_connected']
+
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = get_user_model()
@@ -23,6 +29,7 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
         token['email'] = user.email
         token['rol'] = user.rol
         token['is_active'] = user.is_active
+        token['is_connected'] = user.is_connected
         token['is_staff'] = user.is_staff
         
         return token

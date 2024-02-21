@@ -194,8 +194,8 @@ const renderHitosFields = () => {
         <div className="Titulo">
           <h1>Detalle de la obra</h1>
           {
-            detalleObra && detalleObra.gantt && detalleObra.presupuesto ? 
-            <Link className="BotonNuevaObra" to={"./nuevo-documento"}>
+            detalleObra && detalleObra.gantt && detalleObra.presupuesto ? //agregar detalleObra.cubicacion pq es obligatorio
+            <Link  className="BotonNuevaObra" to={"./nuevo-documento"}>
               <Button variant="danger">Subir documento</Button>
             </Link>
             :

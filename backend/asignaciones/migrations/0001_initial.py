@@ -9,8 +9,7 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('obras', '0003_obras_is_avance'),
-        ('perfil_usuario', '0002_alter_userprofile_empresa_alter_userprofile_numero'),
+
     ]
 
     operations = [
