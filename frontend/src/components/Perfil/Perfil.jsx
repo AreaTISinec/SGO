@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom"
 import Sidebar from "../Sidebar/Sidebar"
 import './Perfil.css'
+import axios from "axios"
 
 const Perfil = () => {
   const { idUsuario } = useParams()

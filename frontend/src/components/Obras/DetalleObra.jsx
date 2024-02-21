@@ -9,36 +9,105 @@ import Modal from 'react-bootstrap/Modal';
 import Form from "react-bootstrap/Form";
 import "./DetalleObra.css";
 import  useForm  from '../../utils/useForm'
-import { uploadAvance } from "../../actions/newAvance";
+import { uploadAvanceReal, uploadAvanceProyectado } from "../../actions/newAvance"; 
 
 const DetalleObra = () => {
   const { idObra } = useParams();
   const [detalleObra, setDetalleObra] = useState({});
-  const [show, setShow] = useState(false);
+  const [showAR, setShowAR] = useState(false);
+  const [showAP, setShowAP] = useState(false);
+  const [numHitos, setNumHitos] = useState(0);
+  const [hitos, setHitos] = useState([{
+    fecha: '2020-01-01',
+    porcentaje: 0
+  }])
+  const [errores, setErrores] = useState([]);
+  // const [avanceProyectado, setAvanceProyectado] = useState([])
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleCloseAR = () => setShowAR(false);
+  const handleShowAR = () => setShowAR(true);
+
+  const handleCloseAP = () => setShowAP(false);
+  const handleShowAP = () => setShowAP(true);
 
   const { fecha, porcentaje, onInputChange, onResetForm } = useForm({
     fecha: null,
     porcentaje: 0
   })
-  
 
 
-  const avanceSubmit = (e) => {
-    e.preventDefault(); 
-    if(porcentaje <= detalleObra.porc_avance || porcentaje > 100){
-      console.log('Ingrese el porcentaje correcto')
-    }else{
-      uploadAvance(fecha, porcentaje, idObra)
-      setDetalleObra((prevState)=> ({
+  const avanceRealSubmit = (e) => {
+    e.preventDefault();
+
+    if(porcentaje > detalleObra.porc_avance && porcentaje <= 100) {
+      uploadAvanceReal(fecha, porcentaje, idObra);
+      setDetalleObra((prevState) => ({
         ...prevState,
         porc_avance: porcentaje
-      }))
+      }));
+    } else {
+      console.log('Ingrese el porcentaje correcto');
     }
     onResetForm()
-    handleClose()
+    handleCloseAR()
+  }
+
+  const onChangeProyectado = (e, index) => {
+    const { name, value } = e.target;
+  
+    setHitos(prevState => {
+      const nuevosHitos = [...prevState];
+      nuevosHitos[index] = {
+        ...nuevosHitos[index],
+        [name]: value
+      };
+  
+      // Creamos una variable para almacenar el mensaje de error
+      let errorMessage = '';
+  
+      // Validamos el campo 'fecha'
+      if (name === 'fecha') {
+        if(nuevosHitos[index - 1] && nuevosHitos[index - 1].fecha >= value)
+          errorMessage = `Ingrese una fecha mayor a ${nuevosHitos[index-1].fecha}`;
+        
+        if(nuevosHitos[index + 1] && nuevosHitos[index + 1].fecha <= value)
+          errorMessage = `Ingrese una fecha menor a ${nuevosHitos[index+1].fecha}`;
+      }
+  
+      // Validamos el campo 'porcentaje'
+      if (name === 'porcentaje') {
+        if(nuevosHitos[index - 1] && parseInt(nuevosHitos[index - 1].porcentaje) >= value)
+          {console.log('index -1 (dentro if): ', nuevosHitos[index-1].porcentaje)
+          console.log('value (dentro if): ', value)
+          errorMessage = `Ingrese un porcentaje mayor a ${nuevosHitos[index-1].porcentaje}`;}
+
+        if(nuevosHitos[index + 1] && parseInt(nuevosHitos[index + 1].porcentaje) <= value)
+          errorMessage = `Ingrese un porcentaje menor a ${nuevosHitos[index+1].porcentaje}`;
+
+        if(nuevosHitos[numHitos] && parseInt(nuevosHitos[numHitos].porcentaje) !== 100)
+          errorMessage = 'Su ultimo porcentaje debe ser igual a 100';
+      }
+  
+      // Actualizamos el estado de errores
+      setErrores(prevErrors => {
+        const newErrors = [...prevErrors];
+        newErrors[index] = {name: name, message: errorMessage}
+        return newErrors;
+      });
+      
+
+      return nuevosHitos;
+    });
+  };
+
+
+  const avanceProyecSubmit = (e) => {
+    e.preventDefault();
+
+    uploadAvanceProyectado(hitos, idObra);
+      
+    onResetForm()
+    handleCloseAR()
   }
 
   const getDatos = async () => {
@@ -46,8 +115,6 @@ const DetalleObra = () => {
       `http://127.0.0.1:8000/api/obras/${idObra}`
     );
     setDetalleObra(data);
-    console.log('detalleObra')
-    console.log(detalleObra.id)
   };
  
   const [accessToken, setAccessToken] = useState('');
@@ -78,9 +145,47 @@ const DetalleObra = () => {
 
   useEffect(() => {
     getDatos();
-    console.log('useEffect del getdatos')
   }, []); // Ejecutar efecto solo en el montaje inicial del componente
 
+
+const renderHitosFields = () => {
+  const fields = [];
+  for (let i = 1; i <= numHitos; i++) {
+    fields.push(
+      <div  key={i}>
+
+        <Form.Group>
+          <Form.Label>{`Fecha hito ${i}`}</Form.Label>
+          <Form.Control 
+            type="date"
+            name={'fecha'}
+            placeholder={`Ingrese la fecha del hito ${i}`}
+            onChange={ (e) => {
+              onChangeProyectado(e, i)
+            }}
+            required
+          />
+          {errores[i] && errores[i].name === 'fecha' && <span style={{ color: 'red' }}>{errores[i].message}<br/></span>}
+          <Form.Label><br/>{`% Avance esperado hito ${i}`}</Form.Label>
+          <Form.Control 
+            type="number"
+            name={'porcentaje'}
+            placeholder={`Ingrese el porcentaje de avance del hito ${i}`}
+            onChange={(e) => {
+              onChangeProyectado(e, i)
+            }}
+            required
+            max={100}
+            min={0}
+          />
+          {errores[i] && errores[i].name === 'porcentaje' && <span style={{ color: 'red' }}>{errores[i].message}</span>}
+        </Form.Group>
+        <br/><br/>
+      </div>
+    );
+  }
+  return fields;
+};
 
   return (
     <div className="DetalleObraContainer">
@@ -102,6 +207,42 @@ const DetalleObra = () => {
           <Link className="BotonNuevaObra" to={"./documentos"}> {/*ver la url */}
             <Button variant="danger">Ver documentos</Button>
           </Link>
+          {
+            detalleObra && !detalleObra.is_avance ?
+            <>
+              <Button onClick={handleShowAP} variant="danger" className="boton-avance">Subir Avance Proyectado</Button>
+                  <Modal show={showAP} onHide={handleCloseAP}>
+                    <Modal.Header closeButton>
+                      <Modal.Title>Definir Avance Proyectado</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                      <Form onSubmit={avanceProyecSubmit}>
+                        <Form.Group>
+                          <Form.Label>Ingrese la cantidad de hitos</Form.Label>
+                          <Form.Control 
+                            type="number"
+                            name="hitos"
+                            onChange={(e)=>{
+                              setNumHitos(parseInt(e.target.value))
+                            }}
+                            required
+                          />
+                        </Form.Group>
+
+                      {renderHitosFields()}
+                      
+                      <Button variant="primary" type="onSubmit" disabled={errores.some(e => {
+                        if(e)
+                          return e.message !== ''
+                      }) }>
+                        Guardar Avance
+                      </Button>
+                      </Form>
+                    </Modal.Body>
+                  </Modal>
+            </>:
+            <></>
+          }
         </div>
         <>
           {detalleObra &&  (
@@ -119,13 +260,13 @@ const DetalleObra = () => {
               <div className="Dato"><strong>Observaciones</strong><strong>{detalleObra.observaciones}</strong></div>
               <div className="Dato"><strong>Porcentaje de Avance</strong><strong>{detalleObra.porc_avance} %</strong>
               <>
-                <Button onClick={handleShow} variant="danger" className="boton-avance">subir avance</Button>
-                <Modal show={show} onHide={handleClose}>
+                <Button onClick={handleShowAR} variant="danger" className="boton-avance">subir avance</Button>
+                <Modal show={showAR} onHide={handleCloseAR}>
                   <Modal.Header closeButton>
                     <Modal.Title>Ingrese el Avance</Modal.Title>
                   </Modal.Header>
                   <Modal.Body>
-                    <Form onSubmit={avanceSubmit}>
+                    <Form onSubmit={avanceRealSubmit}>
                       <Form.Group>
                         <Form.Label></Form.Label>
                         <Form.Control 

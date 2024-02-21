@@ -15,7 +15,7 @@ export const upload = async (doc, nombre, tipo, id) => {
   };
   
     try {
-      const res = await axios.post('http://127.0.0.1:8000/api/docs/upload/', formData, config)
+      const res = await axios.post('http://127.0.0.1:8000/api/files/upload/', formData, config)
       console.log(res)
 
   }catch(err){
