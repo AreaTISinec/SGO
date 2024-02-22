@@ -39,7 +39,7 @@ const DetalleCentroDeNegocios = () => {
               <tbody>
                   <tr key={detalleCentroDeNegocios.id_cene}>
                     <td>{detalleCentroDeNegocios.id_cene}</td>
-                    <td className="TablaNombre">{detalleCentroDeNegocios.nombre}</td>
+                    <td>{detalleCentroDeNegocios.nombre}</td>
                   </tr>
               </tbody>
             </table>
