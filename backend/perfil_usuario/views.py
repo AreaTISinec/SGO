@@ -11,6 +11,7 @@ class UserProfileView(APIView):
     
     def post(self, request):
         serializer = UserProfileSerializer(data=request.data)
+        print(serializer)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -18,7 +19,7 @@ class UserProfileView(APIView):
     
     def get(self, request, id_user):
         try:
-            user = UserProfile.objects.get(id=id_user)
+            user = UserProfile.objects.get(user_id=id_user)
         except UserProfile.DoesNotExist:
             return Response({"error": "El usuario no existe"}, status=status.HTTP_404_NOT_FOUND)
         
@@ -32,7 +33,7 @@ class UserProfileUpdateView(UpdateAPIView):
       
     def patch(self, request, *args, **kwargs):
         id_user = self.kwargs['id_user']
-        usuario = UserProfile.objects.get(id=id_user)
+        usuario = UserProfile.objects.get(user_id=id_user)
         serializer = UserProfileSerializer(usuario, data = request.data, partial = True)
         if serializer.is_valid():
             serializer.save()
