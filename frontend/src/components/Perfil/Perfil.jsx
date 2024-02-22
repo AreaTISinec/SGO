@@ -69,7 +69,6 @@ const Perfil = () => {
   
   useEffect(() => {
     getDatosUser();
-    //getEmpresasUser();
     getEmpresas();
   }, []);
   
@@ -138,7 +137,7 @@ const Perfil = () => {
                           >
                             {
                               empresas?.map((empresa) => (
-                                <option key={empresa.id} value={empresa.nombre}> {empresa.nombre} </option>
+                                <option key={empresa.id} value={empresa.id}> {empresa.nombre} </option>
                               ))
                             }
                           </Form.Select>

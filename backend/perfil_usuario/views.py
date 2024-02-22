@@ -29,7 +29,7 @@ class UserProfileView(APIView):
 
 class UserProfileUpdateView(UpdateAPIView):
     permission_classes = (permissions.AllowAny, )
-    
+      
     def patch(self, request, *args, **kwargs):
         id_user = self.kwargs['id_user']
         usuario = UserProfile.objects.get(id=id_user)
