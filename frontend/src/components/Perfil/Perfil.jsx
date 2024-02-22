@@ -7,7 +7,7 @@ import Button from "react-bootstrap/Button";
 import Modal from 'react-bootstrap/Modal';
 import Form from "react-bootstrap/Form";
 import  useForm  from '../../utils/useForm'
-import { uploadDataUser } from "../../actions/newDataUsers"
+import { uploadDataUser, updateDataUser } from "../../actions/newDataUsers"
 
 const Perfil = () => {
   const { idUsuario } = useParams()
@@ -66,6 +66,15 @@ const Perfil = () => {
 
     onResetForm()
   }
+  const updateDataSubmit = (e) => {
+    e.preventDefault()
+
+    updateDataUser(idUsuario, nombre, apellido, numero, empresa)
+    setInfoUser({nombre: nombre, apellido: apellido, numero: numero, empresa: empresa})
+    setInfoEmpresa({...infoEmpresa, nombre: empresa})
+
+    onResetForm()
+  }
   
   useEffect(() => {
     getDatosUser();
@@ -89,12 +98,71 @@ const Perfil = () => {
           <span>empresa= {infoEmpresa.nombre}</span>
           <span>numero= {infoUser.numero}</span>
           {
-            infoUser ?
-            <>
+            Object.keys(infoUser).length !== 0 ?
+            (<>
               <Button onClick={handleShowAP} variant="danger" className="boton-avance">Editar Perfil</Button>
                   <Modal show={showAP} onHide={handleCloseAP}>
                     <Modal.Header closeButton>
                       <Modal.Title>Editar perfil</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                      <Form onSubmit={updateDataSubmit}>
+                        <Form.Group>
+                          <Form.Label>Ingresa tu nombre</Form.Label>
+                          <Form.Control 
+                            type="text"
+                            name="nombre"
+                            onChange={onInputChange}
+                            required
+                          />
+                        </Form.Group>
+
+                        <Form.Group>
+                          <Form.Label>Ingresa tu apellido</Form.Label>
+                          <Form.Control 
+                            type="text"
+                            name="apellido"
+                            onChange={onInputChange}
+                            required
+                          />
+                        </Form.Group>
+
+                        <Form.Group>
+                          <Form.Label>Ingresa tu celular</Form.Label>
+                          <Form.Control 
+                            type="text"
+                            name="numero"
+                            onChange={onInputChange}
+                            required
+                          />
+                        </Form.Group>
+
+                        <Form.Group>
+                          <Form.Label>¿A que empresa perteneces?</Form.Label>
+                          <Form.Select 
+                            name="empresa"
+                            onChange={onInputChange}
+                            required
+                          >
+                            {
+                              empresas?.map((empresa) => (
+                                <option key={empresa.id} value={empresa.id}> {empresa.nombre} </option>
+                              ))
+                            }
+                          </Form.Select>
+                        </Form.Group>
+
+                        <Button variant="danger" type="onSubmit">
+                          Guardar Cambios
+                        </Button>
+                      </Form>
+                    </Modal.Body>
+                  </Modal>
+            </>):
+            (<><Button onClick={handleShowAP} variant="danger" className="boton-avance">Cargar Perfil</Button>
+                  <Modal show={showAP} onHide={handleCloseAP}>
+                    <Modal.Header closeButton>
+                      <Modal.Title>Cargar perfil</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                       <Form onSubmit={newDataSubmit}>
@@ -148,9 +216,7 @@ const Perfil = () => {
                         </Button>
                       </Form>
                     </Modal.Body>
-                  </Modal>
-            </>:
-            <></>
+                  </Modal></>)
           }
         </div>
         <>.</>  

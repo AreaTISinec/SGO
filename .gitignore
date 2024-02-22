@@ -12,7 +12,7 @@ backend/db.sqlite3
 # C extensions
 backend/*.so
 /*/*/__pycache__/
-
+backend/avance/migrations/
 backend/files/migrations/
 backend/cene/migrations/
 backend/accounts/migrations/
