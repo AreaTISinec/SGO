@@ -10,7 +10,7 @@ ALLOWED_HOSTS = [
 
 CSRF_TRUSTED_ORIGINS = ["https://" + os.environ['WEBSITE_HOSTNAME']]
 
-DEBUG = False
+DEBUG = True
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
