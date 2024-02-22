@@ -25,7 +25,11 @@ MIDDLEWARE = [
 ]
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-STATIC_ROOT = os.path.join(BASE_DIR, 'dist/assets')
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'dist/assets')
+]
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'assets')
 
 DATABASES = {
     'default': {
