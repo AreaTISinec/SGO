@@ -22,13 +22,12 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Enter django folder
-        run: cd backend/
-
-      - name: Create and start virtual environment
-        run: |
+      - name: Configure Django project 
+        run: | 
+          cd backend
           python -m venv venv
-          source venv/bin/activate
+          . venv/bin/activate
+
 
       - name: Install dependencies
         run: pip install -r requirements.txt
