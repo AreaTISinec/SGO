@@ -23,7 +23,7 @@ jobs:
           python-version: '3.12'
 
       - name: Enter django folder
-        run: cd backend
+        run: cd backend/
 
       - name: Create and start virtual environment
         run: |
