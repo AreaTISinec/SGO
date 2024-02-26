@@ -19,6 +19,7 @@ backend/accounts/migrations/
 backend/obras/migrations/
 backend/perfil_usuario/migrations/
 backend/ventas/migrations/
+backend/empresas/migrations/
 
 # Distribution / packaging
 backend/.Python

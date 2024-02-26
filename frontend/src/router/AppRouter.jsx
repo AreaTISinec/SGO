@@ -28,89 +28,89 @@ const AppRouter = () => {
           <Route
             path="/home"
             element={
-              <PrivateRoute>
+              //<PrivateRoute>
                 <Home />
-              </PrivateRoute>
+              //</PrivateRoute>
             }
           />
           <Route
             path="/obras"
             element={
-              <PrivateRoute>
+              //<PrivateRoute>
                 <Obras />
-              </PrivateRoute>
+              //</PrivateRoute>
             }
           />
           <Route
             path="/obras/:idObra"
             element={
-              <PrivateRoute>
+              //<PrivateRoute>
                 <DetalleObra />
-              </PrivateRoute>
+              //</PrivateRoute>
             }
           />
           <Route
             path="/obras/nueva-obra"
             element={
-              <PrivateRoute>
+              //<PrivateRoute>
                 <NuevaObra />
-              </PrivateRoute>
+              //</PrivateRoute>
             }
           />
           <Route
             path="/obras/:idObra/nuevo-documento"
             element={
-              <PrivateRoute>
+              //<PrivateRoute>
                 <UploadFile />
-              </PrivateRoute>
+              //</PrivateRoute>
             }
           />
           <Route
             path="/obras/:idObra/req-documento"
             element={
-              <PrivateRoute>
+              //<PrivateRoute>
                 <ReqFiles />
-              </PrivateRoute>
+              //</PrivateRoute>
             }
           />
           <Route
             path="/obras/:idObra/documentos"
             element={
-              <PrivateRoute>
+              //<PrivateRoute>
                 <ListaDocumentos />
-              </PrivateRoute>
+              //</PrivateRoute>
             }
           />
           <Route
             path="/centro-de-negocios"
             element={
-              <PrivateRoute>
+              //<PrivateRoute>
                 <CentroDeNegocios />
-              </PrivateRoute>
+              //</PrivateRoute>
             }
           />
           <Route
             path="/centro-de-negocios/:idCentroDeNegocios"
             element={
-              <PrivateRoute>
+              //<PrivateRoute>
                 <DetalleCentroDeNegocios />
-              </PrivateRoute>
+              //</PrivateRoute>
             }
           />
           <Route
             path="/centro-de-negocios/nuevo-centro-de-negocios"
             element={
-              <PrivateRoute>
+              //<PrivateRoute>
                 <NuevoCentroDeNegocios />
-              </PrivateRoute>
+              //</PrivateRoute>
             }
           />
           <Route
             path="/perfil/:idUsuario"
             element={
-              <PrivateRoute>
+              //<PrivateRoute>
                 <Perfil />
-              </PrivateRoute>
+              //</PrivateRoute>
             }
           />
           <Route path="/*" element={NotFound} />

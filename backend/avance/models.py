@@ -3,13 +3,8 @@ from obras.models import Obras
 
 # Create your models here.
 
-class AvanceReal(models.Model):
+class Avances(models.Model):
+    id_obra = models.ForeignKey(Obras, on_delete=models.CASCADE)
     fecha = models.DateField()
     porcentaje = models.IntegerField()
-    id_obra = models.ForeignKey(Obras, on_delete=models.CASCADE)
-    
-class AvanceProyectado(models.Model):
-    fecha = models.DateField()
-    porcentaje = models.IntegerField()
-    id_obra = models.ForeignKey(Obras, on_delete=models.CASCADE)
-    
+    tipo = models.CharField(max_length=255, null=False)

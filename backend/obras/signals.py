@@ -2,25 +2,25 @@ from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
 from django.db.models import Max
 from .models import  Obras
-from avance.models import AvanceReal
+from avance.models import Avances
 from files.models import File
 
 print("Registrando handlers de signals")
 
-@receiver(post_save, sender=AvanceReal)
+@receiver(post_save, sender=Avances)
 def actualizar_porcentaje_avance(sender, instance, created, **kwargs):
     if created:
         id_obra = instance.id_obra_id
-        ultimo_avance = AvanceReal.objects.filter(id_obra=id_obra).aggregate(Max('fecha'))
+        ultimo_avance = Avances.objects.filter(id_obra=id_obra, tipo='real').aggregate(Max('fecha'))
         if ultimo_avance['fecha__max']:
-            ultimo_porcentaje = AvanceReal.objects.filter(id_obra=id_obra, fecha=ultimo_avance['fecha__max']).first().porcentaje
+            ultimo_porcentaje = Avances.objects.filter(id_obra=id_obra, fecha=ultimo_avance['fecha__max']).first().porcentaje
             Obras.objects.filter(id=id_obra).update(porc_avance=ultimo_porcentaje)
 
-@receiver(post_delete, sender=AvanceReal)
+@receiver(post_delete, sender=Avances)
 def eliminar_actualizar_porcentaje_avance(sender, instance, **kwargs):
     id_obra = instance.id_obra_id
     print('antes del if')
-    avances = AvanceReal.objects.filter(id_obra=id_obra).order_by('-fecha')
+    avances = Avances.objects.filter(id_obra=id_obra).order_by('-fecha')
 
     if avances.exists():
         print('dentro del if')

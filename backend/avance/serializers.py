@@ -1,12 +1,8 @@
 from rest_framework import serializers
-from .models import AvanceProyectado, AvanceReal
+from .models import Avances
 
-class AProyectadoSerializer(serializers.ModelSerializer):
+class AvancesSerializer(serializers.ModelSerializer):
     class Meta:
-        model = AvanceProyectado
+        model = Avances
         fields = '__all__'
         
-class ARealSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = AvanceReal
-        fields = '__all__'

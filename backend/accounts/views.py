@@ -24,7 +24,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 
 
 class CustomTokenObtainPairView(TokenObtainPairView):
-    print(f"Entrando a vista mi_vista para URL {request.path}")
+    
     serializer_class = CustomTokenObtainPairSerializer
     
 class RegisterView(generics.CreateAPIView):
