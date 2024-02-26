@@ -1,10 +1,10 @@
-import Sidebar from "../Sidebar/Sidebar"
+import SidebarV2 from "../SidebarV2/SidebarV2";
 import './Dashboard.css'
 
 const Dashboard = () => {
     return (
       <div className="DashboardContainer">
-        <Sidebar />
+        <SidebarV2 />
         dashboard
       </div>
     )

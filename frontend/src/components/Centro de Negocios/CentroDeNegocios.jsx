@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import Sidebar from "../Sidebar/Sidebar";
+import SidebarV2 from "../SidebarV2/SidebarV2";
 import "./CentroDeNegocios.css";
 import { useState, useEffect, useContext } from "react";
 import axios from "axios";
@@ -38,7 +38,7 @@ const CentroDeNegocios = () => {
 
   return (
     <div className="CentroNegociosContainer">
-      <Sidebar />
+      <SidebarV2 />
       <div className="RecuadroCentroNegocios">
         <div className="Titulo">
           <h5>Tabla Centro de Negocios</h5>

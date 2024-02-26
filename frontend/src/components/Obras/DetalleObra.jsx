@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { PowerBIEmbed } from 'powerbi-client-react';
 import { models } from 'powerbi-client';
 import axios from "axios";
-import Sidebar from "../Sidebar/Sidebar";
+import SidebarV2 from "../SidebarV2/SidebarV2";
 import Button from "react-bootstrap/Button";
 import Modal from 'react-bootstrap/Modal';
 import Form from "react-bootstrap/Form";
@@ -193,10 +193,10 @@ const renderHitosFields = () => {
 
   return (
     <div className="DetalleObraContainer">
-      <Sidebar />
+      <SidebarV2 />
       <div className="RecuadroDetalleObra">
         <div className="Titulo">
-          <h1>Detalle de la obra #{detalleObra.id}</h1>
+          <h1>Detalle de la Obra</h1>
           <Divider/>
           <div className="Botonera">
             {
