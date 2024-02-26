@@ -20,7 +20,7 @@ backend/obras/migrations/
 backend/perfil_usuario/migrations/
 backend/ventas/migrations/
 backend/empresas/migrations/
-
+backend/tipo_obras/migrations/
 # Distribution / packaging
 backend/.Python
 backend/build/
