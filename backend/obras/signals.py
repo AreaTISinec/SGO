@@ -5,6 +5,8 @@ from .models import  Obras
 from avance.models import AvanceReal
 from files.models import File
 
+print("Registrando handlers de signals")
+
 @receiver(post_save, sender=AvanceReal)
 def actualizar_porcentaje_avance(sender, instance, created, **kwargs):
     if created:
