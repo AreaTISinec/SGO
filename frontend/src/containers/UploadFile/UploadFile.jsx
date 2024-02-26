@@ -3,7 +3,7 @@ import Form from "react-bootstrap/Form";
 import { upload } from "../../actions/docs";
 import {  useState } from "react";
 import { useParams } from "react-router-dom";
-import Sidebar from "../../components/Sidebar/Sidebar";
+import SidebarV2 from "../../components/SidebarV2/SidebarV2";
 import "./UploadFile.css";
 
 const UploadFile = () => {
@@ -37,7 +37,7 @@ const UploadFile = () => {
 
   return (
     <div className="UploadContainer">
-      <Sidebar />
+      <SidebarV2 />
       <div className="RecuadroUploadFiles">
         <div>
           <Form onSubmit={(e) => onSubmit(e)}>

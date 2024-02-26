@@ -8,7 +8,7 @@
   align-items: center;
   justify-content: center;
   width: 85%;
-  max-height: 80vh;
+  height: 80vh;
   overflow-y: auto;
   margin: 50px auto;
   background-color: #f9f9f9;

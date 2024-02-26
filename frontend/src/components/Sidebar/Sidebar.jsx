@@ -70,6 +70,7 @@ const Sidebar = () => {
         <div className="Despliegue">
           <Despliegue />
         </div>
+        <div style={{ visibility: "hidden" }}></div>
       </div>
     </div>
   );

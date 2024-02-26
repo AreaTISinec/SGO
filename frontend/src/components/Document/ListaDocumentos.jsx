@@ -3,7 +3,7 @@ import Button from "react-bootstrap/Button";
 import Accordion from 'react-bootstrap/Accordion';
 import ListGroup from 'react-bootstrap/ListGroup';
 import axios from "axios";
-import Sidebar from "../Sidebar/Sidebar";
+import SidebarV2 from "../SidebarV2/SidebarV2";
 import "./ListaDocumentos.css";
 
 const ListaDocumentos = () => {
@@ -46,7 +46,7 @@ const ListaDocumentos = () => {
 
   return (
     <div className="ListaDocumentoContainer">
-      <Sidebar />
+      <SidebarV2 />
       <div className="RecuadroListaDocumentos">
         <div className="Titulo">
           <h1>Documentos de la obra</h1>

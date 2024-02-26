@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { PowerBIEmbed } from 'powerbi-client-react';
 import { models } from 'powerbi-client';
 import axios from "axios";
-import Sidebar from "../Sidebar/Sidebar";
+import SidebarV2 from "../SidebarV2/SidebarV2";
 import Button from "react-bootstrap/Button";
 import Modal from 'react-bootstrap/Modal';
 import Form from "react-bootstrap/Form";
@@ -189,7 +189,7 @@ const renderHitosFields = () => {
 
   return (
     <div className="DetalleObraContainer">
-      <Sidebar />
+      <SidebarV2 />
       <div className="RecuadroDetalleObra">
         <div className="Titulo">
           <h1>Detalle de la obra</h1>
@@ -260,7 +260,8 @@ const renderHitosFields = () => {
               <div className="Dato"><strong>Observaciones</strong><strong>{detalleObra.observaciones}</strong></div>
               <div className="Dato"><strong>Porcentaje de Avance</strong><strong>{detalleObra.porc_avance} %</strong>
               <>
-                <Button onClick={handleShowAR} variant="danger" className="boton-avance">subir avance</Button>
+                <Button onClick={handleShowAR} variant="danger" className="boton-avance">
+                </Button>
                 <Modal show={showAR} onHide={handleCloseAR}>
                   <Modal.Header closeButton>
                     <Modal.Title>Ingrese el Avance</Modal.Title>

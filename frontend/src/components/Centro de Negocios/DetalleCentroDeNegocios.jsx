@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import Sidebar from "../Sidebar/Sidebar";
+import SidebarV2 from "../SidebarV2/SidebarV2";
 import "./DetalleCentroDeNegocios.css";
 import axios from "axios";
 import { useState, useEffect } from "react";
@@ -22,7 +22,7 @@ const DetalleCentroDeNegocios = () => {
 
   return (
     <div className="DetalleCentroNegociosContainer">
-      <Sidebar />
+      <SidebarV2 />
       <div className="RecuadroDetalleCentroNegocios">
         <div className="Titulo">
           <h1>Detalle del Centro de Negocios</h1>

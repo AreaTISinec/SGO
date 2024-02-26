@@ -1,5 +1,5 @@
 import { useContext, useEffect } from "react";
-import Sidebar from "../../components/Sidebar/Sidebar.jsx";
+import SidebarV2 from "../../components/SidebarV2/SidebarV2";
 import AuthContext from "../../context/AuthContext"
 import axios from "axios";
 import "./Home.css";
@@ -26,7 +26,7 @@ const Home =  () => {
   },[])
   return (
     <main className="HomeContainer">
-      <Sidebar />
+      <SidebarV2 />
       <div className="RecuadrosHome">
         <div className="RecuadroUno">Obras</div>
         <div className="RecuadroDos">Resumen</div>

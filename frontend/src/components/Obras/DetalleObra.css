@@ -85,3 +85,8 @@
   align-self: center;
   margin-right: 10px;
 }
+.subida{
+  width: 25px;
+  align-items: center;
+  height: 25px;
+}

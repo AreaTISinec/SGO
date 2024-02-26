@@ -1,4 +1,4 @@
-import Sidebar from "../../components/Sidebar/Sidebar.jsx";
+import SidebarV2 from "../SidebarV2/SidebarV2";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import "./NuevoCentroDeNegocios.css";
@@ -43,7 +43,7 @@ const NuevoCentroDeNegocios = () => {
 
   return (
     <div className="NuevoCentroDeNegociosContainer">
-      <Sidebar />
+      <SidebarV2 />
       <div className="RecuadroNuevoCentroDeNegocios">
         <div>
           <Form className="formularioNuevoCene" onSubmit={onSubmit}>

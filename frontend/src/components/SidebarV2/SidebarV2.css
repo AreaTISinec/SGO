@@ -1,0 +1,44 @@
+.SidebarContainerInvisible {
+    display: flex;
+    flex-direction: column;
+    width: auto;
+    transition: transform 0.3s ease-in-out;
+    background-color: #f4f4f4;
+    height: auto;
+    width: 6vh;
+    color: #333333;
+  }
+  
+  .SidebarContainerVisible {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f4f4f4;
+    transform: translateX(0);
+    width: auto;
+    color: #333333;
+    height: auto;
+    width: 17vh;
+  }
+
+  .BotonNavigate{
+    font-size: 1.2rem;
+    width: 125px;
+    background-color: #f26077;
+    color: #fff;
+    border: 0.1rem solid;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+    outline: none;
+  }
+
+  .BotoneraNavegacion:hover {
+    background-color: #ce0e2d;
+  }
+
+  .BotonDespliegue{
+    align-self: start;
+  }

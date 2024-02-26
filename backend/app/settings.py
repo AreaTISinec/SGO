@@ -102,10 +102,10 @@ WSGI_APPLICATION = 'app.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'sgo1',
-        'USER': 'SGOsinec',
-        'PASSWORD': 'Sinec2k24',
-        'HOST': 'sgo.mysql.database.azure.com',
+        'NAME': 'bddsgo1',
+        'USER': 'sgoadmin',
+        'PASSWORD': 'Sinec2024',
+        'HOST': 'bddsgo.mysql.database.azure.com',
         'PORT': '3306',
         'OPTIONS': {
             'ssl':{

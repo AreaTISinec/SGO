@@ -15,6 +15,7 @@ import NuevoCentroDeNegocios from "../components/Centro de Negocios/NuevoCentroD
 import { Route, Routes } from "react-router-dom";
 import ReqFiles from "../containers/UploadFile/ReqFiles";
 import Perfil from "../components/Perfil/Perfil";
+import SidebarV2 from "../components/SidebarV2/SidebarV2";
 
 const AppRouter = () => {
 
@@ -111,6 +112,12 @@ const AppRouter = () => {
               <PrivateRoute>
                 <Perfil />
               </PrivateRoute>
+            }
+          />
+          <Route
+            path="/nuevo-sidebar"
+            element={
+                <SidebarV2 />
             }
           />
           <Route path="/*" element={NotFound} />
