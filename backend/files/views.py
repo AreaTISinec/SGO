@@ -40,8 +40,11 @@ class ListFilesView(ListAPIView):
     serializer_class = FileSerializer
     pagination_class = None
     def get_queryset(self):
-        queryset = File.objects.filter(is_deleted=0)
+        obra_id = self.kwargs["obra_id"]
+        queryset = File.objects.filter(is_deleted=0, id_obra=obra_id)
         return queryset
+    
+        
 class DownloadFileView(APIView):
     permission_classes = (permissions.AllowAny,)
     serializer_class = FileSerializer
