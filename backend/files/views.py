@@ -8,7 +8,7 @@ from rest_framework.response import Response
 from django.http import HttpResponse, StreamingHttpResponse
 
 
-from .azure_file_controller import ALLOWED_EXTENTIONS, upload_file_to_blob, download_blob_to_file, download_blob_to_stream
+from .azure_file_controller import ALLOWED_EXTENTIONS, upload_file_to_blob, download_blob_to_stream
 
 from django.views import View
 from django.shortcuts import render, HttpResponse, Http404

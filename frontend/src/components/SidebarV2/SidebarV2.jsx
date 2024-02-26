@@ -25,7 +25,7 @@ const SidebarV2 = () => {
                             >&lt;</Button>
                             
                         </div>
-                        <div>
+                        <div className="botonera">
                             <button
                                 className="BotonNavigate"
                                 onClick={() => {navigate("/home")}}

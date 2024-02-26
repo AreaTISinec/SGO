@@ -1,11 +1,12 @@
 .SidebarContainerInvisible {
     display: flex;
     flex-direction: column;
+    justify-content: flex-start;
     width: auto;
     transition: transform 0.3s ease-in-out;
     background-color: #f4f4f4;
     height: auto;
-    width: 6vh;
+    width: auto;
     color: #333333;
   }
   
@@ -13,13 +14,13 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    align-items: center;
+    justify-content: flex-start;
     background-color: #f4f4f4;
     transform: translateX(0);
     width: auto;
     color: #333333;
     height: auto;
-    width: 17vh;
+    width: auto;
   }
 
   .BotonNavigate{
@@ -41,4 +42,11 @@
 
   .BotonDespliegue{
     align-self: start;
+  }
+
+  .botonera{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    margin-top: 25px;
   }

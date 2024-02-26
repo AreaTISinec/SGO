@@ -2,45 +2,40 @@ from rest_framework.views import APIView
 from rest_framework import	permissions, status
 from rest_framework.generics import ListAPIView, DestroyAPIView
 from rest_framework.response import Response
-from .serializers import AProyectadoSerializer, ARealSerializer
-from .models import AvanceProyectado, AvanceReal
+from .serializers import AvancesSerializer
+from .models import Avances
 
 # Create your views here.
-class UploadAvanceReal(APIView):
+
+class UploadAvance(APIView):
     permission_classes = (permissions.AllowAny, )
+    
     def post(self, request):
-        serializer = ARealSerializer(data=request.data)
+        serializer = AvancesSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(status=status.HTTP_201_CREATED)
         return Response(status=status.HTTP_400_BAD_REQUEST)
     
-class UploadAvanceProyectado(APIView):
+class AvanceListView(ListAPIView):
     permission_classes = (permissions.AllowAny, )
-    
-    def post(self, request):
-        serializer = AProyectadoSerializer(data=request.data)
-        print(serializer)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(status=status.HTTP_201_CREATED)
-        return Response(status=status.HTTP_400_BAD_REQUEST)
-    
-class AvanceProyectadoView(ListAPIView):
-    permission_classes = (permissions.AllowAny, )
-    queryset = AvanceProyectado.objects.all()
-    serializer_class = AProyectadoSerializer
+    queryset = Avances.objects.all()
+    serializer_class = AvancesSerializer
     pagination_class = None
     
-class AvanceRealView(ListAPIView):
+class AvanceListByTypeView(ListAPIView):
     permission_classes = (permissions.AllowAny, )
-    queryset = AvanceReal.objects.all()
-    serializer_class = ARealSerializer
+    serializer_class = AvancesSerializer
     pagination_class = None
+    def get_queryset(self, request, type, id_obra):
+        queryset = Avances.objects.filter(id_obra=id_obra)
+        queryset = queryset.filter(tipo=type)
+        return queryset
+    
     
 class EliminarAvance(DestroyAPIView):
-    serializer_class = ARealSerializer
+    serializer_class = AvancesSerializer
     def get_queryset(self):
         id_obra = self.kwargs["pk"]
-        queryset = AvanceReal.objects.filter(id=id_obra) 
+        queryset = Avances.objects.filter(id=id_obra) 
         return queryset

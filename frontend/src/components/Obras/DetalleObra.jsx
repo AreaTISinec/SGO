@@ -10,6 +10,10 @@ import Form from "react-bootstrap/Form";
 import "./DetalleObra.css";
 import  useForm  from '../../utils/useForm'
 import { uploadAvanceReal, uploadAvanceProyectado } from "../../actions/newAvance"; 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowUpFromBracket } from '@fortawesome/free-solid-svg-icons'
+import Divider from '@mui/material/Divider';
+
 
 const DetalleObra = () => {
   const { idObra } = useParams();
@@ -192,111 +196,121 @@ const renderHitosFields = () => {
       <SidebarV2 />
       <div className="RecuadroDetalleObra">
         <div className="Titulo">
-          <h1>Detalle de la obra</h1>
-          {
-            detalleObra && detalleObra.gantt && detalleObra.presupuesto ? //agregar detalleObra.cubicacion pq es obligatorio
-            <Link  className="BotonNuevaObra" to={"./nuevo-documento"}>
-              <Button variant="danger">Subir documento</Button>
-            </Link>
-            :
-            <Link className="BotonNuevaObra" to={"./req-documento"}>
-              <Button variant="danger">Subir documento</Button>
-            </Link>
+          <h1>Detalle de la Obra</h1>
+          <Divider/>
+          <div className="Botonera">
+            {
+              detalleObra && detalleObra.gantt && detalleObra.presupuesto ? //agregar detalleObra.cubicacion pq es obligatorio
+              <Link  className="BotonNuevaObra" to={"./nuevo-documento"}>
+                <Button variant="danger">Subir documento</Button>
+              </Link>
+              :
+              <Link className="BotonNuevaObra" to={"./req-documento"}>
+                <Button variant="danger">Subir documento</Button>
+              </Link>
 
-          }
-          <Link className="BotonNuevaObra" to={"./documentos"}> {/*ver la url */}
-            <Button variant="danger">Ver documentos</Button>
-          </Link>
-          {
-            detalleObra && !detalleObra.is_avance ?
-            <>
-              <Button onClick={handleShowAP} variant="danger" className="boton-avance">Subir Avance Proyectado</Button>
-                  <Modal show={showAP} onHide={handleCloseAP}>
+            }
+            <Link className="BotonNuevaObra" to={"./documentos"}> {/*ver la url */}
+              <Button variant="danger">Ver documentos</Button>
+            </Link>
+            {
+              detalleObra && !detalleObra.is_avance ?
+              <span className="BotonNuevaObra">
+                <Button onClick={handleShowAP} variant="danger" >Subir avance Proyectado</Button>
+                    <Modal show={showAP} onHide={handleCloseAP}>
+                      <Modal.Header closeButton>
+                        <Modal.Title>Definir Avance Proyectado</Modal.Title>
+                      </Modal.Header>
+                      <Modal.Body>
+                        <Form onSubmit={avanceProyecSubmit}>
+                          <Form.Group>
+                            <Form.Label>Ingrese la cantidad de hitos</Form.Label>
+                            <Form.Control 
+                              type="number"
+                              name="hitos"
+                              onChange={(e)=>{
+                                setNumHitos(parseInt(e.target.value))
+                              }}
+                              required
+                            />
+                          </Form.Group>
+
+                        {renderHitosFields()}
+                        
+                        <Button variant="primary" type="onSubmit" disabled={errores.some(e => {
+                          if(e)
+                            return e.message !== ''
+                        }) }>
+                          Guardar Avance
+                        </Button>
+                        </Form>
+                      </Modal.Body>
+                    </Modal>
+              </span>:
+              <></>
+            }
+
+          </div>
+        </div>
+        <>
+          {detalleObra &&  (
+            <div className="DetalleDeLaObra">
+              <div className="DataContainer">
+              <div className="divider"><Divider variant="middle" textAlign="left">Fechas</Divider></div>
+                <div className="Dato"><strong>Inicio:</strong><span className="value-dato">{detalleObra.fecha_inicio}</span></div>
+                <div className="Dato"><strong>Termino:</strong><span className="value-dato">{detalleObra.fecha_termino}</span></div>
+                <div className="Dato"><strong>Asignacion:</strong><span className="value-dato">{detalleObra.fecha_asignacion}</span></div>
+                <div className="divider"><Divider variant="middle" textAlign="left">Ubicacion</Divider></div>
+                <div className="Dato"><strong>Empresa:</strong><span className="value-dato">{detalleObra.empresa}</span></div>
+                <div className="Dato"><strong>Direccion:</strong><span className="value-dato">{detalleObra.direccion}</span></div>
+                <div className="Dato"><strong>Comuna:</strong><span className="value-dato">{detalleObra.comuna}</span></div>
+                <div className="divider"><Divider variant="middle" textAlign="left">Obra</Divider></div>
+                <div className="Dato"><strong>Tipo de Obra:</strong><span className="value-dato">{detalleObra.tipo_obra}</span></div>
+                <div className="Dato"><strong>Estado de Obra:</strong><span className="value-dato">{detalleObra.estado_obra}</span></div>
+                <div className="Dato"><strong>Porcentaje de Avance:</strong><div className="porcentaje-cont"><span className="value-dato">{detalleObra.porc_avance} %</span>
+                <> 
+                  <Button onClick={handleShowAR} variant="secondary" className="boton-avance"><FontAwesomeIcon icon={faArrowUpFromBracket} /></Button>
+                  <Modal show={showAR} onHide={handleCloseAR}>
                     <Modal.Header closeButton>
-                      <Modal.Title>Definir Avance Proyectado</Modal.Title>
+                      <Modal.Title>Ingrese el Avance</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                      <Form onSubmit={avanceProyecSubmit}>
+                      <Form onSubmit={avanceRealSubmit}>
                         <Form.Group>
-                          <Form.Label>Ingrese la cantidad de hitos</Form.Label>
+                          <Form.Label></Form.Label>
                           <Form.Control 
-                            type="number"
-                            name="hitos"
-                            onChange={(e)=>{
-                              setNumHitos(parseInt(e.target.value))
-                            }}
+                            type="date"
+                            name="fecha"
+                            onChange={onInputChange}
                             required
                           />
                         </Form.Group>
-
-                      {renderHitosFields()}
-                      
-                      <Button variant="primary" type="onSubmit" disabled={errores.some(e => {
-                        if(e)
-                          return e.message !== ''
-                      }) }>
+                        <Form.Group>
+                          <Form.Label></Form.Label>
+                          <Form.Control 
+                            type="number"
+                            name="porcentaje"
+                            placeholder="Ingrese el porcentaje de avance "
+                            onChange={onInputChange}
+                            required
+                          />
+                        </Form.Group>
+                      <Button variant="primary" type="onSubmit" >
                         Guardar Avance
                       </Button>
                       </Form>
                     </Modal.Body>
                   </Modal>
-            </>:
-            <></>
-          }
-        </div>
-        <>
-          {detalleObra &&  (
-            <div className="DetalleDeLaObra">
-              <div className="Dato"><strong>ID de la obra</strong><strong>{detalleObra.id}</strong></div>
-              <div className="Dato"><strong>Fecha de Inicio</strong><strong>{detalleObra.fecha_inicio}</strong></div>
-              <div className="Dato"><strong>Termino</strong><strong>{detalleObra.fecha_termino}</strong></div>
-              <div className="Dato"><strong>Asignacion</strong><strong>{detalleObra.fecha_asignacion}</strong></div>
-              <div className="Dato"><strong>Monto Neto</strong><strong>{detalleObra.monto_neto}</strong></div>
-              <div className="Dato"><strong>Empresa</strong><strong>{detalleObra.empresa}</strong></div>
-              <div className="Dato"><strong>Direccion</strong><strong>{detalleObra.direccion}</strong></div>
-              <div className="Dato"><strong>Comuna</strong><strong>{detalleObra.comuna}</strong></div>
-              <div className="Dato"><strong>Tipo de Obra</strong><strong>{detalleObra.tipo_obra}</strong></div>
-              <div className="Dato"><strong>Estado de Obra</strong><strong>{detalleObra.estado_obra}</strong></div>
-              <div className="Dato"><strong>Observaciones</strong><strong>{detalleObra.observaciones}</strong></div>
-              <div className="Dato"><strong>Porcentaje de Avance</strong><strong>{detalleObra.porc_avance} %</strong>
-              <>
-                <Button onClick={handleShowAR} variant="danger" className="boton-avance">
-                </Button>
-                <Modal show={showAR} onHide={handleCloseAR}>
-                  <Modal.Header closeButton>
-                    <Modal.Title>Ingrese el Avance</Modal.Title>
-                  </Modal.Header>
-                  <Modal.Body>
-                    <Form onSubmit={avanceRealSubmit}>
-                      <Form.Group>
-                        <Form.Label></Form.Label>
-                        <Form.Control 
-                          type="date"
-                          name="fecha"
-                          onChange={onInputChange}
-                          required
-                        />
-                      </Form.Group>
-                      <Form.Group>
-                        <Form.Label></Form.Label>
-                        <Form.Control 
-                          type="number"
-                          name="porcentaje"
-                          placeholder="Ingrese el porcentaje de avance "
-                          onChange={onInputChange}
-                          required
-                        />
-                      </Form.Group>
-                    <Button variant="primary" type="onSubmit" >
-                      Guardar Avance
-                    </Button>
-                    </Form>
-                  </Modal.Body>
-                </Modal>
-              </>
+                </>
+                </div></div>
+                <div className="divider"><Divider variant="middle" textAlign="left">Montos</Divider></div>
+                <div className="Dato"><strong>Monto Neto:</strong><span className="value-dato">{detalleObra.monto_neto}</span></div>
+                <div className="Dato"><strong>Monto Facturado:</strong><span className="value-dato">{detalleObra.monto_facturado}</span></div>
+                <div className="Dato"><strong>Saldo Facturado:</strong><span className="value-dato">{detalleObra.saldo_facturado}</span></div>
+                <div className="divider"><Divider/></div>
+                <div className="Dato obs"><strong>Observaciones:</strong><span className="value-dato">{detalleObra.observaciones}</span></div>
+
               </div>
-              <div className="Dato"><strong>Monto Facturado</strong><strong>{detalleObra.monto_facturado}</strong></div>
-              <div className="Dato"><strong>Saldo Facturado</strong><strong>{detalleObra.saldo_facturado}</strong></div>
               <div className="reportClass">  
                 <PowerBIEmbed
                 embedConfig = {{
