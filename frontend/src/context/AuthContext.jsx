@@ -4,7 +4,6 @@ import { jwtDecode } from "jwt-decode";
 import { useNavigate} from "react-router-dom";
 import swal from 'sweetalert2';
 import axios from "axios";
-// import Child from './Child.jsx'
 
 
 const AuthContext = createContext();
@@ -27,10 +26,20 @@ export const AuthProvider = ({ children }) => {
             : null
     );
 
+     const [profile, setProfile] = useState({})
+
+    
 
     const [loading, setLoading] = useState(true);
 
-    //const history = useNavigate();
+    const uploadDataProfile = async ()=> {
+        try {
+            const res = await axios.get(`http://127.0.0.1:8000/api/profile/${user.user_id}/`)
+            setProfile(res)
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     const loginUser = async (email, password) => {
 
@@ -62,6 +71,7 @@ export const AuthProvider = ({ children }) => {
                 timerProgressBar: true,
                 showConfirmButton: false,
             })
+            uploadDataProfile()
             return navigate('/home')
         } else {    
             console.log(response.status);
@@ -114,6 +124,8 @@ export const AuthProvider = ({ children }) => {
         }
     }
 
+    
+
 
 
 
@@ -156,6 +168,7 @@ export const AuthProvider = ({ children }) => {
         registerUser,
         loginUser,
         logoutUser,
+        profile,
     }
 
     useEffect(() => {

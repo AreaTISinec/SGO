@@ -100,7 +100,7 @@ const Perfil = () => {
           {
             Object.keys(infoUser).length !== 0 ?
             (<>
-              <Button onClick={handleShowAP} variant="danger" className="boton-avance">Editar Perfil</Button>
+              <Button onClick={handleShowAP} variant="danger" className="">Editar Perfil</Button>
                   <Modal show={showAP} onHide={handleCloseAP}>
                     <Modal.Header closeButton>
                       <Modal.Title>Editar perfil</Modal.Title>

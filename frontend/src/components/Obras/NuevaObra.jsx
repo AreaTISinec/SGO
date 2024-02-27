@@ -10,7 +10,9 @@ import axios from "axios";
 import dataComunas from '../../utils/comunas.json'
 
 const NuevaObra = () => {
-  const {user} = useContext(AuthContext);
+  const {user, profile} = useContext(AuthContext);
+
+  console.log(profile)
 
   const [empresas, setEmpresas] = useState([]);
   const [tiposObra, setTiposObra] = useState([]);
