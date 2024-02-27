@@ -22,8 +22,6 @@ const DetalleObra = () => {
   const [showAP, setShowAP] = useState(false);
   const [numHitos, setNumHitos] = useState(0);
   const [hitos, setHitos] = useState([{
-    fecha: '2020-01-01',
-    porcentaje: 0
   }])
   const [errores, setErrores] = useState([]);
   // const [avanceProyectado, setAvanceProyectado] = useState([])
