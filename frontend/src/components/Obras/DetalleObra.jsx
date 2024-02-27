@@ -43,11 +43,11 @@ const DetalleObra = () => {
   const avanceRealSubmit = (e) => {
     e.preventDefault();
 
-    if(porcentaje > detalleObra.porc_avance && porcentaje <= 100) {
+    if(porcentaje > detalleObra.porc_avance_operativo && porcentaje <= 100) {
       uploadAvanceReal(fecha, porcentaje, idObra);
       setDetalleObra((prevState) => ({
         ...prevState,
-        porc_avance: porcentaje
+        porc_avance_operativo: porcentaje
       }));
     } else {
       console.log('Ingrese el porcentaje correcto');
@@ -267,7 +267,7 @@ const renderHitosFields = () => {
                 <div className="divider"><Divider variant="middle" textAlign="left"><strong>Obra</strong></Divider></div>
                 <div className="Dato"><strong>Tipo de Obra:</strong><span className="value-dato">{detalleObra.tipo_obra}</span></div>
                 <div className="Dato"><strong>Estado de Obra:</strong><span className="value-dato">{detalleObra.estado_obra}</span></div>
-                <div className="Dato"><strong>Porcentaje de Avance:</strong><div className="porcentaje-cont"><span className="value-dato">{detalleObra.porc_avance} %</span>
+                <div className="Dato"><strong>Porcentaje de Avance:</strong><div className="porcentaje-cont"><span className="value-dato">{detalleObra.porc_avance_operativo} %</span>
                 <> 
                   <Button onClick={handleShowAR} variant="secondary" className="boton-avance"><FontAwesomeIcon icon={faArrowUpFromBracket} /></Button>
                   <Modal show={showAR} onHide={handleCloseAR}>
@@ -304,9 +304,9 @@ const renderHitosFields = () => {
                 </>
                 </div></div>
                 <div className="divider"><Divider variant="middle" textAlign="left"><strong>Montos</strong></Divider></div>
-                <div className="Dato"><strong>Monto Neto:</strong><span className="value-dato">{detalleObra.monto_neto}</span></div>
+                <div className="Dato"><strong>Presupuesto:</strong><span className="value-dato">{detalleObra.presupuesto}</span></div>
                 <div className="Dato"><strong>Monto Facturado:</strong><span className="value-dato">{detalleObra.monto_facturado}</span></div>
-                <div className="Dato"><strong>Saldo Facturado:</strong><span className="value-dato">{detalleObra.saldo_facturado}</span></div>
+                <div className="Dato"><strong>Monto por facturar:</strong><span className="value-dato">{detalleObra.monto_por_facturar}</span></div>
                 <div className="divider"><Divider/></div>
                 <div className="Dato obs"><strong>Observaciones:</strong><span className="value-dato">{detalleObra.observaciones}</span></div>
 
