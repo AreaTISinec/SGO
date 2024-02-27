@@ -18,7 +18,7 @@ ALLOWED_EXTENTIONS = ['.pdf', '.doc', '.docx', '.xlsx']
 
 def create_blob_client(file_name, tipo):
     
-    c_string = 'DefaultEndpointsProtocol=https;AccountName=doccontenedor;AccountKey=VTtHPcpKr4jXLVCmw+OMhv5xgm6hxLETNvNlbtoWD4VndrIeCvf52PwZipwnmprGWJN6KOkGsT/L+AStIYQ0oQ==;EndpointSuffix=core.windows.net'
+    c_string = 'DefaultEndpointsProtocol=https;AccountName=sgo01storage;AccountKey=gLztdn4MxjrMUQ/htxFlmVcuCLAVSq08ei0K/zRQFSxDmmPJRhbODnr9XC4fiPrLboobeB5xvuBE+AStsvcdTQ==;EndpointSuffix=core.windows.net'
     blob_service_client = BlobServiceClient.from_connection_string(c_string)
     container_name = tipo
     blob_client = blob_service_client.get_blob_client(container=container_name, blob=file_name)
@@ -42,7 +42,7 @@ def upload_file_to_blob(file, tipo, id_obra):
     return file_object
     
 def download_blob_to_file(  container_name, blob_name):
-    c_string = 'DefaultEndpointsProtocol=https;AccountName=doccontenedor;AccountKey=VTtHPcpKr4jXLVCmw+OMhv5xgm6hxLETNvNlbtoWD4VndrIeCvf52PwZipwnmprGWJN6KOkGsT/L+AStIYQ0oQ==;EndpointSuffix=core.windows.net'
+    c_string = 'DefaultEndpointsProtocol=https;AccountName=sgo01storage;AccountKey=gLztdn4MxjrMUQ/htxFlmVcuCLAVSq08ei0K/zRQFSxDmmPJRhbODnr9XC4fiPrLboobeB5xvuBE+AStsvcdTQ==;EndpointSuffix=core.windows.net'
     blob_service_client = BlobServiceClient.from_connection_string(c_string)
     blob_client = blob_service_client.get_blob_client(container=container_name, blob=blob_name)
     
@@ -54,7 +54,7 @@ def download_blob_to_file(  container_name, blob_name):
         
         
 def download_blob_to_stream( container_name, blob_name):
-    c_string = 'DefaultEndpointsProtocol=https;AccountName=doccontenedor;AccountKey=VTtHPcpKr4jXLVCmw+OMhv5xgm6hxLETNvNlbtoWD4VndrIeCvf52PwZipwnmprGWJN6KOkGsT/L+AStIYQ0oQ==;EndpointSuffix=core.windows.net'
+    c_string = 'DefaultEndpointsProtocol=https;AccountName=sgo01storage;AccountKey=gLztdn4MxjrMUQ/htxFlmVcuCLAVSq08ei0K/zRQFSxDmmPJRhbODnr9XC4fiPrLboobeB5xvuBE+AStsvcdTQ==;EndpointSuffix=core.windows.net'
     blob_service_client = BlobServiceClient.from_connection_string(c_string)
     blob_client = blob_service_client.get_blob_client(container=container_name, blob=blob_name)
 

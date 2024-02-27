@@ -1,4 +1,4 @@
-import Sidebar from "../../components/Sidebar/Sidebar.jsx";
+import SidebarV2 from "../SidebarV2/SidebarV2";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import "./NuevaObra.css";
@@ -10,13 +10,16 @@ import axios from "axios";
 import dataComunas from '../../utils/comunas.json'
 
 const NuevaObra = () => {
-  const {user} = useContext(AuthContext);
+  const {user, profile} = useContext(AuthContext);
+
+  console.log(profile)
 
   const [empresas, setEmpresas] = useState([]);
   const [tiposObra, setTiposObra] = useState([]);
   const [estadosObra, setEstadosObra] = useState([]);
   const [comunas, setComunas] = useState([])
   const [cenes, setCene] = useState([])
+  const [supervisores, setSupervisores] = useState([])
 
   const { regiones } = dataComunas
 
@@ -68,11 +71,22 @@ const NuevaObra = () => {
     }
   };
 
+  const getSupervisores = async () => {    try {
+    const { data } = await axios.get(
+      `http://127.0.0.1:8000/api/profile/`
+    );
+    setSupervisores(data);
+  } catch (err) {
+    console.error("Error al obtener datos:", err);
+  }
+};
+
   useEffect(()=> {
     getEmpresas()
     getTiposObra()
     getEstadosObra()
     getCeNe()
+    getSupervisores()
   },[])
 
   const { 
@@ -141,7 +155,7 @@ const NuevaObra = () => {
 
   return (
     <div className="NuevaObra">
-      <Sidebar />
+      <SidebarV2 />
       <div className="RecuadroNuevaObra">
         <div>
           <Form className="formularioNuevaObra" onSubmit={onSubmit}>
@@ -176,55 +190,6 @@ const NuevaObra = () => {
             </Form.Group>
 
             <Form.Group className="mb-3" >
-              <Form.Label>Monto neto</Form.Label>
-              <Form.Control
-                type="text"
-                pattern="[0-9]*"
-                placeholder="Ingrese el monto neto de la obra"
-                name="monto_neto"
-                onChange={onInputChange}
-              />
-            </Form.Group>
-
-            <Form.Group className="mb-3" >
-              <Form.Label>Centro de Negocios</Form.Label>
-              <Form.Select
-               name='id_cene'
-               onChange={onInputChange}
-               >
-                {
-                  cenes.map((cene) => 
-                    <option key={cene.id_cene}  value={cene.id_cene}>{cene.nombre}</option>
-                  )
-                }
-              </Form.Select>
-            </Form.Group>
-
-            <Form.Group className="mb-3" >
-              <Form.Label>Empresa</Form.Label>
-              <Form.Select
-                onChange={onInputChange}
-                name="empresa"
-              >
-                {
-                  empresas.map((empresa)=>(
-                    <option key={empresa.id} value={empresa.nombre}>{empresa.nombre}</option>
-                  ))
-                }
-              </Form.Select>
-            </Form.Group>
-
-            <Form.Group className="mb-3" >
-              <Form.Label>Direccion</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Ingrese la direccion de la obra"
-                name="direccion"
-                onChange={onInputChange}
-              />
-            </Form.Group>
-            
-            <Form.Group className="mb-3" >
               <Form.Label>Region</Form.Label>
               <Form.Select onChange={onChangeSelect}>
                 {regiones.map((region, indice) => 
@@ -243,6 +208,58 @@ const NuevaObra = () => {
                 {
                   comunas.map((comuna)=>
                     <option key={comuna} value={comuna}>{comuna}</option>
+                  )
+                }
+              </Form.Select>
+            </Form.Group>
+
+            <Form.Group className="mb-3" >
+              <Form.Label>Direccion</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Ingrese la direccion de la obra"
+                name="direccion"
+                onChange={onInputChange}
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3" >
+              <Form.Label>Empresa</Form.Label>
+              <Form.Select
+                onChange={onInputChange}
+                name="empresa"
+              >
+                {
+                  empresas.map((empresa)=>(
+                    <option key={empresa.id} value={empresa.nombre}>{empresa.nombre}</option>
+                  ))
+                }
+              </Form.Select>
+            </Form.Group>
+
+            <Form.Group className="mb-3" >
+              <Form.Label>Centro de Negocios</Form.Label>
+              <Form.Select
+               name='id_cene'
+               onChange={onInputChange}
+               >
+                {
+                  cenes.map((cene) => 
+                    <option key={cene.id_cene}  value={cene.id_cene}>{cene.nombre}</option>
+                  )
+                }
+              </Form.Select>
+            </Form.Group>
+
+            <Form.Group className="mb-3" >
+              <Form.Label>Supervisor de la Obra</Form.Label>
+              <Form.Select
+               name=''
+               onChange={onInputChange}
+               >
+                {
+                  supervisores.map((cene) => 
+                    <option key={cene.id_cene}  value={cene.id_cene}>{cene.nombre}</option>
                   )
                 }
               </Form.Select>
@@ -275,6 +292,17 @@ const NuevaObra = () => {
                   ))
                 }
               </Form.Select>
+            </Form.Group>
+
+            <Form.Group className="mb-3" >
+              <Form.Label>Monto neto</Form.Label>
+              <Form.Control
+                type="text"
+                pattern="[0-9]*"
+                placeholder="Ingrese el monto neto de la obra"
+                name="monto_neto"
+                onChange={onInputChange}
+              />
             </Form.Group>
 
             <Form.Group className="mb-3" >

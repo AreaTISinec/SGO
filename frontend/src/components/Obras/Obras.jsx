@@ -1,4 +1,4 @@
-import Sidebar from "../Sidebar/Sidebar";
+import SidebarV2 from "../SidebarV2/SidebarV2";
 import "./Obras.css";
 import { useState, useEffect, useContext } from "react";
 import axios from "axios";
@@ -49,7 +49,7 @@ const Obras = () => {
 
   return (
     <div className="ObrasContainer">
-      <Sidebar />
+      <SidebarV2 />
       <div className="RecuadroListadoObras">
         <div className="Titulo">
           <h5>Tabla de Obras {obrasData.length}</h5>

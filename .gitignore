@@ -24,6 +24,7 @@ backend/asignaciones/migrations/
 backend/estado_obras/migrations/
 backend/tipo_obras/migrations/
 
+
 # Distribution / packaging
 backend/.Python
 backend/build/

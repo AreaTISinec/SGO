@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom"
-import Sidebar from "../Sidebar/Sidebar"
+import SidebarV2 from "../SidebarV2/SidebarV2";
 import './Perfil.css'
 import axios from "axios"
 import { useEffect, useState } from "react"
@@ -87,7 +87,7 @@ const Perfil = () => {
 
   return (
     <div className="PerfilContainer">
-      <Sidebar/>
+      <SidebarV2 />
       <div className="RecuadroPerfil">
         <div className="Titulo">
           <h1>Perfil de Usuario</h1>
@@ -100,7 +100,7 @@ const Perfil = () => {
           {
             Object.keys(infoUser).length !== 0 ?
             (<>
-              <Button onClick={handleShowAP} variant="danger" className="boton-avance">Editar Perfil</Button>
+              <Button onClick={handleShowAP} variant="danger" className="">Editar Perfil</Button>
                   <Modal show={showAP} onHide={handleCloseAP}>
                     <Modal.Header closeButton>
                       <Modal.Title>Editar perfil</Modal.Title>
