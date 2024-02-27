@@ -37,11 +37,11 @@ def eliminar_actualizar_porcentaje_avance(sender, instance, **kwargs):
 def actualizar_req_files(sender, instance, created, **kwargs):
     if created:
         obra = instance.id_obra
-        if instance.tipo == 'gantts':
-            obra.gantt = True
-        elif instance.tipo == 'presupuestos':
-            obra.presupuesto = True
-        elif instance.tipo == 'cubicaciones':
+        if instance.tipo == 'gantt':
+            obra.is_gantt = True
+        elif instance.tipo == 'presupuesto':
+            obra.is_presupuesto = True
+        elif instance.tipo == 'cubicacion':
             ##AÑADIR CAMPO CUBICACION OBLIGATORIO
             pass 
         obra.save()

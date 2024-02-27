@@ -190,7 +190,7 @@ const renderHitosFields = () => {
   }
   return fields;
 };
-
+  console.log(detalleObra)
   return (
     <div className="DetalleObraContainer">
       <SidebarV2 />
@@ -200,7 +200,7 @@ const renderHitosFields = () => {
           <Divider/>
           <div className="Botonera">
             {
-              detalleObra && detalleObra.gantt && detalleObra.presupuesto ? //agregar detalleObra.cubicacion pq es obligatorio
+              detalleObra && detalleObra.is_gantt && detalleObra.is_presupuesto ? //agregar detalleObra.cubicacion pq es obligatorio
               <Link  className="BotonNuevaObra" to={"./nuevo-documento"}>
                 <Button variant="danger">Subir documento</Button>
               </Link>

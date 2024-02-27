@@ -1,10 +1,8 @@
 import axios from "axios"
 
-export const upload = async (doc, nombre, tipo, id) => {
-    console.log('holamundo')
+export const upload = async (doc, tipo, id) => {
     const formData = new FormData();
     formData.append("doc", doc);
-    formData.append("nombre", nombre);
     formData.append("tipo", tipo);
     formData.append("id_obra", id);
 
@@ -21,7 +19,6 @@ export const upload = async (doc, nombre, tipo, id) => {
   }catch(err){
     console.error(err)
     }
-
 };
 
 export const reqUpload = async (doc,tipo, id) => {

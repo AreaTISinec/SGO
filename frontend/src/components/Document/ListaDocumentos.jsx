@@ -11,15 +11,16 @@ const ListaDocumentos = () => {
   const [listadoDeDocumentos, setListadoDeDocumentos] = useState([])
   const { idObra } = useParams()
 
-  useEffect(() => {
-    async function fetchListadoDocumentos() {
-      try {
-        const response = await axios.get(`http://127.0.0.1:8000/api/files/list/${idObra}/`)
-        setListadoDeDocumentos(response.data)
-      } catch (error){
-        console.error('Error fetching de documentos', error)
-      }
+  async function fetchListadoDocumentos() {
+    try {
+      const response = await axios.get(`http://127.0.0.1:8000/api/files/list/${idObra}/`)
+      setListadoDeDocumentos(response.data)
+      console.log("respuesta: ", response)
+    } catch (error){
+      console.error('Error fetching de documentos', error)
     }
+  }
+  useEffect(() => {
     fetchListadoDocumentos();
     console.log(listadoDeDocumentos)
   }, []);
@@ -59,7 +60,7 @@ const ListaDocumentos = () => {
             <Accordion.Body>
               <ListGroup>
                 {listadoDeDocumentos?.map( document => 
-                  {if(document.tipo == 'gantts')
+                  {if(document.tipo == 'gantt')
                     return (
                   <ListGroup.Item className="ListaDocumentosDisponibles" key={document.id}>
                     {document.file_name}
@@ -75,7 +76,7 @@ const ListaDocumentos = () => {
             <Accordion.Body>
               <ListGroup>
               {listadoDeDocumentos?.map( document => 
-                  {if(document.tipo == 'cubicaciones')
+                  {if(document.tipo == 'cubicacion')
                     return (
                   <ListGroup.Item className="ListaDocumentosDisponibles" key={document.id}>
                     {document.file_name}
@@ -107,7 +108,7 @@ const ListaDocumentos = () => {
             <Accordion.Body>
               <ListGroup>
               {listadoDeDocumentos?.map( document => 
-                  {if(document.tipo == 'presupuestos')
+                  {if(document.tipo == 'presupuesto')
                     return (
                   <ListGroup.Item className="ListaDocumentosDisponibles" key={document.id}>
                     {document.file_name}
