@@ -2,10 +2,10 @@
 import SidebarV2 from "../SidebarV2/SidebarV2";
 import "./CentroDeNegocios.css";
 import { useState, useEffect, useContext } from "react";
-import axios from "axios";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
+import { getCeNes, getCeNe } from "../../actions/getPetitions";
 
 const CentroDeNegocios = () => {
   const [centronegocioData, setCentronegocioData] = useState([]);
@@ -13,18 +13,12 @@ const CentroDeNegocios = () => {
 
   const { user } = useContext(AuthContext)
 
-  const getDatos = async () => {
+  const getDatos = () => {
     try {
       if (searchTerm.trim() === "") {
-        const { data } = await axios.get(
-          `http://127.0.0.1:8000/api/cene/`
-        );
-        setCentronegocioData(data);
+        getCeNes(setCentronegocioData)
       }else{
-        const { data } = await axios.get(
-          `http://127.0.0.1:8000/api/cene/search/?search=${searchTerm}`
-          );
-          setCentronegocioData(data);
+        getCeNe(searchTerm, setCentronegocioData)
       }
       
     } catch (err) {

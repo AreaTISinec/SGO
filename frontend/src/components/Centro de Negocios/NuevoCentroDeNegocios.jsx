@@ -4,7 +4,6 @@ import Form from "react-bootstrap/Form";
 import "./NuevoCentroDeNegocios.css";
 import useForm from "../../utils/useForm.jsx";
 import { uploadCene } from "../../actions/newCene.js"
-import axios from "axios";
 import { useState, useEffect } from "react";
 import { getEmpresas } from "../../actions/getPetitions.js";
 

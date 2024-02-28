@@ -6,30 +6,30 @@ import { useNavigate, useParams } from "react-router-dom"
 
 
 const ReqFiles = () => {
-    const { idObra } = useParams();
-    const [ file, setFile] = useState(null)
-    const [gantt, setGantt] = useState(false)
-    const [presupuesto, setPresupuesto] = useState(false)
-    const [cubicacion, setCubicacion] = useState(false)
+  const { idObra } = useParams();
+  const [ file, setFile] = useState(null)
+  const [gantt, setGantt] = useState(false)
+  const [presupuesto, setPresupuesto] = useState(false)
+  const [cubicacion, setCubicacion] = useState(false)
 
-    const onSubmit = (e, tipo) => {
-        e.preventDefault();
-        if(tipo == 'gantt'){
-          reqUpload(file, tipo, idObra)
-          setGantt(true)
-        }else if(tipo == 'presupuesto'){
-          reqUpload(file, tipo, idObra)
-          setPresupuesto(true)
-        }else{
-          reqUpload(file, tipo, idObra)
-          setCubicacion(true)
-        }
+  const onSubmit = (e, tipo) => {
+      e.preventDefault();
+      if(tipo == 'gantt'){
+        reqUpload(file, tipo, idObra)
+        setGantt(true)
+      }else if(tipo == 'presupuesto'){
+        reqUpload(file, tipo, idObra)
+        setPresupuesto(true)
+      }else{
+        reqUpload(file, tipo, idObra)
+        setCubicacion(true)
+      }
+  };
+
+  const onFileChange = (e) => {
+      setFile(e.target.files[0]);
+      console.log(file);
     };
-
-    const onFileChange = (e) => {
-        setFile(e.target.files[0]);
-        console.log(file);
-      };
 
   const navigate = useNavigate()
     

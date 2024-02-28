@@ -6,7 +6,7 @@ import "./Home.css";
 
 const Home =  () => {
   const { user } = useContext(AuthContext);
-  console.log(user.user_id)
+
   const getUser = async () => {
     const config = {
       headers: {

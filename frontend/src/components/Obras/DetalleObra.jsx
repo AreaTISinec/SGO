@@ -2,7 +2,6 @@ import { useParams, Link } from "react-router-dom";
 import { useState, useEffect } from 'react';
 import { PowerBIEmbed } from 'powerbi-client-react';
 import { models } from 'powerbi-client';
-import axios from "axios";
 import SidebarV2 from "../SidebarV2/SidebarV2";
 import Button from "react-bootstrap/Button";
 import Modal from 'react-bootstrap/Modal';
@@ -13,11 +12,15 @@ import { uploadAvanceReal, uploadAvanceProyectado } from "../../actions/newAvanc
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons'
 import Divider from '@mui/material/Divider';
+import { getDetalleObra, getEncargado } from "../../actions/getPetitions.js"
+
 
 
 const DetalleObra = () => {
   const { idObra } = useParams();
   const [detalleObra, setDetalleObra] = useState({});
+  const [supervisor, setSupervisor] = useState([]);
+  const [responsable, setResponsable] = useState([]);
   const [showAR, setShowAR] = useState(false);
   const [showAP, setShowAP] = useState(false);
   const [numHitos, setNumHitos] = useState(0);
@@ -37,7 +40,6 @@ const DetalleObra = () => {
     porcentaje: 0
   })
 
-
   const avanceRealSubmit = (e) => {
     e.preventDefault();
 
@@ -53,7 +55,7 @@ const DetalleObra = () => {
     onResetForm()
     handleCloseAR()
   }
-
+ 
   const onChangeProyectado = (e, index) => {
     const { name, value } = e.target;
   
@@ -112,13 +114,7 @@ const DetalleObra = () => {
     handleCloseAR()
   }
 
-  const getDatos = async () => {
-    const { data } = await axios.get(
-      `http://127.0.0.1:8000/api/obras/${idObra}`
-    );
-    setDetalleObra(data);
-  };
- 
+
   const [accessToken, setAccessToken] = useState('');
 
   useEffect(() => {
@@ -146,8 +142,12 @@ const DetalleObra = () => {
 
 
   useEffect(() => {
-    getDatos();
-  }, []); // Ejecutar efecto solo en el montaje inicial del componente
+    getDetalleObra(idObra, setDetalleObra)
+    getEncargado(detalleObra.supervisor, setSupervisor)
+    getEncargado(detalleObra.responsable, setResponsable)
+    console.log('supervisor', supervisor)
+  }, [detalleObra]); // Ejecutar efecto solo en el montaje inicial del componente
+
 
 
 const renderHitosFields = () => {
@@ -259,8 +259,8 @@ const renderHitosFields = () => {
             <div className="DetalleDeLaObra">
               <div className="DataContainer">
                 <div className="divider"><Divider variant="middle" textAlign="left"><strong>Personal</strong></Divider></div>
-                <div className="Dato"><strong>Responsable:</strong><span className="value-dato">{detalleObra.fecha_inicio}</span></div>
-                <div className="Dato"><strong>Supervisor:</strong><span className="value-dato">{detalleObra.fecha_termino}</span></div>
+                <div className="Dato"><strong>Responsable:</strong><span className="value-dato">{responsable?.nombre} {responsable?.apellido}</span></div>
+                <div className="Dato"><strong>Supervisor:</strong><span className="value-dato">{supervisor?.nombre} {supervisor?.apellido}</span></div>
                 <div className="divider"><Divider variant="middle" textAlign="left"><strong>Fechas</strong></Divider></div>
                 <div className="Dato"><strong>Inicio:</strong><span className="value-dato">{detalleObra.fecha_inicio}</span></div>
                 <div className="Dato"><strong>Termino:</strong><span className="value-dato">{detalleObra.fecha_termino}</span></div>
