@@ -73,7 +73,7 @@ const NuevaObra = () => {
 
   const getSupervisores = async () => {    try {
     const { data } = await axios.get(
-      `http://127.0.0.1:8000/api/profile/`
+      `http://127.0.0.1:8000/api/profile/lista/`
     );
     setSupervisores(data);
   } catch (err) {
@@ -258,8 +258,8 @@ const NuevaObra = () => {
                onChange={onInputChange}
                >
                 {
-                  supervisores.map((cene) => 
-                    <option key={cene.id_cene}  value={cene.id_cene}>{cene.nombre}</option>
+                  supervisores.map((supervisor) => 
+                    <option key={supervisor.id}  value={supervisor.id}>{supervisor.nombre} {supervisor.apellido}</option>
                   )
                 }
               </Form.Select>
