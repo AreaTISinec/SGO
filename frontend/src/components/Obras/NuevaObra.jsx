@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { uploadObra } from "../../actions/newWorks.js"
-import { getEmpresas, getTiposObra, getEstadosObra, getCeNe, getSupervisores } from "../../actions/getPetitions.js";
+import { getEmpresas, getTiposObra, getEstadosObra, getSupervisores, getCeNes } from "../../actions/getPetitions.js";
 import useForm from "../../utils/useForm.jsx";
 import AuthContext from "../../context/AuthContext.jsx";
 import Button from "react-bootstrap/Button";
@@ -27,10 +27,10 @@ const NuevaObra = () => {
     getEmpresas(setEmpresas)
     getTiposObra(setTiposObra)
     getEstadosObra(setEstadosObra)
-    getCeNe(setCene)
+    getCeNes(setCene)
     getSupervisores(setSupervisores)
   },[])
-
+  console.log(supervisores)
   const { 
     fecha_inicio, 
     fecha_termino, 
@@ -196,7 +196,7 @@ const NuevaObra = () => {
             <Form.Group className="mb-3" >
               <Form.Label>Supervisor de la Obra</Form.Label>
               <Form.Select
-               name=''
+               name='supervisor_id'
                onChange={onInputChange}
                >
                 {

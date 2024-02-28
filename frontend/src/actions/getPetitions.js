@@ -66,7 +66,7 @@ export const getCeNes = async (setCeNeCallback) => {
 
 export const getCeNe = async (id, setCeNeCallback) => {
     try {
-        const res = await axios.get(`http://127.0.0.1:8000/api/cene/${id}`);
+        const res = await axios.get(`http://127.0.0.1:8000/api/cene/${id}/`);
         setCeNeCallback(res.data);
     } catch (err) {
         console.error("Error al obtener datos:", err);
@@ -75,7 +75,7 @@ export const getCeNe = async (id, setCeNeCallback) => {
 
 export const getSupervisores = async (setSupervisoresCallback) => {
     try {
-        const res = await axios.get(`http://127.0.0.1:8000/api/profile/`);
+        const res = await axios.get(`http://127.0.0.1:8000/api/profile/lista/`);
         setSupervisoresCallback(res.data);
     } catch (err) {
         console.error("Error al obtener datos:", err);
