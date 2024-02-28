@@ -11,7 +11,7 @@ import "./DetalleObra.css";
 import  useForm  from '../../utils/useForm'
 import { uploadAvanceReal, uploadAvanceProyectado } from "../../actions/newAvance"; 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowUpFromBracket } from '@fortawesome/free-solid-svg-icons'
+import { faPenToSquare } from '@fortawesome/free-solid-svg-icons'
 import Divider from '@mui/material/Divider';
 
 
@@ -188,6 +188,7 @@ const renderHitosFields = () => {
   }
   return fields;
 };
+
   console.log(detalleObra)
   return (
     <div className="DetalleObraContainer">
@@ -210,6 +211,9 @@ const renderHitosFields = () => {
             }
             <Link className="BotonNuevaObra" to={"./documentos"}> {/*ver la url */}
               <Button variant="danger">Ver documentos</Button>
+            </Link>
+            <Link className="BotonNuevaObra" to={"./documentos"}> {/*ver la url */}
+              <Button variant="danger">Avance Financiero</Button>
             </Link>
             {
               detalleObra && !detalleObra.is_avance ?
@@ -254,7 +258,10 @@ const renderHitosFields = () => {
           {detalleObra &&  (
             <div className="DetalleDeLaObra">
               <div className="DataContainer">
-              <div className="divider"><Divider variant="middle" textAlign="left"><strong>Fechas</strong></Divider></div>
+                <div className="divider"><Divider variant="middle" textAlign="left"><strong>Personal</strong></Divider></div>
+                <div className="Dato"><strong>Responsable:</strong><span className="value-dato">{detalleObra.fecha_inicio}</span></div>
+                <div className="Dato"><strong>Supervisor:</strong><span className="value-dato">{detalleObra.fecha_termino}</span></div>
+                <div className="divider"><Divider variant="middle" textAlign="left"><strong>Fechas</strong></Divider></div>
                 <div className="Dato"><strong>Inicio:</strong><span className="value-dato">{detalleObra.fecha_inicio}</span></div>
                 <div className="Dato"><strong>Termino:</strong><span className="value-dato">{detalleObra.fecha_termino}</span></div>
                 <div className="Dato"><strong>Asignacion:</strong><span className="value-dato">{detalleObra.fecha_asignacion}</span></div>
@@ -267,7 +274,7 @@ const renderHitosFields = () => {
                 <div className="Dato"><strong>Estado de Obra:</strong><span className="value-dato">{detalleObra.estado_obra}</span></div>
                 <div className="Dato"><strong>Porcentaje de Avance:</strong><div className="porcentaje-cont"><span className="value-dato">{detalleObra.porc_avance_operativo} %</span>
                 <> 
-                  <Button onClick={handleShowAR} variant="secondary" className="boton-avance"><FontAwesomeIcon icon={faArrowUpFromBracket} /></Button>
+                  <Button onClick={handleShowAR} variant="outline-secondary" className="boton-avance"><FontAwesomeIcon icon={faPenToSquare} /></Button>
                   <Modal show={showAR} onHide={handleCloseAR}>
                     <Modal.Header closeButton>
                       <Modal.Title>Ingrese el Avance</Modal.Title>
