@@ -63,6 +63,7 @@ def actualizar_req_files(sender, instance, created, **kwargs):
 
 #X probar aun
 @receiver(post_save, sender=Obras)
-def actualizar_monto_por_facturar(sender, instance, **kwargs):
-    instance.monto_por_facturar = instance.presupuesto - instance.monto_facturado
-    instance.save()
+def actualizar_monto_por_facturar(sender, instance, created, **kwargs):
+    if not created:
+        monto_por_facturar = instance.presupuesto - instance.monto_facturado
+        Obras.objects.filter(pk=instance.pk).update(monto_por_facturar=monto_por_facturar)

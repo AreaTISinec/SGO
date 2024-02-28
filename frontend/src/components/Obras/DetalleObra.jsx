@@ -212,7 +212,7 @@ const renderHitosFields = () => {
             <Link className="BotonNuevaObra" to={"./documentos"}> {/*ver la url */}
               <Button variant="danger">Ver documentos</Button>
             </Link>
-            <Link className="BotonNuevaObra" to={"./documentos"}> {/*ver la url */}
+            <Link className="BotonNuevaObra" to={"./avance-financiero"}> {/*ver la url */}
               <Button variant="danger">Avance Financiero</Button>
             </Link>
             {
