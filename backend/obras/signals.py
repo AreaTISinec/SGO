@@ -11,9 +11,13 @@ from files.models import File
 def actualizar_porcentaje_avance(sender, instance, created, **kwargs):
     if created:
         id_obra = instance.id_obra_id
+        print(id_obra)
         ultimo_avance_operacional = Avances.objects.filter(id_obra=id_obra, tipo='real').aggregate(Max('fecha'))
+        print(ultimo_avance_operacional)
         if ultimo_avance_operacional['fecha__max']:
-            ultimo_porcentaje = Avances.objects.filter(id_obra=id_obra, fecha=ultimo_avance_operacional['fecha__max']).first().porcentaje
+            fecha_maxima = ultimo_avance_operacional['fecha__max']
+            ultimo_porcentaje = Avances.objects.filter(id_obra=id_obra, fecha=fecha_maxima).last().porcentaje
+            print(Obras.objects.filter(id=id_obra))
             Obras.objects.filter(id=id_obra).update(porc_avance_operativo=ultimo_porcentaje)
 
 @receiver(post_delete, sender=Avances)

@@ -17,10 +17,12 @@ import Divider from '@mui/material/Divider';
 
 const DetalleObra = () => {
   const { idObra } = useParams();
+  console.log("id Obra: ", idObra)
   const [detalleObra, setDetalleObra] = useState({});
   const [showAR, setShowAR] = useState(false);
   const [showAP, setShowAP] = useState(false);
   const [numHitos, setNumHitos] = useState(0);
+  const [fechaActual, setFechaActual] = useState('')
   const [hitos, setHitos] = useState([{
   }])
   const [errores, setErrores] = useState([]);
@@ -32,8 +34,7 @@ const DetalleObra = () => {
   const handleCloseAP = () => setShowAP(false);
   const handleShowAP = () => setShowAP(true);
 
-  const { fecha, porcentaje, onInputChange, onResetForm } = useForm({
-    fecha: null,
+  const {  porcentaje, onInputChange, onResetForm } = useForm({
     porcentaje: 0
   })
 
@@ -42,7 +43,7 @@ const DetalleObra = () => {
     e.preventDefault();
 
     if(porcentaje > detalleObra.porc_avance_operativo && porcentaje <= 100) {
-      uploadAvanceReal(fecha, porcentaje, idObra);
+      uploadAvanceReal(fechaActual, porcentaje, idObra);
       setDetalleObra((prevState) => ({
         ...prevState,
         porc_avance_operativo: porcentaje
@@ -50,6 +51,7 @@ const DetalleObra = () => {
     } else {
       console.log('Ingrese el porcentaje correcto');
     }
+    console.log("estado")
     onResetForm()
     handleCloseAR()
   }
@@ -147,6 +149,8 @@ const DetalleObra = () => {
 
   useEffect(() => {
     getDatos();
+    const fecha = new Date().toISOString().split('T')[0];
+    setFechaActual(fecha)
   }, []); // Ejecutar efecto solo en el montaje inicial del componente
 
 
@@ -189,7 +193,6 @@ const renderHitosFields = () => {
   return fields;
 };
 
-  console.log(detalleObra)
   return (
     <div className="DetalleObraContainer">
       <SidebarV2 />
@@ -282,20 +285,20 @@ const renderHitosFields = () => {
                     <Modal.Body>
                       <Form onSubmit={avanceRealSubmit}>
                         <Form.Group>
-                          <Form.Label></Form.Label>
+                          <Form.Label>Fecha Actual</Form.Label>
                           <Form.Control 
                             type="date"
                             name="fecha"
-                            onChange={onInputChange}
-                            required
+                            value={fechaActual}
+                            disabled
                           />
                         </Form.Group>
                         <Form.Group>
-                          <Form.Label></Form.Label>
+                          <Form.Label>Porcentaje</Form.Label>
                           <Form.Control 
                             type="number"
                             name="porcentaje"
-                            placeholder="Ingrese el porcentaje de avance "
+                            placeholder="Ingrese el porcentaje de avance operativo"
                             onChange={onInputChange}
                             required
                           />
