@@ -5,7 +5,7 @@ from .models import  Obras
 from avance.models import Avances
 from files.models import File
 
-print("Registrando handlers de signals")
+######################### AVANCES #####################################
 
 @receiver(post_save, sender=Avances)
 def actualizar_porcentaje_avance(sender, instance, created, **kwargs):
@@ -15,8 +15,6 @@ def actualizar_porcentaje_avance(sender, instance, created, **kwargs):
         if ultimo_avance_operacional['fecha__max']:
             ultimo_porcentaje = Avances.objects.filter(id_obra=id_obra, fecha=ultimo_avance_operacional['fecha__max']).first().porcentaje
             Obras.objects.filter(id=id_obra).update(porc_avance_operativo=ultimo_porcentaje)
-            
-        
 
 @receiver(post_delete, sender=Avances)
 def eliminar_actualizar_porcentaje_avance(sender, instance, **kwargs):
@@ -46,6 +44,7 @@ def actualizar_is_avance(sender, instance, created, **kwargs):
             obra.is_avance = True
             obra.save()
         
+######################### ARCHIVOS #####################################
 
 @receiver(post_save, sender=File)
 def actualizar_req_files(sender, instance, created, **kwargs):
@@ -59,3 +58,11 @@ def actualizar_req_files(sender, instance, created, **kwargs):
             ##AÑADIR CAMPO CUBICACION OBLIGATORIO
             pass 
         obra.save()
+        
+######################### OBRAS #####################################
+
+#X probar aun
+@receiver(post_save, sender=Obras)
+def actualizar_monto_por_facturar(sender, instance, **kwargs):
+    instance.monto_por_facturar = instance.presupuesto - instance.monto_facturado
+    instance.save()

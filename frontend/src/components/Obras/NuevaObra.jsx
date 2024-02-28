@@ -23,18 +23,6 @@ const NuevaObra = () => {
 
   const { regiones } = dataComunas
 
-
-  
-  
-  // const getRegiones = async () => {
-  //   try {
-  //     const res = await axios.get('https://apis.modernizacion.cl/dpa/regiones')
-  //     consol
-  //   } catch (error) {
-  //     console.error(error)
-  //   }
-  // }
-
   const getEmpresas = async () => {
     try {
       const res = await axios.get('http://127.0.0.1:8000/api/empresas/')
