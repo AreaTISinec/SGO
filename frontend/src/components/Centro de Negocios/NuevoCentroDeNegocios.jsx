@@ -6,18 +6,10 @@ import useForm from "../../utils/useForm.jsx";
 import { uploadCene } from "../../actions/newCene.js"
 import axios from "axios";
 import { useState, useEffect } from "react";
+import { getEmpresas } from "../../actions/getPetitions.js";
 
 const NuevoCentroDeNegocios = () => {
   const [empresas, setEmpresas] = useState([]);
-
-  const getEmpresas = async () => {
-    try {
-      const response = await axios.get('http://127.0.0.1:8000/api/empresas/')
-      setEmpresas(response.data)
-    } catch (error) {
-      console.error(error)
-    }
-  }
 
   const {id_cene, nombre, empresa, onInputChange, onResetForm} = useForm({
     id_cene:'',
@@ -28,7 +20,7 @@ const NuevoCentroDeNegocios = () => {
   const ceneRegex = /^[0-9a-zA-Z]*$/;
 
   useEffect(()=>{
-    getEmpresas()
+    getEmpresas(setEmpresas)
   }, [])
 
   const onSubmit = (e) => {

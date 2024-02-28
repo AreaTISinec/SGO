@@ -1,13 +1,13 @@
-import SidebarV2 from "../SidebarV2/SidebarV2";
+import { useContext, useEffect, useState } from "react";
+import { uploadObra } from "../../actions/newWorks.js"
+import { getEmpresas, getTiposObra, getEstadosObra, getCeNe, getSupervisores } from "../../actions/getPetitions.js";
+import useForm from "../../utils/useForm.jsx";
+import AuthContext from "../../context/AuthContext.jsx";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import "./NuevaObra.css";
-import useForm from "../../utils/useForm.jsx";
-import { uploadObra } from "../../actions/newWorks.js"
-import { useContext, useEffect, useState } from "react";
-import AuthContext from "../../context/AuthContext.jsx";
-import axios from "axios";
 import dataComunas from '../../utils/comunas.json'
+import SidebarV2 from "../SidebarV2/SidebarV2";
+import "./NuevaObra.css";
 
 const NuevaObra = () => {
   const {user, profile} = useContext(AuthContext);
@@ -23,70 +23,12 @@ const NuevaObra = () => {
 
   const { regiones } = dataComunas
 
-
-  
-  
-  // const getRegiones = async () => {
-  //   try {
-  //     const res = await axios.get('https://apis.modernizacion.cl/dpa/regiones')
-  //     consol
-  //   } catch (error) {
-  //     console.error(error)
-  //   }
-  // }
-
-  const getEmpresas = async () => {
-    try {
-      const res = await axios.get('http://127.0.0.1:8000/api/empresas/')
-      setEmpresas(res.data)
-    } catch (error) {
-      console.error(error)
-    }
-  }
-
-  const getTiposObra = async () => {
-    try {
-      const res = await axios.get('http://127.0.0.1:8000/api/tipos-obra/')
-      setTiposObra(res.data)
-    } catch (error) {
-      console.error(error)
-    }
-  }
-
-  const getEstadosObra = async () => {
-    try {
-      const res = await axios.get('http://127.0.0.1:8000/api/estados-obra/')
-      setEstadosObra(res.data)
-    } catch (error) {
-      console.error(error)
-    }
-  }
-  const getCeNe = async () => {    try {
-      const { data } = await axios.get(
-        `http://127.0.0.1:8000/api/cene/`
-      );
-      setCene(data);
-    } catch (err) {
-      console.error("Error al obtener datos:", err);
-    }
-  };
-
-  const getSupervisores = async () => {    try {
-    const { data } = await axios.get(
-      `http://127.0.0.1:8000/api/profile/`
-    );
-    setSupervisores(data);
-  } catch (err) {
-    console.error("Error al obtener datos:", err);
-  }
-};
-
   useEffect(()=> {
-    getEmpresas()
-    getTiposObra()
-    getEstadosObra()
-    getCeNe()
-    getSupervisores()
+    getEmpresas(setEmpresas)
+    getTiposObra(setTiposObra)
+    getEstadosObra(setEstadosObra)
+    getCeNe(setCene)
+    getSupervisores(setSupervisores)
   },[])
 
   const { 
