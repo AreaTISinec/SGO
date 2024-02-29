@@ -5,22 +5,35 @@ import Button from "react-bootstrap/Button";
 import Modal from 'react-bootstrap/Modal';
 import Form from "react-bootstrap/Form";
 import { useEffect, useState } from "react";
+import  useForm  from '../../utils/useForm'
+import { useParams } from "react-router-dom";
 
 
 const AvanceFinanciero = () => {
-
+    const { } = useParams()
     const [showAP, setShowAP] = useState(false);
     const [fechaActual, setFechaActual] = useState('')
-
+    
     const handleCloseAP = () => setShowAP(false);
     const handleShowAP = () => setShowAP(true);
-
+    
     useEffect(()=> {
         const fecha = new Date().toISOString().split('T')[0];
         setFechaActual(fecha)
     },[])
+    
+    const {fecha, monto, id_obra, responsable_id, onInputChange, onResetForm } = useForm({
+        fecha: fechaActual, 
+        monto: 0, 
+        id_obra: 0, 
+        responsable_id: 0
+      })
 
+    const onSubmit = (e) => {
+        e.preventDefault()
 
+        onResetForm()
+    }
 
     return (
         <div className="AvancesContainer">
@@ -41,7 +54,7 @@ const AvanceFinanciero = () => {
                     <Modal.Title>Ultimo avance financiero</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <Form>
+                        <Form onSubmit={(e) => {onSubmit(e)}}>
                             <Form.Group>
                                 <Form.Label>Fecha</Form.Label>
                                 <Form.Control 
@@ -55,7 +68,8 @@ const AvanceFinanciero = () => {
                                 <Form.Label>Ingrese el monto Facturado</Form.Label>
                                 <Form.Control 
                                     type="number"
-                                    name="monto_facturado"
+                                    name="monto"
+                                    onChange={onInputChange}
                                 />
                             </Form.Group>
                             <Button variant="danger" type="onSubmit">Guardar</Button>

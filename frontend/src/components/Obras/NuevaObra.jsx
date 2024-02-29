@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { uploadObra } from "../../actions/newWorks.js"
-import { getEmpresas, getTiposObra, getEstadosObra, getCeNe, getSupervisores } from "../../actions/getPetitions.js";
+import { getEmpresas, getTiposObra, getEstadosObra, getCeNe, getSupervisores, getClientes } from "../../actions/getPetitions.js";
 import useForm from "../../utils/useForm.jsx";
 import AuthContext from "../../context/AuthContext.jsx";
 import Button from "react-bootstrap/Button";
@@ -20,6 +20,7 @@ const NuevaObra = () => {
   const [comunas, setComunas] = useState([])
   const [cenes, setCene] = useState([])
   const [supervisores, setSupervisores] = useState([])
+  const [clientes, setClientes] = useState([])
 
   const { regiones } = dataComunas
 
@@ -29,62 +30,77 @@ const NuevaObra = () => {
     getEstadosObra(setEstadosObra)
     getCeNe(setCene)
     getSupervisores(setSupervisores)
+    getClientes(setClientes)
   },[])
 
   const { 
     fecha_inicio, 
     fecha_termino, 
     fecha_asignacion,
-    monto_neto, 
-    empresa, 
+    presupuesto, 
+    empresa,
+    cliente,
+    nombre,
+    porc_avance_financiero,
+    porc_avance_operativo, 
     direccion, 
     comuna, 
     tipo_obra, 
     estado_obra, 
     observaciones, 
-    porc_avance, 
     monto_facturado, 
-    saldo_facturado, 
-    id_user,
-    id_cene,
+    monto_por_facturar, 
+    responsable,// ex id_user
+    supervisor,
+    cene_id,
     onInputChange, 
     onResetForm 
   } = useForm({ //agregar correctamente los parametros de la nueva obra
     fecha_inicio: null,
     fecha_termino: null,
     fecha_asignacion: null,
-    monto_neto: 0,
+    presupuesto: 0,
     empresa: 'Sinec',
+    cliente: '',
+    nombre: '',
+    porc_avance_financiero: 0,
+    porc_avance_operativo: 0,
     direccion: '',
     comuna: '',
-    tipo_obra: 'Alumbrado Publico',
+    tipo_obra: 'Empalmes y Celdas',
     estado_obra: 'Adjudicada',
     observaciones: '',
-    porc_avance: 0, 
     monto_facturado: 0, 
-    saldo_facturado: 0, 
-    id_user: user.user_id,
-    id_cene: ''
+    monto_por_facturar: 0,
+    responsable: user.user_id,
+    supervisor: 0,
+    cene_id: ''
   });
 
   const onSubmit = (e) => {
     e.preventDefault();
     uploadObra(
+      empresa, 
+      cliente, 
+      nombre,
+      presupuesto, 
+      porc_avance_financiero,  //debiesen iniciar en 0, en una obra nueva
+      porc_avance_operativo,
+      estado_obra,
       fecha_inicio, 
       fecha_termino, 
       fecha_asignacion, 
-      monto_neto, 
-      empresa, 
       direccion, 
       comuna, 
-      tipo_obra, 
-      estado_obra, 
-      observaciones, 
-      porc_avance, 
-      monto_facturado, 
-      saldo_facturado, 
-      id_user,
-      id_cene
+      tipo_obra,
+      responsable,
+      //RELLENO
+      responsable,
+      supervisor,
+      cene_id,
+      observaciones,
+      monto_facturado,
+      monto_por_facturar
     )  
     onResetForm();
   };
@@ -188,6 +204,20 @@ const NuevaObra = () => {
                 {
                   cenes.map((cene) => 
                     <option key={cene.id_cene}  value={cene.id_cene}>{cene.nombre}</option>
+                  )
+                }
+              </Form.Select>
+            </Form.Group>
+
+            <Form.Group className="mb-3" >
+              <Form.Label>Cliente</Form.Label>
+              <Form.Select
+               name='cliente'
+               onChange={onInputChange}
+               >
+                {
+                  clientes.map((cliente) => 
+                    <option key={cliente.rut}  value={cliente.nombre}>{cliente.nombre}</option>
                   )
                 }
               </Form.Select>

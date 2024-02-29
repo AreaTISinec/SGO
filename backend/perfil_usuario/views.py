@@ -19,7 +19,7 @@ class UserProfileView(APIView):
     
     def get(self, request, id_user):
         try:
-            user = UserProfile.objects.get(id=id_user)
+            user = UserProfile.objects.get(user_id=id_user)
         except UserProfile.DoesNotExist:
             return Response({"error": "El usuario no existe"}, status=status.HTTP_404_NOT_FOUND)
         

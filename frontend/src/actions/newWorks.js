@@ -7,7 +7,7 @@ export const uploadObra = async (
     cliente, 
     nombre,
     presupuesto, 
-    porc_avance_financiero,
+    porc_avance_financiero,  //debiesen iniciar en 0, en una obra nueva
     porc_avance_operativo,
     estado_obra,
     fecha_inicio, 
@@ -18,9 +18,12 @@ export const uploadObra = async (
     tipo_obra,
     responsable,
     //RELLENO
-    id_responsable,
-    id_supervisor,
-    id_cene
+    responsable_id,
+    supervisor_id,
+    cene_id,
+    observaciones,
+    monto_facturado,
+     monto_por_facturar
     ) => {
 
     const body = JSON.stringify({
@@ -40,9 +43,12 @@ export const uploadObra = async (
         tipo_obra,
         responsable,
         //RELLENO
-        id_responsable,
-        id_supervisor,
-        id_cene
+        responsable_id,
+        supervisor_id,
+        cene_id,
+        observaciones,
+        monto_facturado,
+        monto_por_facturar
     })
     console.log(body)
 

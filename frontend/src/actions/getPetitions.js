@@ -44,3 +44,12 @@ export const getSupervisores = async (setSupervisoresCallback) => {
         console.error("Error al obtener datos:", err);
     }
 };
+
+export const getClientes = async (setClientesCallback) => {
+    try {
+        const res = await axios.get("http://127.0.0.1:8000/api/cliente/")
+        setClientesCallback(res.data)
+    } catch (error) {
+        console.error("Error al obtener datos", error)
+    }
+}
