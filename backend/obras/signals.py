@@ -13,7 +13,8 @@ def actualizar_porcentaje_avance(sender, instance, created, **kwargs):
         id_obra = instance.id_obra_id
         ultimo_avance_operacional = Avances.objects.filter(id_obra=id_obra, tipo='real').aggregate(Max('fecha'))
         if ultimo_avance_operacional['fecha__max']:
-            ultimo_porcentaje = Avances.objects.filter(id_obra=id_obra, fecha=ultimo_avance_operacional['fecha__max']).first().porcentaje
+            fecha_maxima = ultimo_avance_operacional['fecha__max']
+            ultimo_porcentaje = Avances.objects.filter(id_obra=id_obra, fecha=fecha_maxima).last().porcentaje
             Obras.objects.filter(id=id_obra).update(porc_avance_operativo=ultimo_porcentaje)
 
 @receiver(post_delete, sender=Avances)
@@ -23,7 +24,6 @@ def eliminar_actualizar_porcentaje_avance(sender, instance, **kwargs):
     avances = Avances.objects.filter(id_obra=id_obra).order_by('-fecha')
 
     if avances.exists():
-        print('dentro del if')
         ultimo_avance = avances.first()
         Obras.objects.filter(id=id_obra).update(porc_avance_operativo=ultimo_avance.porcentaje)
     else:

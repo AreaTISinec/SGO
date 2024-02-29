@@ -6,6 +6,11 @@ from .models import Obras
 from .serializers import ObraSerializer
 from rest_framework.response import Response 
 
+############CENE Revisar id que no lo toma############
+############RESPONSABLE Duplicado - Cambiar id cuenta x id perfil#########
+############SUPERVISOR Cambiar id cuenta x id perfil #########
+###########NOMBRE Agregar campo nombre#############
+#######
 class ObraListView(ListAPIView):
     permission_classes = (permissions.AllowAny, )
     queryset = Obras.objects.all()
@@ -51,3 +56,5 @@ class ObraUploadView(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+

@@ -1,0 +1,50 @@
+.AvancesContainer {
+    display: flex;
+  }
+  
+  .RecuadroAvances {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    width: 85%;
+    height: 80vh;
+    margin: 50px auto;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    padding: 20px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+    box-sizing: border-box;
+  }
+
+  .Titulo {
+    padding-bottom: 20px; /* Ajustado el espaciado inferior */
+    top: 0;
+    background-color: #f9f9f9;
+    z-index: 1; /*asegura que el titulo quede encima del contenido*/
+  }
+
+  .Botonera{
+    margin-top: 2em;
+  }
+
+  .DetalleAvanceFinanciero{
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+  }
+
+
+  .Datos{
+    display: flex;
+    justify-content: space-between;
+    width: auto;
+  }
+  .Historial{
+    border: #ddd 1px solid;
+    height: auto;
+    width: 100%;
+    margin: 1em;
+    overflow-y: auto;
+  }

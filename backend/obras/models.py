@@ -25,7 +25,7 @@ class Obras(models.Model):
     fecha_asignacion = models.DateField()
     
     supervisor = models.ForeignKey(UserProfile, on_delete=models.DO_NOTHING, null=True, related_name='supervisor_obra')
-    cene = models.ForeignKey(Cene, on_delete=models.DO_NOTHING, default=0)
+    cene = models.ForeignKey(Cene, on_delete=models.DO_NOTHING)
     
     direccion = models.CharField(max_length=45)
     comuna = models.CharField(max_length=45)
