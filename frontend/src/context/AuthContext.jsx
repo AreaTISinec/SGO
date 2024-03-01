@@ -35,7 +35,7 @@ export const AuthProvider = ({ children }) => {
     const uploadDataProfile = async ()=> {
         try {
             const res = await axios.get(`http://127.0.0.1:8000/api/profile/${user.user_id}/`)
-            setProfile(res)
+            setProfile(res.data)
         } catch (error) {
             console.log(error)
         }
@@ -175,6 +175,7 @@ export const AuthProvider = ({ children }) => {
     useEffect(() => {
         if (authTokens) {
             setUser(jwtDecode(authTokens.access))
+            uploadDataProfile()
         }
         setLoading(false)
     }, [authTokens, loading])

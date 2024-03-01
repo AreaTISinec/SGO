@@ -4,15 +4,24 @@ import "./AvanceFinanciero.css"
 import Button from "react-bootstrap/Button";
 import Modal from 'react-bootstrap/Modal';
 import Form from "react-bootstrap/Form";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import  useForm  from '../../utils/useForm'
 import { useParams } from "react-router-dom";
+import { getDetalleObra, getHistorialFinanciero, getProfile } from "../../actions/getPetitions";
+import { uploadAvanceFinanciero } from "../../actions/newAvance";
+import AuthContext from "../../context/AuthContext";
 
 
 const AvanceFinanciero = () => {
-    const { } = useParams()
+    const { profile } =useContext(AuthContext)
+    const { idObra } = useParams()
     const [showAP, setShowAP] = useState(false);
     const [fechaActual, setFechaActual] = useState('')
+    const [obra, setObra] = useState({})
+    const [historialFinanciero, setHistorialFinanciero] = useState([])
+
+    
+
     
     const handleCloseAP = () => setShowAP(false);
     const handleShowAP = () => setShowAP(true);
@@ -20,20 +29,43 @@ const AvanceFinanciero = () => {
     useEffect(()=> {
         const fecha = new Date().toISOString().split('T')[0];
         setFechaActual(fecha)
-    },[])
+        getDetalleObra(setObra, idObra)
+        //obtenerHistorialFinanciero()
+        getHistorialFinanciero(setHistorialFinanciero, idObra);
+    }, [])
+
+    // const obtenerHistorialFinanciero = async () => {
+    //     try {
+    //         const historial = await getHistorialFinanciero(setHistorialFinanciero, idObra);
+    //         const perfilesPromises = historial.map(row => getProfile(row.responsable));
+    //         const perfiles = await Promise.all(perfilesPromises);
+            
+    //         const historialConNombres = historial.map((row, index) => ({
+    //             ...row,
+    //             nombreResponsable: perfiles[index].nombre
+    //         }));
+
+    //         setHistorialFinanciero(historialConNombres);
+    //     } catch (error) {
+    //         console.error('Error al obtener historial financiero:', error);
+    //     }
+    // };
+
     
-    const {fecha, monto, id_obra, responsable_id, onInputChange, onResetForm } = useForm({
-        fecha: fechaActual, 
-        monto: 0, 
-        id_obra: 0, 
-        responsable_id: 0
+
+    
+    const { monto,  onInputChange, onResetForm } = useForm({
+        monto: 0,
       })
 
     const onSubmit = (e) => {
         e.preventDefault()
-
+        console.log(typeof(idObra))
+        uploadAvanceFinanciero(fechaActual, parseInt(monto), parseInt(idObra), profile.id)
         onResetForm()
     }
+
+    console.log('id responsable: ',profile)
 
     return (
         <div className="AvancesContainer">
@@ -43,9 +75,9 @@ const AvanceFinanciero = () => {
             <h1>Avance Financiero</h1>
             </div>
             <div className="DetalleAvanceFinanciero">
-                <div className="Datos"><span><strong>Presupuesto: </strong></span><span className=""> ${}6565656565</span></div>
-                <div className="Datos"><strong>Total Facturado: </strong><span className=""> ${}45455</span></div>
-                <div className="Datos"><strong>Monto por Facturar: </strong><span className=""> ${}454</span></div>
+                <div className="Datos"><span><strong>Presupuesto: </strong></span><span className=""> ${obra.presupuesto}</span></div>
+                <div className="Datos"><strong>Total Facturado: </strong><span className=""> ${obra.monto_facturado}</span></div>
+                <div className="Datos"><strong>Monto por Facturar: </strong><span className=""> ${obra.monto_por_facturar}</span></div>
             </div>
             <div className="Botonera">
                 <Button variant="danger" onClick={handleShowAP}>Agregar avance financiero</Button>
@@ -90,12 +122,21 @@ const AvanceFinanciero = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Tomas Landaeta</td>
-                            <td>20/20/2020</td>
-                            <td>123456</td>
-                            <td>11%</td>
-                        </tr>
+                    {
+                    historialFinanciero.map((row, index)=>{
+                        
+                                return(
+                                    <tr key={row.id}>
+                                        <td>{profile.nombre}</td>
+                                        <td>{row.fecha}</td>
+                                        <td>{row.monto}</td>
+                                        <td>{row.porcentaje}</td>
+                                    </tr>
+                                )
+            
+                        }
+                    )
+                    }
                     </tbody>
                 </Table>
             </div>

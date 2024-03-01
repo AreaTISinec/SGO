@@ -1,11 +1,10 @@
-from rest_framework.serializers import Serializer
+from rest_framework import serializers
 from .models import Historial
 
 
-class HistorialSerializer(Serializer):
+class HistorialSerializer(serializers.ModelSerializer):
     class Meta:
         model = Historial
-        fields = ['fecha', 'monto', 'responsable','id_obra']
+        fields = '__all__'
         
-
    

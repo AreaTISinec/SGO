@@ -53,3 +53,31 @@ export const getClientes = async (setClientesCallback) => {
         console.error("Error al obtener datos", error)
     }
 }
+
+export const getDetalleObra = async (setDetalleObraCallback, idObra) => {
+    try {
+        const { data } = await axios.get(`http://127.0.0.1:8000/api/obras/${idObra}`);
+        setDetalleObraCallback(data)
+    } catch (error) {
+        console.error(error)
+    }
+  };
+
+
+export const getHistorialFinanciero = async (setHistorialFinancieroCallback, idObra) => {
+    try {
+        const { data } = await axios.get(`http://127.0.0.1:8000/api/historial/${idObra}/`)
+        setHistorialFinancieroCallback(data)
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const getProfile = async ( idProfile) => {
+    try {
+        const { data } = await axios.get(`http://127.0.0.1:8000/api/profile/${idProfile}/`)
+        return(data)
+    } catch (error) {
+        console.log(error)
+    }
+}

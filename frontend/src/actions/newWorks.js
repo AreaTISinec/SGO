@@ -23,7 +23,7 @@ export const uploadObra = async (
     cene_id,
     observaciones,
     monto_facturado,
-     monto_por_facturar
+    monto_por_facturar
     ) => {
 
     const body = JSON.stringify({
