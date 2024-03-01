@@ -10,7 +10,7 @@ import SidebarV2 from "../SidebarV2/SidebarV2";
 import "./NuevaObra.css";
 
 const NuevaObra = () => {
-  const {user, profile} = useContext(AuthContext);
+  const {profile} = useContext(AuthContext);
 
   const [empresas, setEmpresas] = useState([]);
   const [tiposObra, setTiposObra] = useState([]);
