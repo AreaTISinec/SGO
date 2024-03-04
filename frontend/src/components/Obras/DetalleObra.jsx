@@ -2,7 +2,6 @@ import { useParams, Link } from "react-router-dom";
 import { useState, useEffect } from 'react';
 import { PowerBIEmbed } from 'powerbi-client-react';
 import { models } from 'powerbi-client';
-import axios from "axios";
 import SidebarV2 from "../SidebarV2/SidebarV2";
 import Button from "react-bootstrap/Button";
 import Modal from 'react-bootstrap/Modal';
@@ -11,19 +10,23 @@ import "./DetalleObra.css";
 import  useForm  from '../../utils/useForm'
 import { uploadAvanceReal, uploadAvanceProyectado } from "../../actions/newAvance"; 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowUpFromBracket } from '@fortawesome/free-solid-svg-icons'
+import { faPenToSquare } from '@fortawesome/free-solid-svg-icons'
 import Divider from '@mui/material/Divider';
+import { getDetalleObra, getEncargado } from "../../actions/getPetitions.js"
+
 
 
 const DetalleObra = () => {
   const { idObra } = useParams();
+  console.log("id Obra: ", idObra)
   const [detalleObra, setDetalleObra] = useState({});
+  const [supervisor, setSupervisor] = useState([]);
+  const [responsable, setResponsable] = useState([]);
   const [showAR, setShowAR] = useState(false);
   const [showAP, setShowAP] = useState(false);
   const [numHitos, setNumHitos] = useState(0);
+  const [fechaActual, setFechaActual] = useState('')
   const [hitos, setHitos] = useState([{
-    fecha: '2020-01-01',
-    porcentaje: 0
   }])
   const [errores, setErrores] = useState([]);
   // const [avanceProyectado, setAvanceProyectado] = useState([])
@@ -34,28 +37,27 @@ const DetalleObra = () => {
   const handleCloseAP = () => setShowAP(false);
   const handleShowAP = () => setShowAP(true);
 
-  const { fecha, porcentaje, onInputChange, onResetForm } = useForm({
-    fecha: null,
+  const {  porcentaje, onInputChange, onResetForm } = useForm({
     porcentaje: 0
   })
-
 
   const avanceRealSubmit = (e) => {
     e.preventDefault();
 
-    if(porcentaje > detalleObra.porc_avance && porcentaje <= 100) {
-      uploadAvanceReal(fecha, porcentaje, idObra);
+    if(porcentaje > detalleObra.porc_avance_operativo && porcentaje <= 100) {
+      uploadAvanceReal(fechaActual, porcentaje, idObra);
       setDetalleObra((prevState) => ({
         ...prevState,
-        porc_avance: porcentaje
+        porc_avance_operativo: porcentaje
       }));
     } else {
       console.log('Ingrese el porcentaje correcto');
     }
+    console.log("estado")
     onResetForm()
     handleCloseAR()
   }
-
+ 
   const onChangeProyectado = (e, index) => {
     const { name, value } = e.target;
   
@@ -114,13 +116,7 @@ const DetalleObra = () => {
     handleCloseAR()
   }
 
-  const getDatos = async () => {
-    const { data } = await axios.get(
-      `http://127.0.0.1:8000/api/obras/${idObra}`
-    );
-    setDetalleObra(data);
-  };
- 
+
   const [accessToken, setAccessToken] = useState('');
 
   useEffect(() => {
@@ -128,7 +124,7 @@ const DetalleObra = () => {
     const fetchAccessToken = async () => {
       try {
         // Realiza una solicitud a tu backend para obtener un nuevo token de acceso
-        const response = await fetch('http://127.0.0.1:8000/api/powerbi/getAccessToken/');
+        const response = await fetch('https://sgo-django.azurewebsites.net/api/powerbi/getAccessToken/');
         const data = await response.json();
         // Actualiza el estado del token de acceso con el nuevo token
         setAccessToken(data.accessToken);
@@ -148,8 +144,12 @@ const DetalleObra = () => {
 
 
   useEffect(() => {
-    getDatos();
-  }, []); // Ejecutar efecto solo en el montaje inicial del componente
+    getDetalleObra(idObra, setDetalleObra)
+    getEncargado(detalleObra.supervisor, setSupervisor)
+    getEncargado(detalleObra.responsable, setResponsable)
+    const fecha = new Date().toISOString().split('T')[0];
+    setFechaActual(fecha)
+  }, [detalleObra]); // Ejecutar efecto solo en el montaje inicial del componente
 
 
 const renderHitosFields = () => {
@@ -200,7 +200,7 @@ const renderHitosFields = () => {
           <Divider/>
           <div className="Botonera">
             {
-              detalleObra && detalleObra.gantt && detalleObra.presupuesto ? //agregar detalleObra.cubicacion pq es obligatorio
+              detalleObra && detalleObra.is_gantt && detalleObra.is_presupuesto ? //agregar detalleObra.cubicacion pq es obligatorio
               <Link  className="BotonNuevaObra" to={"./nuevo-documento"}>
                 <Button variant="danger">Subir documento</Button>
               </Link>
@@ -212,6 +212,9 @@ const renderHitosFields = () => {
             }
             <Link className="BotonNuevaObra" to={"./documentos"}> {/*ver la url */}
               <Button variant="danger">Ver documentos</Button>
+            </Link>
+            <Link className="BotonNuevaObra" to={"./avance-financiero"}> {/*ver la url */}
+              <Button variant="danger">Avance Financiero</Button>
             </Link>
             {
               detalleObra && !detalleObra.is_avance ?
@@ -256,7 +259,10 @@ const renderHitosFields = () => {
           {detalleObra &&  (
             <div className="DetalleDeLaObra">
               <div className="DataContainer">
-              <div className="divider"><Divider variant="middle" textAlign="left"><strong>Fechas</strong></Divider></div>
+                <div className="divider"><Divider variant="middle" textAlign="left"><strong>Personal</strong></Divider></div>
+                <div className="Dato"><strong>Responsable:</strong><span className="value-dato">{responsable?.nombre} {responsable?.apellido}</span></div>
+                <div className="Dato"><strong>Supervisor:</strong><span className="value-dato">{supervisor?.nombre} {supervisor?.apellido}</span></div>
+                <div className="divider"><Divider variant="middle" textAlign="left"><strong>Fechas</strong></Divider></div>
                 <div className="Dato"><strong>Inicio:</strong><span className="value-dato">{detalleObra.fecha_inicio}</span></div>
                 <div className="Dato"><strong>Termino:</strong><span className="value-dato">{detalleObra.fecha_termino}</span></div>
                 <div className="Dato"><strong>Asignacion:</strong><span className="value-dato">{detalleObra.fecha_asignacion}</span></div>
@@ -267,9 +273,9 @@ const renderHitosFields = () => {
                 <div className="divider"><Divider variant="middle" textAlign="left"><strong>Obra</strong></Divider></div>
                 <div className="Dato"><strong>Tipo de Obra:</strong><span className="value-dato">{detalleObra.tipo_obra}</span></div>
                 <div className="Dato"><strong>Estado de Obra:</strong><span className="value-dato">{detalleObra.estado_obra}</span></div>
-                <div className="Dato"><strong>Porcentaje de Avance:</strong><div className="porcentaje-cont"><span className="value-dato">{detalleObra.porc_avance} %</span>
+                <div className="Dato"><strong>Porcentaje de Avance:</strong><div className="porcentaje-cont"><span className="value-dato">{detalleObra.porc_avance_operativo} %</span>
                 <> 
-                  <Button onClick={handleShowAR} variant="secondary" className="boton-avance"><FontAwesomeIcon icon={faArrowUpFromBracket} /></Button>
+                  <Button onClick={handleShowAR} variant="outline-secondary" className="boton-avance"><FontAwesomeIcon icon={faPenToSquare} /></Button>
                   <Modal show={showAR} onHide={handleCloseAR}>
                     <Modal.Header closeButton>
                       <Modal.Title>Ingrese el Avance</Modal.Title>
@@ -277,20 +283,20 @@ const renderHitosFields = () => {
                     <Modal.Body>
                       <Form onSubmit={avanceRealSubmit}>
                         <Form.Group>
-                          <Form.Label></Form.Label>
+                          <Form.Label>Fecha Actual</Form.Label>
                           <Form.Control 
                             type="date"
                             name="fecha"
-                            onChange={onInputChange}
-                            required
+                            value={fechaActual}
+                            disabled
                           />
                         </Form.Group>
                         <Form.Group>
-                          <Form.Label></Form.Label>
+                          <Form.Label>Porcentaje</Form.Label>
                           <Form.Control 
                             type="number"
                             name="porcentaje"
-                            placeholder="Ingrese el porcentaje de avance "
+                            placeholder="Ingrese el porcentaje de avance operativo"
                             onChange={onInputChange}
                             required
                           />
@@ -304,9 +310,9 @@ const renderHitosFields = () => {
                 </>
                 </div></div>
                 <div className="divider"><Divider variant="middle" textAlign="left"><strong>Montos</strong></Divider></div>
-                <div className="Dato"><strong>Monto Neto:</strong><span className="value-dato">{detalleObra.monto_neto}</span></div>
+                <div className="Dato"><strong>Presupuesto:</strong><span className="value-dato">{detalleObra.presupuesto}</span></div>
                 <div className="Dato"><strong>Monto Facturado:</strong><span className="value-dato">{detalleObra.monto_facturado}</span></div>
-                <div className="Dato"><strong>Saldo Facturado:</strong><span className="value-dato">{detalleObra.saldo_facturado}</span></div>
+                <div className="Dato"><strong>Monto por facturar:</strong><span className="value-dato">{detalleObra.monto_por_facturar}</span></div>
                 <div className="divider"><Divider/></div>
                 <div className="Dato obs"><strong>Observaciones:</strong><span className="value-dato">{detalleObra.observaciones}</span></div>
 
@@ -317,7 +323,7 @@ const renderHitosFields = () => {
                   type: 'report',   // Supported types: report, dashboard, tile, visual, qna, paginated report and create
                   id: '5c607318-8d82-49bf-a371-7e0edf855485',
                   embedUrl: 'https://app.powerbi.com/reportEmbed?reportId=5c607318-8d82-49bf-a371-7e0edf855485&config=eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly9XQUJJLVBBQVMtMS1TQ1VTLXJlZGlyZWN0LmFuYWx5c2lzLndpbmRvd3MubmV0IiwiZW1iZWRGZWF0dXJlcyI6eyJ1c2FnZU1ldHJpY3NWTmV4dCI6dHJ1ZSwiZGlzYWJsZUFuZ3VsYXJKU0Jvb3RzdHJhcFJlcG9ydEVtYmVkIjp0cnVlfX0%3d',
-                  accessToken: accessToken,
+                  accessToken: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IlhSdmtvOFA3QTNVYVdTblU3Yk05blQwTWpoQSIsImtpZCI6IlhSdmtvOFA3QTNVYVdTblU3Yk05blQwTWpoQSJ9.eyJhdWQiOiJodHRwczovL2FuYWx5c2lzLndpbmRvd3MubmV0L3Bvd2VyYmkvYXBpIiwiaXNzIjoiaHR0cHM6Ly9zdHMud2luZG93cy5uZXQvYTFhZTMwMTEtNDgwMS00OTBiLWExMDctOWNkOGFiNmQ1ODE3LyIsImlhdCI6MTcwOTI5NDk3NSwibmJmIjoxNzA5Mjk0OTc1LCJleHAiOjE3MDkyOTk2ODksImFjY3QiOjAsImFjciI6IjEiLCJhaW8iOiJBVlFBcS84V0FBQUFJeDRxRktibjdMb2ZxZFV0by84NEJVdVl0QlBNUWpzRGdJYUFIR3pvbGpNS1QvMTNodUZNR01GaXhqaEFxbVFpbGVpZXRWK3pBVTJvZUVVZHZwcnNnMjVLZkt4MFFDM2ZBaVVlekZjaEU5Zz0iLCJhbXIiOlsicHdkIiwibWZhIl0sImFwcGlkIjoiMThmYmNhMTYtMjIyNC00NWY2LTg1YjAtZjdiZjJiMzliM2YzIiwiYXBwaWRhY3IiOiIwIiwiZmFtaWx5X25hbWUiOiJFc3Bpbm96YSIsImdpdmVuX25hbWUiOiJEaWVnbyIsImlwYWRkciI6IjE5MC45OC4yMjIuMTI1IiwibmFtZSI6IkRpZWdvIEVzcGlub3phIiwib2lkIjoiOTljNGE3NzQtZDkzYi00MDkzLTg1ZWUtNjU5NTJjMDk1NWVkIiwicHVpZCI6IjEwMDMyMDAyODk5OTc3RTIiLCJyaCI6IjAuQVNZQUVUQ3VvUUZJQzBtaEI1ellxMjFZRndrQUFBQUFBQUFBd0FBQUFBQUFBQUFtQUxrLiIsInNjcCI6IkFwcC5SZWFkLkFsbCBDYXBhY2l0eS5SZWFkLkFsbCBDYXBhY2l0eS5SZWFkV3JpdGUuQWxsIENvbnRlbnQuQ3JlYXRlIERhc2hib2FyZC5SZWFkLkFsbCBEYXNoYm9hcmQuUmVhZFdyaXRlLkFsbCBEYXRhZmxvdy5SZWFkLkFsbCBEYXRhZmxvdy5SZWFkV3JpdGUuQWxsIERhdGFzZXQuUmVhZC5BbGwgRGF0YXNldC5SZWFkV3JpdGUuQWxsIEdhdGV3YXkuUmVhZC5BbGwgR2F0ZXdheS5SZWFkV3JpdGUuQWxsIEl0ZW0uRXhlY3V0ZS5BbGwgSXRlbS5SZWFkV3JpdGUuQWxsIEl0ZW0uUmVzaGFyZS5BbGwgT25lTGFrZS5SZWFkLkFsbCBPbmVMYWtlLlJlYWRXcml0ZS5BbGwgUGlwZWxpbmUuRGVwbG95IFBpcGVsaW5lLlJlYWQuQWxsIFBpcGVsaW5lLlJlYWRXcml0ZS5BbGwgUmVwb3J0LlJlYWRXcml0ZS5BbGwgUmVwcnQuUmVhZC5BbGwgU3RvcmFnZUFjY291bnQuUmVhZC5BbGwgU3RvcmFnZUFjY291bnQuUmVhZFdyaXRlLkFsbCBUZW5hbnQuUmVhZC5BbGwgVGVuYW50LlJlYWRXcml0ZS5BbGwgVXNlclN0YXRlLlJlYWRXcml0ZS5BbGwgV29ya3NwYWNlLkdpdENvbW1pdC5BbGwgV29ya3NwYWNlLkdpdFVwZGF0ZS5BbGwgV29ya3NwYWNlLlJlYWQuQWxsIFdvcmtzcGFjZS5SZWFkV3JpdGUuQWxsIiwic2lnbmluX3N0YXRlIjpbImttc2kiXSwic3ViIjoiVl95dVF2Z0ZoX2FPanRmQ0RvRmxqQUt0VzJxaS1PbXIybGU0c1FxV1d3ayIsInRpZCI6ImExYWUzMDExLTQ4MDEtNDkwYi1hMTA3LTljZDhhYjZkNTgxNyIsInVuaXF1ZV9uYW1lIjoiZGVzcGlub3phQHNpbmVjc2Eub25taWNyb3NvZnQuY29tIiwidXBuIjoiZGVzcGlub3phQHNpbmVjc2Eub25taWNyb3NvZnQuY29tIiwidXRpIjoiWEEwWTYxdFVRVXFGaG5GWFRnV0hBQSIsInZlciI6IjEuMCIsIndpZHMiOlsiZjI4YTFmNTAtZjZlNy00NTcxLTgxOGItNmExMmYyYWY2YjZjIiwiZjAyM2ZkODEtYTYzNy00YjU2LTk1ZmQtNzkxYWMwMjI2MDMzIiwiMjkyMzJjZGYtOTMyMy00MmZkLWFkZTItMWQwOTdhZjNlNGRlIiwiZmU5MzBiZTctNWU2Mi00N2RiLTkxYWYtOThjM2E0OWEzOGIxIiwiYjc5ZmJmNGQtM2VmOS00Njg5LTgxNDMtNzZiMTk0ZTg1NTA5Il19.uhd9gxEsO2HZinS0yZcUPNjHdWD7D1MDm4EV5Q26BGWN04KIt63rCPyIxJkgAQhOOklNc4u21UkGawRthYs0kXGeOSfLgSlNUvzcJvJBsBZlTdNAcNeyjZApjKFZa4FbjJNhYxycmb0A_LLWD3JXxQHGI3zYRBluk3fpPdZ8cJMtp0Gj8r-21g14aYuKZMsjZ7xO1o0m3OfHRPvDf_Hhtk2yosZbyUgzbzwInHz0SItpbxhn47J1nBIB7sdeQBxMYGKeoZ76kUssToZbQ845eVHOFOFfDe3vOw4U0gyeYvXaNATGNpVJxnZIxhOqJQ3fjGY029LjJ1RMiHaUGW8Inw',
                   tokenType: models.TokenType.Aad, // Use models.TokenType.Aad for SaaS embed
                   settings: {
                     panes: {

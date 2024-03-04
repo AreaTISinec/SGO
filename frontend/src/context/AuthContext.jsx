@@ -35,12 +35,13 @@ export const AuthProvider = ({ children }) => {
     const uploadDataProfile = async ()=> {
         try {
             const res = await axios.get(`https://sgo-django.azurewebsites.net/api/profile/${user.user_id}/`)
-            setProfile(res)
+            setProfile(res.data)
         } catch (error) {
             console.log(error)
         }
     }
 
+    
     const loginUser = async (email, password) => {
 
         const response = await fetch("https://sgo-django.azurewebsites.net/api/token/", {
@@ -174,6 +175,7 @@ export const AuthProvider = ({ children }) => {
     useEffect(() => {
         if (authTokens) {
             setUser(jwtDecode(authTokens.access))
+            uploadDataProfile()
         }
         setLoading(false)
     }, [authTokens, loading])

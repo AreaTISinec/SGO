@@ -1,10 +1,10 @@
 import SidebarV2 from "../SidebarV2/SidebarV2";
 import "./Obras.css";
 import { useState, useEffect, useContext } from "react";
-import axios from "axios";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
+import { getObras, getObra } from "../../actions/getPetitions";
 
 const Obras = () => {
   const [obrasData, setObrasData] = useState([]);
@@ -25,18 +25,13 @@ const Obras = () => {
     }
   };
 
-  const getDatos = async () => {
+  const getDatos = () => {
     try {
       const id = user.user_id
       if (user.rol == 1 || user.rol == 2 || user.rol == 5) {
-        const { data } = await axios.get(`http://127.0.0.1:8000/api/obras/`);
-        setObrasData(data);
+        getObras(setObrasData)
       } else {
-        const { data } = await axios.get(
-          `http://127.0.0.1:8000/api/obras/user/${id}/`
-        );
-        setObrasData(data);
-        console.log(obrasData)
+        getObra(id, setObrasData)
       }
     } catch (err) {
       console.error("Error al obtener datos:", err);

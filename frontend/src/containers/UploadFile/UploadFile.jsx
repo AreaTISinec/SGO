@@ -10,7 +10,6 @@ const UploadFile = () => {
   const { idObra } = useParams();
 
   const [formData, setFormData] = useState({
-    nombre: '',
     id_obra: idObra,
     tipo: "",
     doc: null,
@@ -23,9 +22,9 @@ const UploadFile = () => {
   
   const onSubmit = (e) => {
     e.preventDefault();
-    const hoy = new Date();
-    const nuevoNombre = `${tipo}_${doc.name}_${hoy.toISOString()}`
-    upload(doc, nuevoNombre, tipo, id_obra);
+    //const hoy = new Date();
+    //const nuevoNombre = `${tipo}_${doc.name}_${hoy.toISOString()}`
+    upload(doc, tipo, id_obra);
     
   };
 
@@ -44,10 +43,10 @@ const UploadFile = () => {
           <Form.Group className="mb-3" >
               <Form.Label>Tipo de obra</Form.Label>
               <Form.Select name = "tipo" onChange={(e) => onChange(e)}>
-                <option value="presupuestos">Presupuesto</option>
-                <option value="gantts">Carta Gantt</option>
+                <option value="presupuesto">Presupuesto</option>
+                <option value="gantt">Carta Gantt</option>
                 <option value="facturas">Factura</option>
-                <option value="cubicaciones">Cubicacion</option>
+                <option value="cubicacion">Cubicacion</option>
               </Form.Select>
             </Form.Group>
 

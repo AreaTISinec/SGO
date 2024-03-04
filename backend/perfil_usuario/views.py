@@ -19,7 +19,7 @@ class UserProfileView(APIView):
     
     def get(self, request, id_user):
         try:
-            user = UserProfile.objects.get(id=id_user)
+            user = UserProfile.objects.get(user_id=id_user)
         except UserProfile.DoesNotExist:
             return Response({"error": "El usuario no existe"}, status=status.HTTP_404_NOT_FOUND)
         
@@ -50,4 +50,10 @@ class UsersByEmpresaView(ListAPIView):
                 return Response({"error": "no se han encontrado usuarios"}, status=status.HTTP_404_NOT_FOUND )
         serializer = UserProfileSerializer(users)
         return Response(serializer.data, status=status.HTTP_200_OK)
+    
+class UsersListView(ListAPIView):
+    permission_classes=(permissions.AllowAny, )
+    queryset = UserProfile.objects.all()
+    serializer_class = UserProfileSerializer
+    pagination_class = None
         

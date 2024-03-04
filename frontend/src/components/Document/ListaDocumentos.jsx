@@ -11,22 +11,23 @@ const ListaDocumentos = () => {
   const [listadoDeDocumentos, setListadoDeDocumentos] = useState([])
   const { idObra } = useParams()
 
-  useEffect(() => {
-    async function fetchListadoDocumentos() {
-      try {
-        const response = await axios.get(`http://127.0.0.1:8000/api/files/list/${idObra}/`)
-        setListadoDeDocumentos(response.data)
-      } catch (error){
-        console.error('Error fetching de documentos', error)
-      }
+  async function fetchListadoDocumentos() {
+    try {
+      const response = await axios.get(`https://sgo-django.azurewebsites.net/api/files/list/${idObra}/`)
+      setListadoDeDocumentos(response.data)
+      console.log("respuesta: ", response)
+    } catch (error){
+      console.error('Error fetching de documentos', error)
     }
+  }
+  useEffect(() => {
     fetchListadoDocumentos();
     console.log(listadoDeDocumentos)
   }, []);
 
   const handleDownload = async (documentId) => {
     try {
-      const response = await axios.get(`http://127.0.0.1:8000/api/files/download/${documentId}/`, {
+      const response = await axios.get(`https://sgo-django.azurewebsites.net/api/files/download/${documentId}/`, {
         responseType: 'blob',
       });
       const url = window.URL.createObjectURL(new Blob([response.data]));
@@ -59,7 +60,7 @@ const ListaDocumentos = () => {
             <Accordion.Body>
               <ListGroup>
                 {listadoDeDocumentos?.map( document => 
-                  {if(document.tipo == 'gantts')
+                  {if(document.tipo == 'gantt')
                     return (
                   <ListGroup.Item className="ListaDocumentosDisponibles" key={document.id}>
                     {document.file_name}
@@ -75,7 +76,7 @@ const ListaDocumentos = () => {
             <Accordion.Body>
               <ListGroup>
               {listadoDeDocumentos?.map( document => 
-                  {if(document.tipo == 'cubicaciones')
+                  {if(document.tipo == 'cubicacion')
                     return (
                   <ListGroup.Item className="ListaDocumentosDisponibles" key={document.id}>
                     {document.file_name}
@@ -107,7 +108,7 @@ const ListaDocumentos = () => {
             <Accordion.Body>
               <ListGroup>
               {listadoDeDocumentos?.map( document => 
-                  {if(document.tipo == 'presupuestos')
+                  {if(document.tipo == 'presupuesto')
                     return (
                   <ListGroup.Item className="ListaDocumentosDisponibles" key={document.id}>
                     {document.file_name}
