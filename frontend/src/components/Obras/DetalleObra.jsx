@@ -124,7 +124,7 @@ const DetalleObra = () => {
     const fetchAccessToken = async () => {
       try {
         // Realiza una solicitud a tu backend para obtener un nuevo token de acceso
-        const response = await fetch('http://127.0.0.1:8000/api/powerbi/getAccessToken/');
+        const response = await fetch('https://sgo-django.azurewebsites.net/api/powerbi/getAccessToken/');
         const data = await response.json();
         // Actualiza el estado del token de acceso con el nuevo token
         setAccessToken(data.accessToken);

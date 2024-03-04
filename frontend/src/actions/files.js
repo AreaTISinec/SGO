@@ -13,7 +13,7 @@ export const upload_xlxs = ( file ) => async dispatch => {
     formData.append('file', file);
 
     try {
-        const res = await axios.post('http://127.0.0.1:8000/api/ventas/upload', formData, config)
+        const res = await axios.post('https://sgo-django.azurewebsites.net/api/ventas/upload', formData, config)
 
         dispatch({
             type: UPLOAD_SUCCES,

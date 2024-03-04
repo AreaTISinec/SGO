@@ -10,9 +10,9 @@ export const login = async (username, password ) => {
     }
 
     const body = JSON.stringify({ username, password });
-
+    
     try {
-        const res = await axios.post('http://127.0.0.1:8000/api/accounts/token/', body, config);
+        const res = await axios.post('https://sgo-django.azurewebsites.net/api/accounts/token/', body, config);
 
         if(res.status === 200){
             const token = res.data.token;
@@ -36,7 +36,7 @@ export const signup = async ({ username, email, password, re_password, rol })   
     const body = JSON.stringify({ username, email, password, re_password, rol });
 
     try {
-        const res = await axios.post('http://127.0.0.1:8000/api/accounts/registrar/', body, config);
+        const res = await axios.post('https://sgo-django.azurewebsites.net/api/accounts/registrar/', body, config);
 
         //dispatch(login(email, password));
     }catch(err ){
@@ -54,7 +54,7 @@ export const logout = async () => {
     }
     const body = ''
     try {
-        const res = await axios.post('http://127.0.0.1:8000/api/accounts/logout/', body, config);
+        const res = await axios.post('https://sgo-django.azurewebsites.net/api/accounts/logout/', body, config);
 
         if (res.status === 200) {
             // Eliminar la cookie del navegador

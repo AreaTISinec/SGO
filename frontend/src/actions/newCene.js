@@ -14,7 +14,7 @@ export const uploadCene = async (id_cene, nombre, empresa) => {
   };
 
     try {
-      const res = await axios.post('http://127.0.0.1:8000/api/cene/new/', body, config)
+      const res = await axios.post('https://sgo-django.azurewebsites.net/api/cene/new/', body, config)
       console.log(res)
       swal.fire({
         title: "Nuevo cene creado exitosamente",

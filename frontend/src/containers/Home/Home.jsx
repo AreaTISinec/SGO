@@ -15,7 +15,7 @@ const Home =  () => {
     }
     const body = JSON.stringify({'is_connected': true})
     try {
-      const response = await axios.patch(`http://127.0.0.1:8000/api/accounts/logout/${user.user_id}/`, body, config)
+      const response = await axios.patch(`https://sgo-django.azurewebsites.net/api/accounts/logout/${user.user_id}/`, body, config)
   
     } catch (error) {
       console.error(error)

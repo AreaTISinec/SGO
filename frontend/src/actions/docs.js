@@ -14,7 +14,7 @@ export const upload = async (doc, tipo, id) => {
   };
   
     try {
-      const res = await axios.post('http://127.0.0.1:8000/api/files/upload/', formData, config)
+      const res = await axios.post('https://sgo-django.azurewebsites.net/api/files/upload/', formData, config)
       console.log(res)
 
   }catch(err){
@@ -35,7 +35,7 @@ export const reqUpload = async (doc,tipo, id) => {
   };
 
   try {
-    const res = await axios.post('http://127.0.0.1:8000/api/files/upload/', formData, config)
+    const res = await axios.post('https://sgo-django.azurewebsites.net/api/files/upload/', formData, config)
     console.log(res)
     swal.fire({
       title: "Documento cargado correctamente",
