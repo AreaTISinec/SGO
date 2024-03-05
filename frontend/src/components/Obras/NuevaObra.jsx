@@ -131,6 +131,13 @@ const NuevaObra = () => {
       <SidebarV2 />
       <div className="RecuadroNuevaObra">
         <div>
+          <div className='spinnerLoading'>
+            { loading ?
+              <Spinner animation="border" variant="danger" className='spinnerLoading' />
+            :
+              <></>
+            }
+          </div>
           <Form className="formularioNuevaObra" onSubmit={onSubmit}>
           <Form.Group className="mb-3" >
               <Form.Label>Nombre de la Obra</Form.Label>
@@ -315,13 +322,7 @@ const NuevaObra = () => {
             <Button variant="danger" type="submit" onClick={handleClick}>
               Crear Obra
             </Button>
-            <div className='spinnerLoading'>
-              { loading ?
-                <Spinner animation="border" variant="danger" className='spinnerLoading' />
-              :
-                <></>
-              }
-            </div>
+            
           </Form>
         </div>
       </div>

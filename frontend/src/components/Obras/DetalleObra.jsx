@@ -200,64 +200,36 @@ const renderHitosFields = () => {
       <div className="RecuadroDetalleObra">
         <div className="Titulo">
           <h1>Detalle de la Obra</h1>
+          <div className='spinnerLoading'>
+            { loading ?
+              <Spinner animation="border" variant="danger" className='spinnerLoading' />
+            :
+              <></>
+            }
+          </div>
           <Divider/>
           <div className="Botonera">
             {
               detalleObra && detalleObra.is_gantt && detalleObra.is_presupuesto ? //agregar detalleObra.cubicacion pq es obligatorio
               <Link  className="BotonNuevaObra" to={"./nuevo-documento"}>
-                <Button variant="danger">Subir documento</Button>
-                <div className='spinnerLoading'>
-                  { loading ?
-                    <Spinner animation="border" variant="danger" className='spinnerLoading' />
-                  :
-                    <></>
-                  }
-                </div>
+                <Button variant="danger" onClick={handleClick}>Subir documento</Button>
               </Link>
               :
               <Link className="BotonNuevaObra" to={"./req-documento"}>
-                <Button variant="danger">Subir documento</Button>
-                <div className='spinnerLoading'>
-                  { loading ?
-                    <Spinner animation="border" variant="danger" className='spinnerLoading' />
-                  :
-                    <></>
-                  }
-                </div>
+                <Button variant="danger" onClick={handleClick}>Subir documento</Button>
               </Link>
 
             }
             <Link className="BotonNuevaObra" to={"./documentos"}> {/*ver la url */}
-              <Button variant="danger">Ver documentos</Button>
-              <div className='spinnerLoading'>
-                  { loading ?
-                    <Spinner animation="border" variant="danger" className='spinnerLoading' />
-                  :
-                    <></>
-                  }
-                </div>
+              <Button variant="danger" onClick={handleClick}>Ver documentos</Button>
             </Link>
             <Link className="BotonNuevaObra" to={"./avance-financiero"}> {/*ver la url */}
-              <Button variant="danger">Avance Financiero</Button>
-              <div className='spinnerLoading'>
-                  { loading ?
-                    <Spinner animation="border" variant="danger" className='spinnerLoading' />
-                  :
-                    <></>
-                  }
-                </div>
+              <Button variant="danger" onClick={handleClick}>Avance Financiero</Button>
             </Link>
             {
               detalleObra && !detalleObra.is_avance ?
               <span className="BotonNuevaObra">
-                <Button onClick={handleShowAP} variant="danger" >Subir avance Proyectado</Button>
-                <div className='spinnerLoading'>
-                  { loading ?
-                    <Spinner animation="border" variant="danger" className='spinnerLoading' />
-                  :
-                    <></>
-                  }
-                </div>
+                <Button onClick={() => {handleShowAP(); handleClick();}} variant="danger" >Subir avance Proyectado</Button>
                     <Modal show={showAP} onHide={handleCloseAP}>
                       <Modal.Header closeButton>
                         <Modal.Title>Definir Avance Proyectado</Modal.Title>
@@ -278,19 +250,12 @@ const renderHitosFields = () => {
 
                         {renderHitosFields()}
                         
-                        <Button variant="primary" type="onSubmit" disabled={errores.some(e => {
+                        <Button variant="primary" onClick={handleClick} type="onSubmit" disabled={errores.some(e => {
                           if(e)
                             return e.message !== ''
                         }) }>
                           Guardar Avance
                         </Button>
-                        <div className='spinnerLoading'>
-                          { loading ?
-                            <Spinner animation="border" variant="danger" className='spinnerLoading' />
-                          :
-                            <></>
-                          }
-                        </div>
                         </Form>
                       </Modal.Body>
                     </Modal>
@@ -321,13 +286,6 @@ const renderHitosFields = () => {
                 <div className="Dato"><strong>Porcentaje de Avance:</strong><div className="porcentaje-cont"><span className="value-dato">{detalleObra.porc_avance_operativo} %</span>
                 <> 
                   <Button onClick={handleShowAR} variant="outline-secondary" className="boton-avance"><FontAwesomeIcon icon={faPenToSquare} /></Button>
-                  <div className='spinnerLoading'>
-                    { loading ?
-                      <Spinner animation="border" variant="danger" className='spinnerLoading' />
-                    :
-                      <></>
-                    }
-                  </div>
                   <Modal show={showAR} onHide={handleCloseAR}>
                     <Modal.Header closeButton>
                       <Modal.Title>Ingrese el Avance</Modal.Title>
@@ -353,16 +311,10 @@ const renderHitosFields = () => {
                             required
                           />
                         </Form.Group>
-                      <Button variant="primary" type="onSubmit" >
+                      <Button variant="danger" type="onSubmit" onClick={handleClick} >
                         Guardar Avance
                       </Button>
-                      <div className='spinnerLoading'>
-                        { loading ?
-                          <Spinner animation="border" variant="danger" className='spinnerLoading' />
-                        :
-                          <></>
-                        }
-                      </div>
+                      
                       </Form>
                     </Modal.Body>
                   </Modal>
