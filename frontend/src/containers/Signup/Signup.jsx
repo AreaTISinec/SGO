@@ -18,7 +18,6 @@ const Signup = () => {
   const handleSubmit = async e => {
     e.preventDefault()
     registerUser(email, username, rol, password, password2)
-    console.log(email, username, rol, password, password2)
   }
 
 

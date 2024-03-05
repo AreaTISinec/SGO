@@ -15,14 +15,12 @@ const ListaDocumentos = () => {
     try {
       const response = await axios.get(`https://sgo-django.azurewebsites.net/api/files/list/${idObra}/`)
       setListadoDeDocumentos(response.data)
-      console.log("respuesta: ", response)
     } catch (error){
       console.error('Error fetching de documentos', error)
     }
   }
   useEffect(() => {
     fetchListadoDocumentos();
-    console.log(listadoDeDocumentos)
   }, []);
 
   const handleDownload = async (documentId) => {
@@ -31,10 +29,6 @@ const ListaDocumentos = () => {
         responseType: 'blob',
       });
       const url = window.URL.createObjectURL(new Blob([response.data]));
-      console.log('url: ')
-      console.log(url)
-      console.log('response: ')
-      console.log(response)
       const link = document.createElement('a');
       link.href = url;
       link.setAttribute('download','document.pdf');

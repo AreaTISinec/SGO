@@ -31,7 +31,6 @@ const UploadFile = () => {
 
   const onFileChange = (e) => {
     setFormData({ ...formData, doc: e.target.files[0] });
-    console.log(e.target.files);
   };
 
   return (

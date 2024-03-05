@@ -60,12 +60,10 @@ const AvanceFinanciero = () => {
 
     const onSubmit = (e) => {
         e.preventDefault()
-        console.log(typeof(idObra))
         uploadAvanceFinanciero(fechaActual, parseInt(monto), parseInt(idObra), profile.id)
         onResetForm()
     }
 
-    console.log('id responsable: ',profile)
 
     return (
         <div className="AvancesContainer">

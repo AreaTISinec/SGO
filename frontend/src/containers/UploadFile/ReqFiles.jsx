@@ -28,7 +28,6 @@ const ReqFiles = () => {
 
   const onFileChange = (e) => {
       setFile(e.target.files[0]);
-      console.log(file);
     };
 
   const navigate = useNavigate()

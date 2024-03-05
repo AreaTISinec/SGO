@@ -21,7 +21,7 @@ export const uploadAvanceReal = async (fecha, porcentaje, id_obra) => {
     try {
         const res = await axios.post('https://sgo-django.azurewebsites.net/api/avance/newAvance/', body, config)
     } catch (error) {
-        console.log(error.response)
+        console.error(error.response)
     }
 }
 

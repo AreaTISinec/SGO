@@ -37,7 +37,7 @@ export const AuthProvider = ({ children }) => {
             const res = await axios.get(`https://sgo-django.azurewebsites.net/api/profile/${user.user_id}/`)
             setProfile(res.data)
         } catch (error) {
-            console.log(error)
+            console.error(error)
         }
     }
 
@@ -58,11 +58,9 @@ export const AuthProvider = ({ children }) => {
         
 
         if(response.status === 200){
-            console.log("Logged In");
             setAuthTokens(data)
             setUser(jwtDecode(data.access))
             localStorage.setItem("authTokens", JSON.stringify(data))
-            console.log(user)
             swal.fire({
                 title: "Sesion iniciada correctamente",
                 icon: "success",
@@ -138,11 +136,8 @@ export const AuthProvider = ({ children }) => {
         }
 
         const body = JSON.stringify({'is_connected': false})
-        console.log('user.id')
-        console.log(id)
         try {
             const response = await axios.patch(`https://sgo-django.azurewebsites.net/api/accounts/logout/${id}/`, body, config)
-            console.log('en el try')
         } catch (error) {
             console.error(error)
         }
