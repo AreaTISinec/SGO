@@ -45,7 +45,6 @@ export const signup = async ({ username, email, password, re_password, rol })   
 } 
 
 export const logout = async () => {
-    console.log(document.cookie)
     const config = {
         headers: {
             'Content-Type': 'application/json',

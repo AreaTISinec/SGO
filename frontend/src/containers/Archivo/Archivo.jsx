@@ -8,7 +8,6 @@ const Archivo = () => {
 
     const onSubmit = e => {
         e.preventDefault();
-        console.log(e)
         upload_xlxs(e)
     }
 

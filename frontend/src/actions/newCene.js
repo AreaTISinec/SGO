@@ -3,7 +3,6 @@ import swal from 'sweetalert2';
 
 
 export const uploadCene = async (id_cene, nombre, empresa) => {
-    console.log('holamundo')
     const body = JSON.stringify({
         id_cene, nombre, empresa
     })

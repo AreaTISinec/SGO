@@ -18,7 +18,6 @@ import { getDetalleObra, getEncargado } from "../../actions/getPetitions.js"
 
 const DetalleObra = () => {
   const { idObra } = useParams();
-  console.log("id Obra: ", idObra)
   const [detalleObra, setDetalleObra] = useState({});
   const [supervisor, setSupervisor] = useState([]);
   const [responsable, setResponsable] = useState([]);
@@ -53,7 +52,6 @@ const DetalleObra = () => {
     } else {
       console.log('Ingrese el porcentaje correcto');
     }
-    console.log("estado")
     onResetForm()
     handleCloseAR()
   }
@@ -83,9 +81,7 @@ const DetalleObra = () => {
       // Validamos el campo 'porcentaje'
       if (name === 'porcentaje') {
         if(nuevosHitos[index - 1] && parseInt(nuevosHitos[index - 1].porcentaje) >= value)
-          {console.log('index -1 (dentro if): ', nuevosHitos[index-1].porcentaje)
-          console.log('value (dentro if): ', value)
-          errorMessage = `Ingrese un porcentaje mayor a ${nuevosHitos[index-1].porcentaje}`;}
+          {errorMessage = `Ingrese un porcentaje mayor a ${nuevosHitos[index-1].porcentaje}`;}
 
         if(nuevosHitos[index + 1] && parseInt(nuevosHitos[index + 1].porcentaje) <= value)
           errorMessage = `Ingrese un porcentaje menor a ${nuevosHitos[index+1].porcentaje}`;
@@ -120,7 +116,6 @@ const DetalleObra = () => {
   const [accessToken, setAccessToken] = useState('');
 
   useEffect(() => {
-    console.log('useEffect del accessToken')
     const fetchAccessToken = async () => {
       try {
         // Realiza una solicitud a tu backend para obtener un nuevo token de acceso
@@ -128,8 +123,6 @@ const DetalleObra = () => {
         const data = await response.json();
         // Actualiza el estado del token de acceso con el nuevo token
         setAccessToken(data.accessToken);
-        
-        //console.log(accessToken)
       } catch (error) {
         console.error('Error al obtener el token de acceso:', error);
       }

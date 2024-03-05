@@ -1,3 +1,4 @@
+
 import axios from "axios"
 
 export const getObra = async (id ,setObraCallback) => {
@@ -97,5 +98,24 @@ export const getClientes = async (setClientesCallback) => {
         setClientesCallback(res.data)
     } catch (error) {
         console.error("Error al obtener datos", error)
+    }
+}
+
+
+export const getHistorialFinanciero = async (setHistorialFinancieroCallback, idObra) => {
+    try {
+        const { data } = await axios.get(`https://sgo-django.azurewebsites.net/api/historial/${idObra}/`)
+        setHistorialFinancieroCallback(data)
+    } catch (error) {
+        console.error(error)
+    }
+}
+
+export const getProfile = async ( idProfile) => {
+    try {
+        const { data } = await axios.get(`https://sgo-django.azurewebsites.net/api/profile/${idProfile}/`)
+        return(data)
+    } catch (error) {
+        console.error(error)
     }
 }

@@ -23,9 +23,12 @@ class HistorialObraListView(ListAPIView):
 class HistorialUploadView(APIView):
     permission_classes = (permissions.AllowAny, )
     
-    def post(self, request):
-        serializer = HistorialSerializer
+    def post(self, request, format=None):
+        print(request.data)
+        serializer = HistorialSerializer(data=request.data)
+        print(serializer)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
+        print(serializer.errors)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)       
