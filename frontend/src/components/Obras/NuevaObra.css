@@ -21,3 +21,8 @@
 .formularioNuevaObra {
   overflow-y: auto;
 }
+
+.spinnerLoading{
+  display: flex;
+  justify-content: center;
+}

@@ -63,3 +63,8 @@
   background-color: transparent;
   padding-top: 30px;
 }
+
+.spinnerLoading{
+  display: flex;
+  justify-content: center;
+}

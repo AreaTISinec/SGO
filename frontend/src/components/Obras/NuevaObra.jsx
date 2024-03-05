@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { uploadObra } from "../../actions/newWorks.js"
 import { getEmpresas, getTiposObra, getEstadosObra, getSupervisores, getCeNes, getClientes} from "../../actions/getPetitions.js";
+import Spinner from 'react-bootstrap/Spinner';
 import useForm from "../../utils/useForm.jsx";
 import AuthContext from "../../context/AuthContext.jsx";
 import Button from "react-bootstrap/Button";
@@ -19,6 +20,15 @@ const NuevaObra = () => {
   const [cenes, setCene] = useState([])
   const [supervisores, setSupervisores] = useState([])
   const [clientes, setClientes] = useState([])
+
+  const [loading, setLoading] = useState(false)
+
+  const handleClick = () => {
+    setLoading(true)
+    setTimeout(() => {
+      setLoading(false);
+    }, 2650);
+  }
 
   const { regiones } = dataComunas
 
@@ -231,7 +241,7 @@ const NuevaObra = () => {
                onChange={onInputChange}
                >
                 {
-                  clientes.map((cliente) => 
+                  clientes?.map((cliente) => 
                     <option key={cliente.rut}  value={cliente.nombre}>{cliente.nombre}</option>
                   )
                 }
@@ -245,7 +255,7 @@ const NuevaObra = () => {
                onChange={onInputChange}
                >
                 {
-                  supervisores.map((supervisor) => 
+                  supervisores?.map((supervisor) => 
                     <option key={supervisor.id}  value={supervisor.id}>{supervisor.nombre} {supervisor.apellido}</option>
                   )
                 }
@@ -302,9 +312,16 @@ const NuevaObra = () => {
               />
             </Form.Group>
 
-            <Button variant="danger" type="submit">
+            <Button variant="danger" type="submit" onClick={handleClick}>
               Crear Obra
             </Button>
+            <div className='spinnerLoading'>
+              { loading ?
+                <Spinner animation="border" variant="danger" className='spinnerLoading' />
+              :
+                <></>
+              }
+            </div>
           </Form>
         </div>
       </div>
