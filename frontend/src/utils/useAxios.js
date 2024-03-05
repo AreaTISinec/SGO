@@ -4,7 +4,7 @@ import dayjs from 'dayjs'
 import { useContext } from 'react'
 import AuthContext from '../context/AuthContext'
 
-const URL = "http://127.0.0.1:8000/api"
+const URL = "https://sgo-django.azurewebsites.net/api"
 
 const useAxios = () => {
     const [authTokens, setUser, setAuthTokens] = useContext(AuthContext)

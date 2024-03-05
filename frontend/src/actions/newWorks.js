@@ -1,5 +1,5 @@
 import axios from "axios"
-
+import swal from 'sweetalert2';
 
 export const uploadObra = async (
     //REQUERIDOS
@@ -16,16 +16,17 @@ export const uploadObra = async (
     direccion, 
     comuna, 
     tipo_obra,
-    responsable,
     //RELLENO
-    responsable_id,
-    supervisor_id,
-    cene_id,
+    responsable,
+    supervisor,
+    cene,
     observaciones,
     monto_facturado,
-    monto_por_facturar
+    monto_por_facturar,
+    is_gantt,
+    is_presupuesto,
+    is_avance
     ) => {
-
     const body = JSON.stringify({
         //REQUIRED
         empresa, 
@@ -41,16 +42,17 @@ export const uploadObra = async (
         direccion, 
         comuna, 
         tipo_obra,
-        responsable,
         //RELLENO
-        responsable_id,
-        supervisor_id,
-        cene_id,
+        responsable,
+        supervisor,
+        cene,
         observaciones,
         monto_facturado,
-        monto_por_facturar
+        monto_por_facturar,
+        is_gantt,
+        is_presupuesto,
+        is_avance
     })
-    console.log(body)
 
 
     const config = {
@@ -60,10 +62,28 @@ export const uploadObra = async (
   };
 
     try {
-        const res = await axios.post('http://127.0.0.1:8000/api/obras/nueva/', body, config)
+        const res = await axios.post('https://sgo-django.azurewebsites.net/api/obras/nueva/', body, config)
+        swal.fire({
+            title: "Nueva obra creada exitosamente",
+            icon: "success",
+            toast: true,
+            timer: 4000,
+            position: 'top-right',
+            timerProgressBar: true,
+            showConfirmButton: false,
+        })
         return res
     }catch(err){
         console.error(err)
+        swal.fire({
+            title: "Error al crear la obra",
+            icon: "error",
+            toast: true,
+            timer: 4000,
+            position: 'top-right',
+            timerProgressBar: true,
+            showConfirmButton: false,
+          })
         throw err
     }
 

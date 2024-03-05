@@ -34,7 +34,7 @@ export const AuthProvider = ({ children }) => {
 
     const uploadDataProfile = async ()=> {
         try {
-            const res = await axios.get(`http://127.0.0.1:8000/api/profile/${user.user_id}/`)
+            const res = await axios.get(`https://sgo-django.azurewebsites.net/api/profile/${user.user_id}/`)
             setProfile(res.data)
         } catch (error) {
             console.log(error)
@@ -44,7 +44,7 @@ export const AuthProvider = ({ children }) => {
     
     const loginUser = async (email, password) => {
 
-        const response = await fetch("http://127.0.0.1:8000/api/token/", {
+        const response = await fetch("https://sgo-django.azurewebsites.net/api/token/", {
             method: "POST",
             headers:{
                 "Content-Type":"application/json"
@@ -90,7 +90,7 @@ export const AuthProvider = ({ children }) => {
     }
 
     const registerUser = async (email, username, rol, password, password2) => {
-        const response = await fetch("http://127.0.0.1:8000/api/accounts/registrar/", {
+        const response = await fetch("https://sgo-django.azurewebsites.net/api/accounts/registrar/", {
             method: "POST",
             headers: {
                 "Content-Type":"application/json"
@@ -141,7 +141,7 @@ export const AuthProvider = ({ children }) => {
         console.log('user.id')
         console.log(id)
         try {
-            const response = await axios.patch(`http://127.0.0.1:8000/api/accounts/logout/${id}/`, body, config)
+            const response = await axios.patch(`https://sgo-django.azurewebsites.net/api/accounts/logout/${id}/`, body, config)
             console.log('en el try')
         } catch (error) {
             console.error(error)

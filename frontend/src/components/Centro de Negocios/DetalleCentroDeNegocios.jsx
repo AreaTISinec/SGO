@@ -1,19 +1,15 @@
 import { useParams } from "react-router-dom";
 import SidebarV2 from "../SidebarV2/SidebarV2";
 import "./DetalleCentroDeNegocios.css";
-import axios from "axios";
 import { useState, useEffect } from "react";
+import { getCeNe } from "../../actions/getPetitions";
 
 const DetalleCentroDeNegocios = () => {
   const { idCentroDeNegocios } = useParams();
   const [detalleCentroDeNegocios, setDetalleCentroDeNegocios] = useState();
 
-  const getDatos = async () => {
-    const { data } = await axios.get(
-      `http://127.0.0.1:8000/api/cene/${idCentroDeNegocios}`
-    );
-    console.log(data)
-    setDetalleCentroDeNegocios(data);
+  const getDatos = () => {
+    getCeNe(idCentroDeNegocios, setDetalleCentroDeNegocios)
   };
 
   useEffect(() => {

@@ -30,7 +30,7 @@ const Perfil = () => {
 
   const getDatosUser = async () => {
     try {
-      const { data } = await axios.get(`http://127.0.0.1:8000/api/profile/${idUsuario}/`);
+      const { data } = await axios.get(`https://sgo-django.azurewebsites.net/api/profile/${idUsuario}/`);
       setInfoUser(data);
     } catch (error) {
       console.error(error)
@@ -40,7 +40,7 @@ const Perfil = () => {
 
   const getEmpresasUser= async () => {
     try {
-        const { data } = await axios.get(`http://127.0.0.1:8000/api/empresas/${infoUser?.empresa}/`)
+        const { data } = await axios.get(`https://sgo-django.azurewebsites.net/api/empresas/${infoUser?.empresa}/`)
         setInfoEmpresa(data);      
     } catch (error) {
       console.error(error)
@@ -50,7 +50,7 @@ const Perfil = () => {
  
   const getEmpresas = async () => {
     try {
-      const response = await axios.get('http://127.0.0.1:8000/api/empresas/')
+      const response = await axios.get('https://sgo-django.azurewebsites.net/api/empresas/')
       setEmpresas(response.data)
     } catch (error) {
       console.error(error)

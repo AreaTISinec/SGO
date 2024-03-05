@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { uploadObra } from "../../actions/newWorks.js"
-import { getEmpresas, getTiposObra, getEstadosObra, getCeNe, getSupervisores, getClientes } from "../../actions/getPetitions.js";
+import { getEmpresas, getTiposObra, getEstadosObra, getSupervisores, getCeNes, getClientes} from "../../actions/getPetitions.js";
 import useForm from "../../utils/useForm.jsx";
 import AuthContext from "../../context/AuthContext.jsx";
 import Button from "react-bootstrap/Button";
@@ -10,9 +10,7 @@ import SidebarV2 from "../SidebarV2/SidebarV2";
 import "./NuevaObra.css";
 
 const NuevaObra = () => {
-  const {user, profile} = useContext(AuthContext);
-
-  console.log(profile)
+  const {profile} = useContext(AuthContext);
 
   const [empresas, setEmpresas] = useState([]);
   const [tiposObra, setTiposObra] = useState([]);
@@ -28,7 +26,7 @@ const NuevaObra = () => {
     getEmpresas(setEmpresas)
     getTiposObra(setTiposObra)
     getEstadosObra(setEstadosObra)
-    getCeNe(setCene)
+    getCeNes(setCene)
     getSupervisores(setSupervisores)
     getClientes(setClientes)
   },[])
@@ -51,8 +49,11 @@ const NuevaObra = () => {
     monto_facturado, 
     monto_por_facturar, 
     responsable,// ex id_user
-    supervisor,
+    supervisor_id,
     cene_id,
+    is_gantt,
+    is_presupuesto,
+    is_avance,
     onInputChange, 
     onResetForm 
   } = useForm({ //agregar correctamente los parametros de la nueva obra
@@ -72,9 +73,11 @@ const NuevaObra = () => {
     observaciones: '',
     monto_facturado: 0, 
     monto_por_facturar: 0,
-    responsable: user.user_id,
-    supervisor: 0,
-    cene_id: ''
+    supervisor_id: 0,
+    cene_id: '',
+    is_gantt: false,
+    is_presupuesto: false,
+    is_avance: false
   });
 
   const onSubmit = (e) => {
@@ -83,7 +86,7 @@ const NuevaObra = () => {
       empresa, 
       cliente, 
       nombre,
-      presupuesto, 
+      parseInt(presupuesto), 
       porc_avance_financiero,  //debiesen iniciar en 0, en una obra nueva
       porc_avance_operativo,
       estado_obra,
@@ -93,14 +96,16 @@ const NuevaObra = () => {
       direccion, 
       comuna, 
       tipo_obra,
-      responsable,
       //RELLENO
-      responsable,
-      supervisor,
+      profile.id,
+      parseInt(supervisor_id),
       cene_id,
       observaciones,
       monto_facturado,
-      monto_por_facturar
+      monto_por_facturar,
+      is_gantt,
+      is_presupuesto,
+      is_avance
     )  
     onResetForm();
   };
@@ -117,6 +122,16 @@ const NuevaObra = () => {
       <div className="RecuadroNuevaObra">
         <div>
           <Form className="formularioNuevaObra" onSubmit={onSubmit}>
+          <Form.Group className="mb-3" >
+              <Form.Label>Nombre de la Obra</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Ingrese la direccion de la obra"
+                name="nombre"
+                onChange={onInputChange}
+              />
+            </Form.Group>
+
             <Form.Group className="mb-3" >
               <Form.Label>Fecha de inicio</Form.Label>
               <Form.Control
@@ -198,7 +213,7 @@ const NuevaObra = () => {
             <Form.Group className="mb-3" >
               <Form.Label>Centro de Negocios</Form.Label>
               <Form.Select
-               name='id_cene'
+               name='cene_id'
                onChange={onInputChange}
                >
                 {
@@ -226,7 +241,7 @@ const NuevaObra = () => {
             <Form.Group className="mb-3" >
               <Form.Label>Supervisor de la Obra</Form.Label>
               <Form.Select
-               name=''
+               name='supervisor_id'
                onChange={onInputChange}
                >
                 {
@@ -267,12 +282,12 @@ const NuevaObra = () => {
             </Form.Group>
 
             <Form.Group className="mb-3" >
-              <Form.Label>Monto neto</Form.Label>
+              <Form.Label>Presupuesto</Form.Label>
               <Form.Control
-                type="text"
+                type="number"
                 pattern="[0-9]*"
                 placeholder="Ingrese el monto neto de la obra"
-                name="monto_neto"
+                name="presupuesto"
                 onChange={onInputChange}
               />
             </Form.Group>

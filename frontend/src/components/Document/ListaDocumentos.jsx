@@ -13,7 +13,7 @@ const ListaDocumentos = () => {
 
   async function fetchListadoDocumentos() {
     try {
-      const response = await axios.get(`http://127.0.0.1:8000/api/files/list/${idObra}/`)
+      const response = await axios.get(`https://sgo-django.azurewebsites.net/api/files/list/${idObra}/`)
       setListadoDeDocumentos(response.data)
       console.log("respuesta: ", response)
     } catch (error){
@@ -27,7 +27,7 @@ const ListaDocumentos = () => {
 
   const handleDownload = async (documentId) => {
     try {
-      const response = await axios.get(`http://127.0.0.1:8000/api/files/download/${documentId}/`, {
+      const response = await axios.get(`https://sgo-django.azurewebsites.net/api/files/download/${documentId}/`, {
         responseType: 'blob',
       });
       const url = window.URL.createObjectURL(new Blob([response.data]));
