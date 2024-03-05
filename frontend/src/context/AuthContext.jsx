@@ -40,7 +40,6 @@ export const AuthProvider = ({ children }) => {
             console.error(error)
         }
     }
-
     
     const loginUser = async (email, password) => {
 
@@ -122,11 +121,6 @@ export const AuthProvider = ({ children }) => {
             })
         }
     }
-
-    
-
-
-
 
     const logoutUser = async (id) => {
         const config = {

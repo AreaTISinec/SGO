@@ -29,10 +29,12 @@ const AvanceFinanciero = () => {
     useEffect(()=> {
         const fecha = new Date().toISOString().split('T')[0];
         setFechaActual(fecha)
-        getDetalleObra(setObra, idObra)
+        getDetalleObra(idObra, setObra)
         //obtenerHistorialFinanciero()
         getHistorialFinanciero(setHistorialFinanciero, idObra);
     }, [])
+
+    console.log(historialFinanciero)
 
     // const obtenerHistorialFinanciero = async () => {
     //     try {
@@ -121,9 +123,9 @@ const AvanceFinanciero = () => {
                     </thead>
                     <tbody>
                     {
-                    historialFinanciero.map((row, index)=>{
-                        
-                                return(
+                    historialFinanciero.length > 0 && historialFinanciero ?
+                        (historialFinanciero.map((row)=>
+                                (
                                     <tr key={row.id}>
                                         <td>{profile.nombre}</td>
                                         <td>{row.fecha}</td>
@@ -131,9 +133,9 @@ const AvanceFinanciero = () => {
                                         <td>{row.porcentaje}</td>
                                     </tr>
                                 )
-            
-                        }
-                    )
+                            )
+                        ):
+                        <></>
                     }
                     </tbody>
                 </Table>

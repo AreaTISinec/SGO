@@ -15,7 +15,7 @@ import NuevoCentroDeNegocios from "../components/Centro de Negocios/NuevoCentroD
 import { Route, Routes } from "react-router-dom";
 import ReqFiles from "../containers/UploadFile/ReqFiles";
 import Perfil from "../components/Perfil/Perfil";
-//import AvanceFinanciero from "../containers/AvanceFinanciero/AvanceFinanciero";
+import AvanceFinanciero from "../containers/AvanceFinanciero/AvanceFinanciero";
 
 const AppRouter = () => {
 
@@ -82,14 +82,14 @@ const AppRouter = () => {
               </PrivateRoute>
             }
           />
-          {/* <Route
+          <Route
             path="/obras/:idObra/avance-financiero"
             element={
               <PrivateRoute>
                 <AvanceFinanciero />
               </PrivateRoute>
             }
-          /> */}
+          />
           <Route
             path="/centro-de-negocios"
             element={
