@@ -13,6 +13,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons'
 import Divider from '@mui/material/Divider';
 import { getDetalleObra, getEncargado } from "../../actions/getPetitions.js"
+import Spinner from 'react-bootstrap/Spinner';
 
 
 
@@ -29,6 +30,15 @@ const DetalleObra = () => {
   }])
   const [errores, setErrores] = useState([]);
   // const [avanceProyectado, setAvanceProyectado] = useState([])
+
+  const [loading, setLoading] = useState(false)
+
+  const handleClick = () => {
+    setLoading(true)
+    setTimeout(() => {
+      setLoading(false);
+    }, 2650);
+  }
 
   const handleCloseAR = () => setShowAR(false);
   const handleShowAR = () => setShowAR(true);
@@ -198,23 +208,58 @@ const renderHitosFields = () => {
               detalleObra && detalleObra.is_gantt && detalleObra.is_presupuesto ? //agregar detalleObra.cubicacion pq es obligatorio
               <Link  className="BotonNuevaObra" to={"./nuevo-documento"}>
                 <Button variant="danger">Subir documento</Button>
+                <div className='spinnerLoading'>
+                  { loading ?
+                    <Spinner animation="border" variant="danger" className='spinnerLoading' />
+                  :
+                    <></>
+                  }
+                </div>
               </Link>
               :
               <Link className="BotonNuevaObra" to={"./req-documento"}>
                 <Button variant="danger">Subir documento</Button>
+                <div className='spinnerLoading'>
+                  { loading ?
+                    <Spinner animation="border" variant="danger" className='spinnerLoading' />
+                  :
+                    <></>
+                  }
+                </div>
               </Link>
 
             }
             <Link className="BotonNuevaObra" to={"./documentos"}> {/*ver la url */}
               <Button variant="danger">Ver documentos</Button>
+              <div className='spinnerLoading'>
+                  { loading ?
+                    <Spinner animation="border" variant="danger" className='spinnerLoading' />
+                  :
+                    <></>
+                  }
+                </div>
             </Link>
             <Link className="BotonNuevaObra" to={"./avance-financiero"}> {/*ver la url */}
               <Button variant="danger">Avance Financiero</Button>
+              <div className='spinnerLoading'>
+                  { loading ?
+                    <Spinner animation="border" variant="danger" className='spinnerLoading' />
+                  :
+                    <></>
+                  }
+                </div>
             </Link>
             {
               detalleObra && !detalleObra.is_avance ?
               <span className="BotonNuevaObra">
                 <Button onClick={handleShowAP} variant="danger" >Subir avance Proyectado</Button>
+                <div className='spinnerLoading'>
+                  { loading ?
+                    <Spinner animation="border" variant="danger" className='spinnerLoading' />
+                  :
+                    <></>
+                  }
+                </div>
                     <Modal show={showAP} onHide={handleCloseAP}>
                       <Modal.Header closeButton>
                         <Modal.Title>Definir Avance Proyectado</Modal.Title>
@@ -241,6 +286,13 @@ const renderHitosFields = () => {
                         }) }>
                           Guardar Avance
                         </Button>
+                        <div className='spinnerLoading'>
+                          { loading ?
+                            <Spinner animation="border" variant="danger" className='spinnerLoading' />
+                          :
+                            <></>
+                          }
+                        </div>
                         </Form>
                       </Modal.Body>
                     </Modal>
@@ -271,6 +323,13 @@ const renderHitosFields = () => {
                 <div className="Dato"><strong>Porcentaje de Avance:</strong><div className="porcentaje-cont"><span className="value-dato">{detalleObra.porc_avance_operativo} %</span>
                 <> 
                   <Button onClick={handleShowAR} variant="outline-secondary" className="boton-avance"><FontAwesomeIcon icon={faPenToSquare} /></Button>
+                  <div className='spinnerLoading'>
+                    { loading ?
+                      <Spinner animation="border" variant="danger" className='spinnerLoading' />
+                    :
+                      <></>
+                    }
+                  </div>
                   <Modal show={showAR} onHide={handleCloseAR}>
                     <Modal.Header closeButton>
                       <Modal.Title>Ingrese el Avance</Modal.Title>
@@ -299,6 +358,13 @@ const renderHitosFields = () => {
                       <Button variant="primary" type="onSubmit" >
                         Guardar Avance
                       </Button>
+                      <div className='spinnerLoading'>
+                        { loading ?
+                          <Spinner animation="border" variant="danger" className='spinnerLoading' />
+                        :
+                          <></>
+                        }
+                      </div>
                       </Form>
                     </Modal.Body>
                   </Modal>

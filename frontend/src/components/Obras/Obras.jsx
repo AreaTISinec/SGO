@@ -1,4 +1,5 @@
 import SidebarV2 from "../SidebarV2/SidebarV2";
+import Spinner from 'react-bootstrap/Spinner';
 import "./Obras.css";
 import { useState, useEffect, useContext } from "react";
 import Button from "react-bootstrap/Button";
@@ -9,6 +10,15 @@ import { getObras, getObra } from "../../actions/getPetitions";
 const Obras = () => {
   const [obrasData, setObrasData] = useState([]);
   const [searchTerm, setSearchTerm] = useState(""); // Estado para el término de búsqueda
+
+  const [loading, setLoading] = useState(false)
+
+  const handleClick = () => {
+    setLoading(true)
+    setTimeout(() => {
+      setLoading(false);
+    }, 2650);
+  }
 
   const { user } = useContext(AuthContext);
 
@@ -67,7 +77,14 @@ const Obras = () => {
             />
             {user.rol == 1 || user.rol == 2 || user.rol == 5 ?
               <Link className="BotonNuevaObra" to={"/obras/nueva-obra"}>
-                <Button variant="danger">Nueva Obra</Button>
+                <Button variant="danger" onClick={handleClick}>Nueva Obra</Button>
+                <div className='spinnerLoading'>
+                  { loading ?
+                    <Spinner animation="border" variant="danger" className='spinnerLoading' />
+                  :
+                    <></>
+                  }
+                </div>
               </Link>
               :
               <></>
@@ -93,7 +110,14 @@ const Obras = () => {
                   <td>{obra.estado_obra}</td>
                   <td>
                     <Link to={`/obras/${obra.id}`}>
-                      <Button variant="danger">+</Button>
+                      <Button variant="danger" onClick={handleClick}>+</Button>
+                      <div className='spinnerLoading'>
+                        { loading ?
+                          <Spinner animation="border" variant="danger" className='spinnerLoading' />
+                        :
+                          <></>
+                        }
+                      </div>
                     </Link>
                   </td>
                 </tr>
