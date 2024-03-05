@@ -19,7 +19,7 @@ const NavBar = () => {
         <nav className="navbar">
           <div className="navbar__top">
             <div className="navbar__top__logo">
-              <Navbar.Brand href="http://localhost:5173/home">
+              <Navbar.Brand href="https://sgo-django.azurewebsites.net/home">
                 <img
                   src={logogrupo}
                   alt="logo"
