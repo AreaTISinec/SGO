@@ -69,7 +69,7 @@ export const uploadAvanceFinanciero = async (fecha, monto, id_obra, responsable)
     }
 
     try {
-        const res = await axios.post('http://127.0.0.1:8000/api/historial/upload/', body, config)
+        const res = await axios.post('https://sgo-django.azurewebsites.net/api/historial/upload/', body, config)
         console.log(res)
     } catch (error) {
         console.log(error)
