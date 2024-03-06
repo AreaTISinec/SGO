@@ -75,16 +75,16 @@ const Obras = () => {
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
-            {user.rol == 1 || user.rol == 2 || user.rol == 5 ?
-              <Link className="BotonNuevaObra" to={"/obras/nueva-obra"}>
-                <Button variant="danger" onClick={handleClick}>Nueva Obra</Button>
-                <div className='spinnerLoading'>
+            <div className='spinnerLoading'>
                   { loading ?
                     <Spinner animation="border" variant="danger" className='spinnerLoading' />
                   :
                     <></>
                   }
                 </div>
+            {user.rol == 1 || user.rol == 2 || user.rol == 5 ?
+              <Link className="BotonNuevaObra" to={"/obras/nueva-obra"}>
+                <Button variant="danger" onClick={handleClick}>Nueva Obra</Button>
               </Link>
               :
               <></>
@@ -111,13 +111,7 @@ const Obras = () => {
                   <td>
                     <Link to={`/obras/${obra.id}`}>
                       <Button variant="danger" onClick={handleClick}>+</Button>
-                      <div className='spinnerLoading'>
-                        { loading ?
-                          <Spinner animation="border" variant="danger" className='spinnerLoading' />
-                        :
-                          <></>
-                        }
-                      </div>
+
                     </Link>
                   </td>
                 </tr>

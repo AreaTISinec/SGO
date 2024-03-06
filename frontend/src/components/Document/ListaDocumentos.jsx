@@ -6,10 +6,24 @@ import axios from "axios";
 import SidebarV2 from "../SidebarV2/SidebarV2";
 import "./ListaDocumentos.css";
 import { useParams } from "react-router-dom";
+import Spinner from 'react-bootstrap/Spinner';
 
 const ListaDocumentos = () => {
   const [listadoDeDocumentos, setListadoDeDocumentos] = useState([])
   const { idObra } = useParams()
+
+  const [loading, setLoading] = useState(false)
+
+  const handleClick = () => {
+    setLoading(true)
+    setTimeout(() => {
+      setLoading(false);
+    }, 2650);
+  }
+
+  const click2 = () => {
+    
+  }
 
   async function fetchListadoDocumentos() {
     try {
@@ -50,7 +64,8 @@ const ListaDocumentos = () => {
         </div>
         <Accordion className="AcordeonListaDocumentos">
           <Accordion.Item eventKey="0">
-            <Accordion.Header>Cartas Gantt</Accordion.Header>
+            <Accordion.Header>Cartas Gantt
+            </Accordion.Header>
             <Accordion.Body>
               <ListGroup>
                 {listadoDeDocumentos?.map( document => 
@@ -58,7 +73,8 @@ const ListaDocumentos = () => {
                     return (
                   <ListGroup.Item className="ListaDocumentosDisponibles" key={document.id}>
                     {document.file_name}
-                    <Button variant="danger" onClick={() => handleDownload(document.id)}>Descargar</Button>
+                    <Button variant="danger" onClick={() => {handleDownload(document.id); handleClick();}}>Descargar</Button>
+                    
                   </ListGroup.Item> )
                 }
                 )}
@@ -74,7 +90,7 @@ const ListaDocumentos = () => {
                     return (
                   <ListGroup.Item className="ListaDocumentosDisponibles" key={document.id}>
                     {document.file_name}
-                    <Button variant="danger" onClick={() => handleDownload(document.id)}>Descargar</Button>
+                    <Button variant="danger" onClick={() => {handleDownload(document.id); handleClick();}}>Descargar</Button>
                   </ListGroup.Item> )
                 }
                 )}
@@ -90,7 +106,7 @@ const ListaDocumentos = () => {
                     return (
                   <ListGroup.Item className="ListaDocumentosDisponibles" key={document.id}>
                     {document.file_name}
-                    <Button variant="danger" onClick={() => handleDownload(document.id)}>Descargar</Button>
+                    <Button variant="danger" onClick={() => {handleDownload(document.id); handleClick();}}>Descargar</Button>
                   </ListGroup.Item> )
                 }
                 )}
@@ -106,13 +122,20 @@ const ListaDocumentos = () => {
                     return (
                   <ListGroup.Item className="ListaDocumentosDisponibles" key={document.id}>
                     {document.file_name}
-                    <Button variant="danger" onClick={() => handleDownload(document.id)}>Descargar</Button>
+                    <Button variant="danger" onClick={() => {handleDownload(document.id); handleClick();}}>Descargar</Button>
                   </ListGroup.Item> )
                 }
                 )}
               </ListGroup>
             </Accordion.Body>
           </Accordion.Item>
+          <div className='spinnerLoading'>
+              { loading ?
+                <Spinner animation="border" variant="danger" className='spinnerLoading' />
+              :
+                <></>
+              }
+            </div>
         </Accordion>
       </div>
     </div>
