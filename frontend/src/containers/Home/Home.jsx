@@ -13,6 +13,7 @@ import Dropdown from 'react-bootstrap/Dropdown'
 import Button from "react-bootstrap/Button";
 
 import { getCeNes, getSupervisores, getClientes, getEmpresas, getTiposObra, getEstadosObra } from "../../actions/getPetitions";
+import CeneModal from "../../components/Modals/Cene/CeneModal";
 
 ChartJS.register(ArcElement, Tooltip, Legend)
 
@@ -27,7 +28,9 @@ const Home =  () => {
   const [tiposObra, setTiposObra] = useState([])
   const [estadosObra, setEstadosObra] = useState([])
 
-  useEffect
+  const [show, setShow] = useState(false)
+
+  const handleShow = () => setShow(!show)
 
   const getUser = async () => {
     const config = {
@@ -43,6 +46,7 @@ const Home =  () => {
       console.error(error)
     }
   }
+
   useEffect(()=>{
     getUser()
     getCeNes(setCenes)
@@ -52,6 +56,7 @@ const Home =  () => {
     getTiposObra(setTiposObra)
     getEstadosObra(setEstadosObra)
   },[])
+
   return (
     <main className="HomeContainer">
       <SidebarV2 />
@@ -125,7 +130,10 @@ const Home =  () => {
                       </Dropdown.Menu>
                     </Dropdown>
                   </td>
-                  <td><Button variant="danger">+</Button> </td>
+                  <td>
+                    <Button variant="danger" onClick={handleShow}>+</Button>
+                    <CeneModal show={show} handleClose={handleShow}  />
+                  </td>
                 </tr>
                 <tr>
                   <td>Clientes</td>
@@ -143,7 +151,10 @@ const Home =  () => {
                       </Dropdown.Menu>
                     </Dropdown>
                   </td>
-                  <td><Button variant="danger">+</Button></td>
+                  <td>
+                    <Button variant="danger" onClick={handleShow}>+</Button>
+                    <CeneModal show={show} handleClose={handleShow}  />
+                  </td>
                 </tr>
                 <tr>
                   <td>Empresas</td>
@@ -161,7 +172,11 @@ const Home =  () => {
                       </Dropdown.Menu>
                     </Dropdown>
                   </td>
-                  <td><Button variant="danger">+</Button></td>
+                  <td>
+                    <Button variant="danger" onClick={handleShow}>+</Button>
+                    <CeneModal show={show} handleClose={handleShow}  />
+                        
+                  </td>
                 </tr>
                 <tr>
                   <td>Personal</td>
@@ -215,7 +230,10 @@ const Home =  () => {
                       </Dropdown.Menu>
                     </Dropdown>
                   </td>
-                  <td><Button variant="danger">+</Button></td>
+                  <td>
+                    <Button variant="danger" onClick={handleShow}>+</Button>
+                    <CeneModal show={show} handleClose={handleShow}  />
+                  </td>
                 </tr>
                 </tbody>
               </Table>

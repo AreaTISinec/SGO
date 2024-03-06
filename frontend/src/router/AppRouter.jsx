@@ -10,7 +10,6 @@ import PrivateRoute from "../utils/PrivateRoute";
 import DetalleObra from "../components/Obras/DetalleObra";
 import NuevaObra from "../components/Obras/NuevaObra";
 import CentroDeNegocios from "../components/Centro de Negocios/CentroDeNegocios";
-import DetalleCentroDeNegocios from "../components/Centro de Negocios/DetalleCentroDeNegocios";
 import NuevoCentroDeNegocios from "../components/Centro de Negocios/NuevoCentroDeNegocios";
 import { Route, Routes } from "react-router-dom";
 import ReqFiles from "../containers/UploadFile/ReqFiles";
@@ -98,14 +97,7 @@ const AppRouter = () => {
               </PrivateRoute>
             }
           />
-          <Route
-            path="/centro-de-negocios/:idCentroDeNegocios"
-            element={
-              <PrivateRoute>
-                <DetalleCentroDeNegocios />
-              </PrivateRoute>
-            }
-          />
+          
           <Route
             path="/centro-de-negocios/nuevo-centro-de-negocios"
             element={

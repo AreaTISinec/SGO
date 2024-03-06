@@ -76,11 +76,6 @@ const CentroDeNegocios = () => {
                       <td>{CentrodeNegocios.id_cene}</td>
                       <td>{CentrodeNegocios.empresa}</td>
                       <td>{CentrodeNegocios.nombre}</td>
-                      <Link
-                        to={`/centro-de-negocios/${CentrodeNegocios.id_cene}`}
-                      >
-                        <Button variant="danger">+</Button>
-                      </Link>
                     </tr>
                   ))}
             </tbody>
