@@ -150,11 +150,14 @@ const DetalleObra = () => {
 
   useEffect(() => {
     getDetalleObra(idObra, setDetalleObra)
-    getEncargado(detalleObra.supervisor, setSupervisor)
-    getEncargado(detalleObra.responsable, setResponsable)
     const fecha = new Date().toISOString().split('T')[0];
     setFechaActual(fecha)
-  }, [detalleObra]); // Ejecutar efecto solo en el montaje inicial del componente
+  }, []); // Ejecutar efecto solo en el montaje inicial del componente
+
+  useEffect(()=>{
+    getEncargado(detalleObra.supervisor, setSupervisor)
+    getEncargado(detalleObra.responsable, setResponsable)
+  }, [detalleObra])
 
 
 const renderHitosFields = () => {
