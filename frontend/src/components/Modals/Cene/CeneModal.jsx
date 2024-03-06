@@ -35,7 +35,7 @@ const CeneModal = ({ show, handleClose }) => {
     }
     return (
         <Modal show={show} onHide={handleClose}>
-            <Modal.Header>
+            <Modal.Header closeButton>
                 <Modal.Title>Crear Nuevo Centro de Negocios</Modal.Title>
             </Modal.Header>
             <Modal.Body>
