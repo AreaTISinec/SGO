@@ -26,8 +26,8 @@ export const uploadAvanceReal = async (fecha, porcentaje, id_obra) => {
 }
 
 export const uploadAvanceProyectado = async (hitos, id_obra) => {
-
-    for(let i =0; i< hitos.length; i++){
+    console.log(hitos)
+    for(let i =1; i< hitos.length; i++){
         let fecha = hitos[i]['fecha']
         let porcentaje = hitos[i]['porcentaje']
         const tipo = 'proyectado'
