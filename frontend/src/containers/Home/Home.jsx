@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import SidebarV2 from "../../components/SidebarV2/SidebarV2";
 import AuthContext from "../../context/AuthContext"
 import axios from "axios";
@@ -12,12 +12,22 @@ import Table  from 'react-bootstrap/Table'
 import Dropdown from 'react-bootstrap/Dropdown'
 import Button from "react-bootstrap/Button";
 
+import { getCeNes, getSupervisores, getClientes, getEmpresas, getTiposObra, getEstadosObra } from "../../actions/getPetitions";
+
 ChartJS.register(ArcElement, Tooltip, Legend)
 
 
 const Home =  () => {
   const { user } = useContext(AuthContext);
 
+  const [cenes, setCenes] = useState([])
+  const [personal ,setPersonal] = useState([])
+  const [clientes, setClientes] = useState([])
+  const [empresas, setEmpresas] = useState([])
+  const [tiposObra, setTiposObra] = useState([])
+  const [estadosObra, setEstadosObra] = useState([])
+
+  useEffect
 
   const getUser = async () => {
     const config = {
@@ -35,6 +45,12 @@ const Home =  () => {
   }
   useEffect(()=>{
     getUser()
+    getCeNes(setCenes)
+    getSupervisores(setPersonal)
+    getClientes(setClientes)
+    getEmpresas(setEmpresas)
+    getTiposObra(setTiposObra)
+    getEstadosObra(setEstadosObra)
   },[])
   return (
     <main className="HomeContainer">
@@ -100,11 +116,12 @@ const Home =  () => {
                       <Dropdown.Toggle variant="secondary">
                         Ver Lista
                       </Dropdown.Toggle>
-                      <Dropdown.Menu>
-                        <Dropdown.Item>cene 1</Dropdown.Item>
-                        <Dropdown.Item>cene 2</Dropdown.Item>
-                        <Dropdown.Item>cene 3</Dropdown.Item>
-                        <Dropdown.Item>cene 4</Dropdown.Item>
+                      <Dropdown.Menu className="menu-dropdown">
+                        {cenes?.map((cene)=>{
+                          return(
+                            <Dropdown.Item key={cene.id_cene}>{cene.nombre}</Dropdown.Item>
+                          )
+                        })}
                       </Dropdown.Menu>
                     </Dropdown>
                   </td>
@@ -117,11 +134,12 @@ const Home =  () => {
                     <Dropdown.Toggle variant="secondary">
                         Ver Lista
                       </Dropdown.Toggle>
-                      <Dropdown.Menu>
-                        <Dropdown.Item>cene 1</Dropdown.Item>
-                        <Dropdown.Item>cene 2</Dropdown.Item>
-                        <Dropdown.Item>cene 3</Dropdown.Item>
-                        <Dropdown.Item>cene 4</Dropdown.Item>
+                      <Dropdown.Menu className="menu-dropdown">
+                        {clientes?.map((cliente)=>{
+                          return(
+                            <Dropdown.Item key={cliente.rut}>{cliente.nombre}</Dropdown.Item>
+                          )
+                        })}
                       </Dropdown.Menu>
                     </Dropdown>
                   </td>
@@ -134,11 +152,12 @@ const Home =  () => {
                     <Dropdown.Toggle variant="secondary"> 
                         Ver Lista
                       </Dropdown.Toggle>
-                      <Dropdown.Menu>
-                        <Dropdown.Item>cene 1</Dropdown.Item>
-                        <Dropdown.Item>cene 2</Dropdown.Item>
-                        <Dropdown.Item>cene 3</Dropdown.Item>
-                        <Dropdown.Item>cene 4</Dropdown.Item>
+                      <Dropdown.Menu className="menu-dropdown">
+                        {empresas?.map((empresa)=>{
+                          return(
+                            <Dropdown.Item key={empresa.id}>{empresa.nombre}</Dropdown.Item>
+                          )
+                        })}
                       </Dropdown.Menu>
                     </Dropdown>
                   </td>
@@ -151,15 +170,16 @@ const Home =  () => {
                     <Dropdown.Toggle variant="secondary">
                         Ver Lista
                       </Dropdown.Toggle>
-                      <Dropdown.Menu>
-                        <Dropdown.Item>cene 1</Dropdown.Item>
-                        <Dropdown.Item>cene 2</Dropdown.Item>
-                        <Dropdown.Item>cene 3</Dropdown.Item>
-                        <Dropdown.Item>cene 4</Dropdown.Item>
+                      <Dropdown.Menu align={'centered'} className="menu-dropdown">
+                        {personal?.map((persona)=>{
+                          return(
+                            <Dropdown.Item key={persona.id}>{persona.nombre} {persona.apellido}</Dropdown.Item>
+                          )
+                        })}
                       </Dropdown.Menu>
                     </Dropdown>
                   </td>
-                  <td><Button variant="danger">+</Button></td>
+                  <td></td>
                 </tr>
                 <tr>
                   <td>Estados de obras</td>
@@ -168,15 +188,16 @@ const Home =  () => {
                     <Dropdown.Toggle variant="secondary">
                         Ver Lista
                       </Dropdown.Toggle>
-                      <Dropdown.Menu>
-                        <Dropdown.Item>cene 1</Dropdown.Item>
-                        <Dropdown.Item>cene 2</Dropdown.Item>
-                        <Dropdown.Item>cene 3</Dropdown.Item>
-                        <Dropdown.Item>cene 4</Dropdown.Item>
+                      <Dropdown.Menu className="menu-dropdown">
+                        {estadosObra?.map((estado)=>{
+                          return(
+                            <Dropdown.Item key={estado.id}>{estado.estado}</Dropdown.Item>
+                          )
+                        })}
                       </Dropdown.Menu>
                     </Dropdown>
                   </td>
-                  <td><Button variant="danger">+</Button></td>
+                  <td></td>
                 </tr>
                 <tr>
                   <td>Tipos de obras</td>
@@ -185,11 +206,12 @@ const Home =  () => {
                     <Dropdown.Toggle variant="secondary">
                         Ver Lista
                       </Dropdown.Toggle>
-                      <Dropdown.Menu>
-                        <Dropdown.Item>cene 1</Dropdown.Item>
-                        <Dropdown.Item>cene 2</Dropdown.Item>
-                        <Dropdown.Item>cene 3</Dropdown.Item>
-                        <Dropdown.Item>cene 4</Dropdown.Item>
+                      <Dropdown.Menu className="menu-dropdown">
+                        {tiposObra?.map((tipo)=>{
+                          return(
+                            <Dropdown.Item key={tipo.id}>{tipo.nombre}</Dropdown.Item>
+                          )
+                        })}
                       </Dropdown.Menu>
                     </Dropdown>
                   </td>

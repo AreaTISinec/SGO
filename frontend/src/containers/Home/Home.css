@@ -73,3 +73,8 @@
     height:auto;
     align-self: center;
 }
+
+.menu-dropdown{
+    max-height: 300px;
+    overflow-y: auto;
+}
