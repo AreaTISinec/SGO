@@ -14,6 +14,9 @@ import Button from "react-bootstrap/Button";
 
 import { getCeNes, getSupervisores, getClientes, getEmpresas, getTiposObra, getEstadosObra } from "../../actions/getPetitions";
 import CeneModal from "../../components/Modals/Cene/CeneModal";
+import ClienteModal from "../../components/Modals/Cliente/ClienteModal";
+import EmpresaModal from "../../components/Modals/Empresa/EmpresaModal";
+import TipoObrasModal from "../../components/Modals/TipoObras/TipoObrasModal";
 
 ChartJS.register(ArcElement, Tooltip, Legend)
 
@@ -28,9 +31,16 @@ const Home =  () => {
   const [tiposObra, setTiposObra] = useState([])
   const [estadosObra, setEstadosObra] = useState([])
 
-  const [show, setShow] = useState(false)
+  const [showCene, setShowCene] = useState(false)
+  const [showCliente, setShowCliente] = useState(false)
+  const [showEmpresa, setShowEmpresa] = useState(false)
+  const [showTipo, setShowTipo] = useState(false)
 
-  const handleShow = () => setShow(!show)
+
+  const handleShowCene = () => setShowCene(!showCene)
+  const handleShowCliente = () => setShowCliente(!showCliente)
+  const handleShowEmpresa = () => setShowEmpresa(!showEmpresa)
+  const handleShowTipo = () => setShowTipo(!showTipo)
 
   const getUser = async () => {
     const config = {
@@ -112,7 +122,6 @@ const Home =  () => {
           <h3>Recursos</h3>
           <div className="">
               <Table>
-                
                 <tbody>
                 <tr>
                   <td>Centro de Negocios</td>
@@ -131,10 +140,11 @@ const Home =  () => {
                     </Dropdown>
                   </td>
                   <td>
-                    <Button variant="danger" onClick={handleShow}>+</Button>
-                    <CeneModal show={show} handleClose={handleShow}  />
+                    <Button variant="danger" onClick={handleShowCene}>+</Button>
+                    <CeneModal show={showCene} handleShow={handleShowCene}  />
                   </td>
                 </tr>
+
                 <tr>
                   <td>Clientes</td>
                   <td>
@@ -152,10 +162,11 @@ const Home =  () => {
                     </Dropdown>
                   </td>
                   <td>
-                    <Button variant="danger" onClick={handleShow}>+</Button>
-                    <CeneModal show={show} handleClose={handleShow}  />
+                    <Button variant="danger" onClick={handleShowCliente}>+</Button>
+                    <ClienteModal  show={showCliente} handleShow={handleShowCliente} />
                   </td>
                 </tr>
+
                 <tr>
                   <td>Empresas</td>
                   <td>
@@ -173,11 +184,11 @@ const Home =  () => {
                     </Dropdown>
                   </td>
                   <td>
-                    <Button variant="danger" onClick={handleShow}>+</Button>
-                    <CeneModal show={show} handleClose={handleShow}  />
-                        
+                    <Button variant="danger" onClick={handleShowEmpresa}>+</Button>
+                    <EmpresaModal show={showEmpresa} handleShow={handleShowEmpresa} />
                   </td>
                 </tr>
+
                 <tr>
                   <td>Personal</td>
                   <td>
@@ -196,6 +207,7 @@ const Home =  () => {
                   </td>
                   <td></td>
                 </tr>
+
                 <tr>
                   <td>Estados de obras</td>
                   <td>
@@ -214,6 +226,7 @@ const Home =  () => {
                   </td>
                   <td></td>
                 </tr>
+
                 <tr>
                   <td>Tipos de obras</td>
                   <td>
@@ -231,8 +244,8 @@ const Home =  () => {
                     </Dropdown>
                   </td>
                   <td>
-                    <Button variant="danger" onClick={handleShow}>+</Button>
-                    <CeneModal show={show} handleClose={handleShow}  />
+                    <Button variant="danger" onClick={handleShowTipo}>+</Button>
+                    <TipoObrasModal  show={showTipo} handleShow={handleShowTipo} />
                   </td>
                 </tr>
                 </tbody>

@@ -11,7 +11,8 @@ class ClienteListView(ListAPIView):
     serializer_class = ClienteSerializer
     pagination_class = None
     queryset = Cliente.objects.all()
-    
+
+
 class ClienteView(APIView):
     permission_classes = (permissions.AllowAny, )
     

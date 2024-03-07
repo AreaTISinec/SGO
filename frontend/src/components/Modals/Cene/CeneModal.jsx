@@ -10,7 +10,7 @@ import { useState } from 'react';
 import useForm from '../../../utils/useForm';
 
 
-const CeneModal = ({ show, handleClose }) => {
+const CeneModal = ({ show, handleShow }) => {
     const [empresas, setEmpresas] = useState([]);
     const {id_cene, nombre, empresa, onInputChange, onResetForm} = useForm({
         id_cene:'',
@@ -22,65 +22,67 @@ const CeneModal = ({ show, handleClose }) => {
         getEmpresas(setEmpresas)
     }, [])
 
-    const ceneRegex = /^[0-9a-zA-Z]*$/;
+    const ceneRegex = /^[0-9a-zA-Z]{0,16}$/;
 
     const onSubmit = (e) => {
-        if(ceneRegex.test(e.target["id_cene"].value)){
+      e.preventDefault()
+        if(ceneRegex.test(id_cene)){
             uploadCene(id_cene,nombre, empresa)
+            onResetForm()
+            handleShow()
           }else{
             console.log('no es valido')
           }
-        onResetForm()
-        handleClose()
-    }
+      }
+
     return (
-        <Modal show={show} onHide={handleClose}>
+        <Modal show={show} onHide={handleShow}>
             <Modal.Header closeButton>
                 <Modal.Title>Crear Nuevo Centro de Negocios</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-            <Form className="formularioNuevoCene" onSubmit={onSubmit}>
-            <Form.Group className="mb-3" controlId="">
-              <Form.Label>ID del Centro de Negocios</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Ingrese el ID del Centro de Negocios"
-                name="id_cene"
-                onChange={ onInputChange }
-                required
-              />
-            </Form.Group>
+              <Form onSubmit={onSubmit}>
+                <Form.Group>
+                  <Form.Label>ID del Centro de Negocios</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Ingrese el ID del Centro de Negocios"
+                    name="id_cene"
+                    onChange={ onInputChange }
+                    required
+                  />
+                </Form.Group>
 
-            <Form.Group className="mb-3" controlId="formBasicPassword">
-              <Form.Label>Seleccione la empresa</Form.Label>
-              <Form.Select
-                onChange={ onInputChange }
-                name="empresa"
-                required
-              >
-                {
-                  empresas.map((empresa) => (
-                    <option key={empresa.id} value={empresa.nombre}> {empresa.nombre} </option>
-                  ))
-                }
-              </Form.Select>
-            </Form.Group>
+                <Form.Group >
+                  <Form.Label>Seleccione la empresa</Form.Label>
+                  <Form.Select
+                    onChange={ onInputChange }
+                    name="empresa"
+                    required
+                  >
+                    {
+                      empresas.map((empresa) => (
+                        <option key={empresa.id} value={empresa.nombre}> {empresa.nombre} </option>
+                      ))
+                    }
+                  </Form.Select>
+                </Form.Group>
 
-            <Form.Group className="mb-3" controlId="formBasicPassword">
-              <Form.Label>Nombre del Centro de Negocios</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Ingrese el nombre del Centro de Negocios"
-                name="nombre"
-                onChange={ onInputChange }
-                required
-              />
-            </Form.Group>
+                <Form.Group  >
+                  <Form.Label>Nombre del Centro de Negocios</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Ingrese el nombre del Centro de Negocios"
+                    name="nombre"
+                    onChange={ onInputChange }
+                    required
+                  />
+                </Form.Group>
 
-            <Button variant="danger" type="submit">
-              Crear
-            </Button>
-          </Form>
+                <Button variant="danger" type="submit">
+                  Crear
+                </Button>
+              </Form>
             </Modal.Body>
         </Modal>
     )
