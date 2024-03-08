@@ -9,14 +9,20 @@ import { Doughnut } from 'react-chartjs-2'
 import { dataObras, dataFacturacion } from "../../components/Charts/Donuts/donut1";
 
 import Table  from 'react-bootstrap/Table'
-import Dropdown from 'react-bootstrap/Dropdown'
 import Button from "react-bootstrap/Button";
 
 import { getCeNes, getSupervisores, getClientes, getEmpresas, getTiposObra, getEstadosObra } from "../../actions/getPetitions";
-import CeneModal from "../../components/Modals/Cene/CeneModal";
+
 import ClienteModal from "../../components/Modals/Cliente/ClienteModal";
 import EmpresaModal from "../../components/Modals/Empresa/EmpresaModal";
 import TipoObrasModal from "../../components/Modals/TipoObras/TipoObrasModal";
+import CeneModal from "../../components/Modals/Cene/CeneModal";
+import PersonalModal from "../../components/Modals/Personal/PersonalModal";
+import EstadoObrasModal from "../../components/Modals/EstadosObra/EstadoObrasModal";
+import AddTipoObrasModal from "../../components/Modals/TipoObras/AddTipoObrasModal";
+import AddEmpresaModal from "../../components/Modals/Empresa/AddEmpresaModal";
+import AddClienteModal from "../../components/Modals/Cliente/AddClienteModal";
+import AddCeneModal from "../../components/Modals/Cene/AddCeneModal";
 
 ChartJS.register(ArcElement, Tooltip, Legend)
 
@@ -24,23 +30,39 @@ ChartJS.register(ArcElement, Tooltip, Legend)
 const Home =  () => {
   const { user } = useContext(AuthContext);
 
-  const [cenes, setCenes] = useState([])
-  const [personal ,setPersonal] = useState([])
-  const [clientes, setClientes] = useState([])
-  const [empresas, setEmpresas] = useState([])
-  const [tiposObra, setTiposObra] = useState([])
-  const [estadosObra, setEstadosObra] = useState([])
 
   const [showCene, setShowCene] = useState(false)
+  const [showAddCene, setShowAddCene] = useState(false)
+
   const [showCliente, setShowCliente] = useState(false)
+  const [showAddCliente, setShowAddCliente] = useState(false)
+
   const [showEmpresa, setShowEmpresa] = useState(false)
+  const [showAddEmpresa, setShowAddEmpresa] = useState(false)
+
   const [showTipo, setShowTipo] = useState(false)
+  const [showAddTipo, setShowAddTipo] = useState(false)
+
+  const [showPersonal, setShowPersonal] = useState(false)
+
+  const [showEstado, setShowEstado] = useState(false)
 
 
   const handleShowCene = () => setShowCene(!showCene)
+  const handleShowAddCene = () => setShowAddCene(!showAddCene)
+
   const handleShowCliente = () => setShowCliente(!showCliente)
+  const handleShowAddCliente = () => setShowAddCliente(!showAddCliente)
+
   const handleShowEmpresa = () => setShowEmpresa(!showEmpresa)
+  const handleShowAddEmpresa = () => setShowAddEmpresa(!showAddEmpresa)
+
   const handleShowTipo = () => setShowTipo(!showTipo)
+  const handleShowAddTipo = () => setShowAddTipo(!showAddTipo)
+
+  const handleShowPersonal = () => setShowPersonal(!showPersonal)
+
+  const handleShowEstado = () => setShowEstado(!showEstado)
 
   const getUser = async () => {
     const config = {
@@ -59,12 +81,6 @@ const Home =  () => {
 
   useEffect(()=>{
     getUser()
-    getCeNes(setCenes)
-    getSupervisores(setPersonal)
-    getClientes(setClientes)
-    getEmpresas(setEmpresas)
-    getTiposObra(setTiposObra)
-    getEstadosObra(setEstadosObra)
   },[])
 
   return (
@@ -126,84 +142,44 @@ const Home =  () => {
                 <tr>
                   <td>Centro de Negocios</td>
                   <td>
-                    <Dropdown>
-                      <Dropdown.Toggle variant="secondary">
-                        Ver Lista
-                      </Dropdown.Toggle>
-                      <Dropdown.Menu className="menu-dropdown">
-                        {cenes?.map((cene)=>{
-                          return(
-                            <Dropdown.Item key={cene.id_cene}>{cene.nombre}</Dropdown.Item>
-                          )
-                        })}
-                      </Dropdown.Menu>
-                    </Dropdown>
+                    <Button variant="secondary" onClick={handleShowCene}>Mostrar Lista</Button>
+                    <CeneModal show={showCene} handleShow={handleShowCene}/>
                   </td>
                   <td>
-                    <Button variant="danger" onClick={handleShowCene}>+</Button>
-                    <CeneModal show={showCene} handleShow={handleShowCene}  />
+                    <Button variant="danger" onClick={handleShowAddCene}>+</Button>
+                    <AddCeneModal show={showAddCene} handleShow={handleShowAddCene}  />
                   </td>
                 </tr>
 
                 <tr>
                   <td>Clientes</td>
                   <td>
-                    <Dropdown>
-                    <Dropdown.Toggle variant="secondary">
-                        Ver Lista
-                      </Dropdown.Toggle>
-                      <Dropdown.Menu className="menu-dropdown">
-                        {clientes?.map((cliente)=>{
-                          return(
-                            <Dropdown.Item key={cliente.rut}>{cliente.nombre}</Dropdown.Item>
-                          )
-                        })}
-                      </Dropdown.Menu>
-                    </Dropdown>
+                    <Button variant="secondary" onClick={handleShowCliente}>Mostrar Lista</Button>
+                    <ClienteModal show={showCliente} handleShow={handleShowCliente} />
                   </td>
                   <td>
-                    <Button variant="danger" onClick={handleShowCliente}>+</Button>
-                    <ClienteModal  show={showCliente} handleShow={handleShowCliente} />
+                    <Button variant="danger" onClick={handleShowAddCliente}>+</Button>
+                    <AddClienteModal  show={showAddCliente} handleShow={handleShowAddCliente} />
                   </td>
                 </tr>
 
                 <tr>
                   <td>Empresas</td>
                   <td>
-                    <Dropdown>
-                    <Dropdown.Toggle variant="secondary"> 
-                        Ver Lista
-                      </Dropdown.Toggle>
-                      <Dropdown.Menu className="menu-dropdown">
-                        {empresas?.map((empresa)=>{
-                          return(
-                            <Dropdown.Item key={empresa.id}>{empresa.nombre}</Dropdown.Item>
-                          )
-                        })}
-                      </Dropdown.Menu>
-                    </Dropdown>
+                    <Button variant="secondary" onClick={handleShowEmpresa}>Mostrar Lista</Button>
+                    <EmpresaModal show={showEmpresa} handleShow={handleShowEmpresa} />
                   </td>
                   <td>
-                    <Button variant="danger" onClick={handleShowEmpresa}>+</Button>
-                    <EmpresaModal show={showEmpresa} handleShow={handleShowEmpresa} />
+                    <Button variant="danger" onClick={handleShowAddEmpresa}>+</Button>
+                    <AddEmpresaModal show={showAddEmpresa} handleShow={handleShowAddEmpresa} />
                   </td>
                 </tr>
 
                 <tr>
                   <td>Personal</td>
                   <td>
-                    <Dropdown>
-                    <Dropdown.Toggle variant="secondary">
-                        Ver Lista
-                      </Dropdown.Toggle>
-                      <Dropdown.Menu align={'centered'} className="menu-dropdown">
-                        {personal?.map((persona)=>{
-                          return(
-                            <Dropdown.Item key={persona.id}>{persona.nombre} {persona.apellido}</Dropdown.Item>
-                          )
-                        })}
-                      </Dropdown.Menu>
-                    </Dropdown>
+                    <Button variant="secondary" onClick={handleShowPersonal}>Mostrar Lista</Button>
+                    <PersonalModal show={showPersonal} handleShow={handleShowPersonal} />
                   </td>
                   <td></td>
                 </tr>
@@ -211,18 +187,8 @@ const Home =  () => {
                 <tr>
                   <td>Estados de obras</td>
                   <td>
-                    <Dropdown>
-                    <Dropdown.Toggle variant="secondary">
-                        Ver Lista
-                      </Dropdown.Toggle>
-                      <Dropdown.Menu className="menu-dropdown">
-                        {estadosObra?.map((estado)=>{
-                          return(
-                            <Dropdown.Item key={estado.id}>{estado.estado}</Dropdown.Item>
-                          )
-                        })}
-                      </Dropdown.Menu>
-                    </Dropdown>
+                    <Button variant="secondary" onClick={handleShowEstado}>Mostrar Lista</Button>
+                    <EstadoObrasModal show={showEstado} handleShow={handleShowEstado} />
                   </td>
                   <td></td>
                 </tr>
@@ -230,22 +196,12 @@ const Home =  () => {
                 <tr>
                   <td>Tipos de obras</td>
                   <td>
-                    <Dropdown> 
-                    <Dropdown.Toggle variant="secondary">
-                        Ver Lista
-                      </Dropdown.Toggle>
-                      <Dropdown.Menu className="menu-dropdown">
-                        {tiposObra?.map((tipo)=>{
-                          return(
-                            <Dropdown.Item key={tipo.id}>{tipo.nombre}</Dropdown.Item>
-                          )
-                        })}
-                      </Dropdown.Menu>
-                    </Dropdown>
+                    <Button variant="secondary" onClick={handleShowTipo}>Mostrar Lista</Button>
+                    <TipoObrasModal show={showTipo} handleShow={handleShowTipo} />
                   </td>
                   <td>
-                    <Button variant="danger" onClick={handleShowTipo}>+</Button>
-                    <TipoObrasModal  show={showTipo} handleShow={handleShowTipo} />
+                    <Button variant="danger" onClick={handleShowAddTipo}>+</Button>
+                    <AddTipoObrasModal  show={showAddTipo} handleShow={handleShowAddTipo} />
                   </td>
                 </tr>
                 </tbody>

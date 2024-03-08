@@ -1,41 +1,39 @@
 /* eslint-disable react/prop-types */
 import Modal from 'react-bootstrap/Modal'
-import Form from 'react-bootstrap/Form'
-import Button from 'react-bootstrap/Button'
-import useForm from '../../../utils/useForm'
-import { uploadEmpresa } from '../../../actions/newEmpresa'
+import Table from 'react-bootstrap/Table'
+import { getEmpresas } from '../../../actions/getPetitions' 
+import { useEffect, useState } from 'react'
 
-const EmpresaModal = ({ show, handleShow }) => {
-  const { nombre, onInputChange, onResetForm} = useForm({
-    nombre: ''
-  })
+const EmpresaModal = ({ show, handleShow}) => {
+  const [empresas, setEmpresas] = useState([])
 
-  const onSubmit = (e) => {
-    e.preventDefault()
-    uploadEmpresa(nombre)
-    onResetForm()
-    handleShow()
-  }
+  useEffect(()=>{
+    getEmpresas(setEmpresas)
+  }, [])
 
   return (
-    <Modal show={show} onHide={handleShow} >
+    <Modal show={show} onHide={handleShow}>
       <Modal.Header closeButton>
-        <Modal.Title>Crear Nueva Empresa</Modal.Title>
+        <Modal.Title>Listado de Empresas</Modal.Title>
       </Modal.Header>
-      <Modal.Body>
-        <Form onSubmit={onSubmit}>
-          <Form.Group>
-            <Form.Label>Nombre de la Empresa</Form.Label>
-            <Form.Control
-              type='text'
-              name='nombre'
-              onChange={onInputChange}
-              placeholder='Ingrese el nombre de la empresa'
-            />
-          </Form.Group>
-          <Button type='onSubmit' variant='danger' >Crear</Button>
-        </Form>
-      </Modal.Body>
+      <Table>
+        <thead>
+        <tr>
+          <th>Nombre Empresa</th>
+        </tr>
+        </thead>
+        <tbody>
+        {
+          empresas?.map((empresa) => {
+            return(
+              <tr key={empresa.id}>
+                <td>{empresa.nombre}</td>
+              </tr>
+            )
+          })
+        }
+        </tbody>
+      </Table>
     </Modal>
   )
 }

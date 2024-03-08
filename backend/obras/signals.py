@@ -4,6 +4,7 @@ from django.db.models import Max
 from .models import  Obras
 from avance.models import Avances
 from files.models import File
+from historial_financiero.models import Historial
 
 ######################### AVANCES #####################################
 
@@ -63,7 +64,22 @@ def actualizar_req_files(sender, instance, created, **kwargs):
 
 #X probar aun
 @receiver(post_save, sender=Obras)
-def actualizar_monto_por_facturar(sender, instance, created, **kwargs):
-    if not created:
-        monto_por_facturar = instance.presupuesto - instance.monto_facturado
-        Obras.objects.filter(pk=instance.pk).update(monto_por_facturar=monto_por_facturar)
+def actualizar_monto_por_facturar(sender, instance, **kwargs):
+    print("dentro señal 1")
+    monto_por_facturar = instance.presupuesto - instance.monto_facturado
+    print(monto_por_facturar)
+    Obras.objects.filter(pk=instance.pk).update(monto_por_facturar=monto_por_facturar)
+    
+    
+@receiver(post_save, sender=Historial)
+def actualizar_facturacion(sender, instance, created, **kwargs):
+    print("dentro señal 2")
+    if created:
+        id_obra = instance.id_obra_id
+        obra = Obras.objects.get(pk=id_obra)
+        obra.monto_facturado = obra.monto_facturado + instance.monto
+        print(obra.porc_avance_financiero)
+        obra.porc_avance_financiero = (obra.monto_facturado / obra.presupuesto) * 100
+        print(obra.porc_avance_financiero)
+        obra.save()
+        

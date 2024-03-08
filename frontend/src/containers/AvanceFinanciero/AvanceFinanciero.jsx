@@ -7,13 +7,14 @@ import Form from "react-bootstrap/Form";
 import { useContext, useEffect, useState } from "react";
 import  useForm  from '../../utils/useForm'
 import { useParams } from "react-router-dom";
-import { getDetalleObra, getHistorialFinanciero, getProfile } from "../../actions/getPetitions";
+import { getDetalleObra, getSupervisores, getHistorialFinanciero } from "../../actions/getPetitions";
 import { uploadAvanceFinanciero } from "../../actions/newAvance";
 import AuthContext from "../../context/AuthContext";
 
 
 const AvanceFinanciero = () => {
     const { profile } =useContext(AuthContext)
+    const [responsables, setResponsables] = useState([])
     const { idObra } = useParams()
     const [showAP, setShowAP] = useState(false);
     const [fechaActual, setFechaActual] = useState('')
@@ -32,9 +33,12 @@ const AvanceFinanciero = () => {
         getDetalleObra(idObra, setObra)
         //obtenerHistorialFinanciero()
         getHistorialFinanciero(setHistorialFinanciero, idObra);
+        getSupervisores(setResponsables)
     }, [])
 
-    console.log(historialFinanciero)
+    
+    
+
 
     // const obtenerHistorialFinanciero = async () => {
     //     try {
@@ -53,8 +57,7 @@ const AvanceFinanciero = () => {
     //     }
     // };
 
-    
-
+   
     
     const { monto,  onInputChange, onResetForm } = useForm({
         monto: 0,
@@ -62,10 +65,11 @@ const AvanceFinanciero = () => {
 
     const onSubmit = (e) => {
         e.preventDefault()
-        uploadAvanceFinanciero(fechaActual, parseInt(monto), parseInt(idObra), profile.id)
+        uploadAvanceFinanciero(fechaActual, parseInt(monto), parseInt(idObra), profile.id, obra.presupuesto)
         onResetForm()
     }
 
+    
 
     return (
         <div className="AvancesContainer">
@@ -75,9 +79,10 @@ const AvanceFinanciero = () => {
             <h1>Avance Financiero</h1>
             </div>
             <div className="DetalleAvanceFinanciero">
-                <div className="Datos"><span><strong>Presupuesto: </strong></span><span className=""> ${obra.presupuesto}</span></div>
-                <div className="Datos"><strong>Total Facturado: </strong><span className=""> ${obra.monto_facturado}</span></div>
-                <div className="Datos"><strong>Monto por Facturar: </strong><span className=""> ${obra.monto_por_facturar}</span></div>
+                <div className="Datos"><span><strong>Presupuesto: </strong></span><span className=""> $ {obra.presupuesto}</span></div>
+                <div className="Datos"><strong>Total Facturado: </strong><span className=""> $ {obra.monto_facturado}</span></div>
+                <div className="Datos"><strong>Monto por Facturar: </strong><span className=""> $ {obra.monto_por_facturar}</span></div>
+                <div className="Datos"><strong>Porcentaje Facturado: </strong><span className="">{obra.porc_avance_financiero} %</span></div>
             </div>
             <div className="Botonera">
                 <Button variant="danger" onClick={handleShowAP}>Agregar avance financiero</Button>
@@ -124,15 +129,18 @@ const AvanceFinanciero = () => {
                     <tbody>
                     {
                     historialFinanciero.length > 0 && historialFinanciero ?
-                        (historialFinanciero.map((row)=>
-                                (
+                        (historialFinanciero.map((row)=>{
+                            const responsable = responsables.find(r => r.id === row.responsable)
+                                return (
                                     <tr key={row.id}>
-                                        <td>{profile.nombre}</td>
+                                        <td>
+                                        {responsable?.nombre} {responsable?.apellido}
+                                        </td>
                                         <td>{row.fecha}</td>
-                                        <td>{row.monto}</td>
-                                        <td>{row.porcentaje}</td>
+                                        <td>$ {row.monto}</td>
+                                        <td>{row.porcentaje} %</td>
                                     </tr>
-                                )
+                                )}
                             )
                         ):
                         <></>
@@ -140,7 +148,6 @@ const AvanceFinanciero = () => {
                     </tbody>
                 </Table>
             </div>
-
             </div>
         </div>
     )
