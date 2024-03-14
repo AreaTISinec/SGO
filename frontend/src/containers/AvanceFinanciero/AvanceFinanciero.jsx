@@ -63,8 +63,8 @@ const AvanceFinanciero = () => {
     const onSubmit = (e) => {
         e.preventDefault()
         uploadAvanceFinanciero(fecha, parseInt(monto), parseInt(idObra), profile.id, obra.presupuesto, empresa, factura)
-        onResetForm()
         upload(doc, tipo, id_obra);
+        onResetForm()
     }
     
     
