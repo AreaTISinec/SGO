@@ -10,6 +10,7 @@ import { useParams } from "react-router-dom";
 import { getDetalleObra, getSupervisores, getHistorialFinanciero, getEmpresas } from "../../actions/getPetitions";
 import { uploadAvanceFinanciero } from "../../actions/newAvance";
 import AuthContext from "../../context/AuthContext";
+import { upload } from "../../actions/docs";
 
 
 const AvanceFinanciero = () => {
@@ -38,28 +39,18 @@ const AvanceFinanciero = () => {
         getEmpresas(setEmpresas)
     }, [])
 
+
+    const [docData, setDocData] = useState({
+        id_obra: idObra,
+        tipo: "facturas",
+        doc: null,
+    });
     
+    const { tipo, doc, id_obra } = docData;
+    
+    console.log(docData)
     
 
-
-    // const obtenerHistorialFinanciero = async () => {
-    //     try {
-    //         const historial = await getHistorialFinanciero(setHistorialFinanciero, idObra);
-    //         const perfilesPromises = historial.map(row => getProfile(row.responsable));
-    //         const perfiles = await Promise.all(perfilesPromises);
-            
-    //         const historialConNombres = historial.map((row, index) => ({
-    //             ...row,
-    //             nombreResponsable: perfiles[index].nombre
-    //         }));
-
-    //         setHistorialFinanciero(historialConNombres);
-    //     } catch (error) {
-    //         console.error('Error al obtener historial financiero:', error);
-    //     }
-    // };
-
-   
     
     const { monto, empresa, factura, fecha, onInputChange, onResetForm } = useForm({
         monto: 0,
@@ -73,7 +64,13 @@ const AvanceFinanciero = () => {
         e.preventDefault()
         uploadAvanceFinanciero(fecha, parseInt(monto), parseInt(idObra), profile.id, obra.presupuesto, empresa, factura)
         onResetForm()
+        upload(doc, tipo, id_obra);
     }
+    
+    
+      const onFileChange = (e) => {
+        setDocData({ ...docData, doc: e.target.files[0] });
+      };
 
     
 
@@ -121,6 +118,14 @@ const AvanceFinanciero = () => {
                                     type="number"
                                     name="factura"
                                     onChange={onInputChange}
+                                />
+                            </Form.Group>
+                            <Form.Group>
+                                <Form.Label>Documento Factura</Form.Label>
+                                <Form.Control
+                                    type="file"
+                                    name="archivo"
+                                    onChange={(e)=> onFileChange(e)}
                                 />
                             </Form.Group>
                             <Form.Group>
