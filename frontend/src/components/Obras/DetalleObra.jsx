@@ -150,10 +150,7 @@ const DetalleObra = () => {
     getEncargado(detalleObra.responsable, setResponsable)
   }, [detalleObra])
 
-  if(accessToken){
-    console.log(accessToken)
-    
-  }
+ 
 
 const renderHitosFields = () => {
   const fields = [];
@@ -195,7 +192,6 @@ const renderHitosFields = () => {
 };
 
 
-console.log("responsable: ", responsable)
 
   return (
     <div className="DetalleObraContainer">
@@ -229,7 +225,10 @@ console.log("responsable: ", responsable)
             <Link className="BotonNuevaObra" to={"./avance-financiero"}> {/*ver la url */}
               <Button variant="danger" onClick={handleClick}>Avance Financiero</Button>
             </Link>
-            {
+            <Link className="BotonNuevaObra" to={"./avance-operativo"}> {/*ver la url */}
+              <Button variant="danger" onClick={handleClick}>Avance Operativo</Button>
+            </Link>
+            {/* {
               detalleObra && !detalleObra.is_avance ?
               <span className="BotonNuevaObra">
                 <Button onClick={() => {handleShowAP(); handleClick();}} variant="danger" >Subir avance Proyectado</Button>
@@ -264,7 +263,7 @@ console.log("responsable: ", responsable)
                     </Modal>
               </span>:
               <></>
-            }
+            } */}
 
           </div>
         </div>

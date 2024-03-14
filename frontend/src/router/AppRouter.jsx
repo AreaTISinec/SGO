@@ -15,6 +15,7 @@ import { Route, Routes } from "react-router-dom";
 import ReqFiles from "../containers/UploadFile/ReqFiles";
 import Perfil from "../components/Perfil/Perfil";
 import AvanceFinanciero from "../containers/AvanceFinanciero/AvanceFinanciero";
+import AvanceOperativo from "../containers/AvanceOperativo/AvanceOperativo";
 
 const AppRouter = () => {
 
@@ -86,6 +87,14 @@ const AppRouter = () => {
             element={
               <PrivateRoute>
                 <AvanceFinanciero />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/obras/:idObra/avance-operativo"
+            element={
+              <PrivateRoute>
+                <AvanceOperativo />
               </PrivateRoute>
             }
           />
