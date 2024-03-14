@@ -132,6 +132,7 @@ export const AuthProvider = ({ children }) => {
         const body = JSON.stringify({'is_connected': false})
         try {
             const response = await axios.patch(`https://sgo-django.azurewebsites.net/api/accounts/logout/${id}/`, body, config)
+            console.log(response)
         } catch (error) {
             console.error(error)
         }

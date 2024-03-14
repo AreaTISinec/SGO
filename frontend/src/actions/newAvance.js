@@ -1,4 +1,5 @@
 import axios from "axios";
+import swal from "sweetalert2";
 
 
 export const uploadAvanceReal = async (fecha, porcentaje, id_obra) => {
@@ -20,8 +21,26 @@ export const uploadAvanceReal = async (fecha, porcentaje, id_obra) => {
 
     try {
         const res = await axios.post('https://sgo-django.azurewebsites.net/api/avance/newAvance/', body, config)
+        swal.fire({
+                title: "Avance subido correctamente",
+                icon: "success",
+                toast: true,
+                timer: 4000,
+                position: 'top-right',
+                timerProgressBar: true,
+                showConfirmButton: false,
+            })
     } catch (error) {
         console.error(error.response)
+        swal.fire({
+        title: "A ocurrido un error: ",
+        icon: "error",
+        toast: true,
+        timer: 4000,
+        position: 'top-right',
+        timerProgressBar: true,
+        showConfirmButton: false,
+    })
     }
 }
 
@@ -47,8 +66,26 @@ export const uploadAvanceProyectado = async (hitos, id_obra) => {
 
         try {
             const res = await axios.post('https://sgo-django.azurewebsites.net/api/avance/newAvance/', body, config)
+            swal.fire({
+                title: "Avance subido correctamente",
+                icon: "success",
+                toast: true,
+                timer: 4000,
+                position: 'top-right',
+                timerProgressBar: true,
+                showConfirmButton: false,
+            })
         } catch (error) {
             console.error(error.response)
+            swal.fire({
+        title: "A ocurrido un error: ",
+        icon: "error",
+        toast: true,
+        timer: 4000,
+        position: 'top-right',
+        timerProgressBar: true,
+        showConfirmButton: false,
+    })
         }
     }
 
@@ -78,9 +115,27 @@ export const uploadAvanceFinanciero = async (fecha, monto, id_obra, responsable,
 
     try {
         const res = await axios.post('https://sgo-django.azurewebsites.net/api/historial/upload/', body, config)
+        swal.fire({
+                title: "Avance subido correctamente",
+                icon: "success",
+                toast: true,
+                timer: 4000,
+                position: 'top-right',
+                timerProgressBar: true,
+                showConfirmButton: false,
+            })
         console.log(res)
     } catch (error) {
-        console.error(error)
+        console.error(error);
+        swal.fire({
+        title: "A ocurrido un error: ",
+        icon: "error",
+        toast: true,
+        timer: 4000,
+        position: 'top-right',
+        timerProgressBar: true,
+        showConfirmButton: false,
+    })
     }
 }
 
