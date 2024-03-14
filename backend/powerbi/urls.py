@@ -1,7 +1,7 @@
 from django.urls import path
-from .views import get_access_token
+from .views import get_access_token, getToken
 
 urlpatterns = [
-    path('getAccessToken/', get_access_token, name='get_access_token'),
+    path('getAccessToken/', getToken.as_view())
     # Otras URL de la aplicación...
 ]

@@ -7,7 +7,7 @@ import Form from "react-bootstrap/Form";
 import { useContext, useEffect, useState } from "react";
 import  useForm  from '../../utils/useForm'
 import { useParams } from "react-router-dom";
-import { getDetalleObra, getSupervisores, getHistorialFinanciero } from "../../actions/getPetitions";
+import { getDetalleObra, getSupervisores, getHistorialFinanciero, getEmpresas } from "../../actions/getPetitions";
 import { uploadAvanceFinanciero } from "../../actions/newAvance";
 import AuthContext from "../../context/AuthContext";
 
@@ -20,6 +20,7 @@ const AvanceFinanciero = () => {
     const [fechaActual, setFechaActual] = useState('')
     const [obra, setObra] = useState({})
     const [historialFinanciero, setHistorialFinanciero] = useState([])
+    const [empresas, setEmpresas] = useState([])
 
     
 
@@ -34,6 +35,7 @@ const AvanceFinanciero = () => {
         //obtenerHistorialFinanciero()
         getHistorialFinanciero(setHistorialFinanciero, idObra);
         getSupervisores(setResponsables)
+        getEmpresas(setEmpresas)
     }, [])
 
     
@@ -59,13 +61,17 @@ const AvanceFinanciero = () => {
 
    
     
-    const { monto,  onInputChange, onResetForm } = useForm({
+    const { monto, empresa, factura, fecha, onInputChange, onResetForm } = useForm({
         monto: 0,
+        empresa: 1,
+        factura: 0,
+        fecha: fechaActual
+
       })
 
     const onSubmit = (e) => {
         e.preventDefault()
-        uploadAvanceFinanciero(fechaActual, parseInt(monto), parseInt(idObra), profile.id, obra.presupuesto)
+        uploadAvanceFinanciero(fecha, parseInt(monto), parseInt(idObra), profile.id, obra.presupuesto, empresa, factura)
         onResetForm()
     }
 
@@ -97,17 +103,39 @@ const AvanceFinanciero = () => {
                                 <Form.Control 
                                     type="date"
                                     name="fecha"
-                                    value={fechaActual}
-                                    disabled
+                                    onChange={onInputChange}
+                                    
                                 />
                             </Form.Group>
                             <Form.Group>
-                                <Form.Label>Ingrese el monto Facturado</Form.Label>
+                                <Form.Label>Monto Facturado</Form.Label>
                                 <Form.Control 
                                     type="number"
                                     name="monto"
                                     onChange={onInputChange}
                                 />
+                            </Form.Group>
+                            <Form.Group>
+                                <Form.Label>Numero de Factura</Form.Label>
+                                <Form.Control 
+                                    type="number"
+                                    name="factura"
+                                    onChange={onInputChange}
+                                />
+                            </Form.Group>
+                            <Form.Group>
+                                <Form.Label>Empresa</Form.Label>
+                                <Form.Select
+                                    onChange={onInputChange}
+                                    name="empresa"
+                                >
+                                    {
+                                        empresas?.map((empresa)=>
+                                            <option key={empresa.id} value={empresa.id}>{empresa.nombre}</option>
+                                        )
+                                    }
+                                </Form.Select>
+                                
                             </Form.Group>
                             <Button variant="danger" type="onSubmit">Guardar</Button>
                         </Form>
@@ -122,6 +150,8 @@ const AvanceFinanciero = () => {
                         <tr>
                             <th>Responsable</th>
                             <th>Fecha</th>
+                            <th>Empresa</th>
+                            <th>Numero de Factura</th>
                             <th>Monto</th>
                             <th>Porcentaje</th>
                         </tr>
@@ -131,12 +161,17 @@ const AvanceFinanciero = () => {
                     historialFinanciero.length > 0 && historialFinanciero ?
                         (historialFinanciero.map((row)=>{
                             const responsable = responsables.find(r => r.id === row.responsable)
+                            const empresa = empresas.find(r => r.id == row.empresa)
+                            
+                            console.log(empresa)
                                 return (
                                     <tr key={row.id}>
                                         <td>
                                         {responsable?.nombre} {responsable?.apellido}
                                         </td>
                                         <td>{row.fecha}</td>
+                                        <td>{empresa?.nombre}</td>
+                                        <td>{row.numero_factura}</td>
                                         <td>$ {row.monto}</td>
                                         <td>{row.porcentaje} %</td>
                                     </tr>

@@ -62,7 +62,7 @@ export const uploadObra = async (
   };
 
     try {
-        const res = await axios.post('https://sgo-django.azurewebsites.net/api/obras/nueva/', body, config)
+        const res = await axios.post('https://sgo-django.azurewebsites.net/api/obras/new/upload/', body, config)
         swal.fire({
             title: "Nueva obra creada exitosamente",
             icon: "success",

@@ -93,7 +93,7 @@ const Obras = () => {
           <table>
             <thead>
               <tr>
-                <th>ID</th>
+                <th>Nombre de la Obra</th>
                 <th>Fecha de inicio</th>
                 <th>Direccion</th>
                 <th>Tipo de obra</th>
@@ -103,11 +103,11 @@ const Obras = () => {
             <tbody>
               {obrasData.length > 0 && filterObrasByDirec(searchTerm).map((obra) => (
                 <tr key={obra.id}>
-                  <td>{obra.id}</td>
+                  <td>{obra.nombre}</td>
                   <td>{obra.fecha_inicio}</td>
                   <td>{obra.direccion}</td>
                   <td>{obra.tipo_obra}</td>
-                  <td>{obra.estado_obra}</td>
+                  <td>{obra.porc_avance_operativo} %</td>
                   <td>
                     <Link to={`/obras/${obra.id}`}>
                       <Button variant="danger" onClick={handleClick}>+</Button>

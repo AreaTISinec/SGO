@@ -12,20 +12,23 @@ import { uploadAvanceReal, uploadAvanceProyectado } from "../../actions/newAvanc
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons'
 import Divider from '@mui/material/Divider';
-import { getDetalleObra, getEncargado } from "../../actions/getPetitions.js"
+import { getAccessToken, getAvances, getDetalleObra, getEncargado } from "../../actions/getPetitions.js"
 import Spinner from 'react-bootstrap/Spinner';
+
+
 
 
 
 const DetalleObra = () => {
   const { idObra } = useParams();
   const [detalleObra, setDetalleObra] = useState({});
-  const [supervisor, setSupervisor] = useState([]);
-  const [responsable, setResponsable] = useState([]);
+  const [supervisor, setSupervisor] = useState({});
+  const [responsable, setResponsable] = useState({});
   const [showAR, setShowAR] = useState(false);
   const [showAP, setShowAP] = useState(false);
   const [numHitos, setNumHitos] = useState(0);
   const [fechaActual, setFechaActual] = useState('')
+  const [avances, setAvances] = useState([])
   const [hitos, setHitos] = useState([{
   }])
   const [errores, setErrores] = useState([]);
@@ -126,39 +129,31 @@ const DetalleObra = () => {
   const [accessToken, setAccessToken] = useState('');
 
   useEffect(() => {
-    const fetchAccessToken = async () => {
-      try {
-        // Realiza una solicitud a tu backend para obtener un nuevo token de acceso
-        const response = await fetch('https://sgo-django.azurewebsites.net/api/powerbi/getAccessToken/');
-        const data = await response.json();
-        // Actualiza el estado del token de acceso con el nuevo token
-        setAccessToken(data.accessToken);
-        
-        //console.log(accessToken)
-      } catch (error) {
-        console.error('Error al obtener el token de acceso:', error);
-      }
-    };
-    fetchAccessToken()
-    // Refresca el token de acceso cada hora (3600000 milisegundos)
-    const intervalId = setInterval(fetchAccessToken, 3600000);
+    getAccessToken(setAccessToken)
+    //   //Refresca el token de acceso cada hora (3600000 milisegundos)
+    //  const intervalId = setInterval(fetchAccessToken, 3600000);
 
-    // Limpia el intervalo cuando el componente se desmonta
-    return () => clearInterval(intervalId);
-  }, []); // Ejecutar efecto solo en el montaje inicial del componente
+    //   //Limpia el intervalo cuando el componente se desmonta
+    //  return () => clearInterval(intervalId);
+   }, []);  //Ejecutar efecto solo en el montaje inicial del componente
 
 
   useEffect(() => {
     getDetalleObra(idObra, setDetalleObra)
     const fecha = new Date().toISOString().split('T')[0];
     setFechaActual(fecha)
-  }, []); // Ejecutar efecto solo en el montaje inicial del componente
+    getAvances(idObra, setAvances)
+  }, [idObra]); // Ejecutar efecto solo en el montaje inicial del componente
 
   useEffect(()=>{
     getEncargado(detalleObra.supervisor, setSupervisor)
     getEncargado(detalleObra.responsable, setResponsable)
   }, [detalleObra])
 
+  if(accessToken){
+    console.log(accessToken)
+    
+  }
 
 const renderHitosFields = () => {
   const fields = [];
@@ -198,6 +193,9 @@ const renderHitosFields = () => {
   }
   return fields;
 };
+
+
+console.log("responsable: ", responsable)
 
   return (
     <div className="DetalleObraContainer">
@@ -303,7 +301,7 @@ const renderHitosFields = () => {
                             type="date"
                             name="fecha"
                             value={fechaActual}
-                            disabled
+                            
                           />
                         </Form.Group>
                         <Form.Group>
@@ -334,13 +332,14 @@ const renderHitosFields = () => {
                 <div className="Dato obs"><strong>Observaciones:</strong><span className="value-dato">{detalleObra.observaciones}</span></div>
 
               </div>
-              <div className="reportClass">  
+              <div className="reportClass">
+
                 <PowerBIEmbed
                 embedConfig = {{
                   type: 'report',   // Supported types: report, dashboard, tile, visual, qna, paginated report and create
                   id: '5c607318-8d82-49bf-a371-7e0edf855485',
                   embedUrl: 'https://app.powerbi.com/reportEmbed?reportId=5c607318-8d82-49bf-a371-7e0edf855485&config=eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly9XQUJJLVBBQVMtMS1TQ1VTLXJlZGlyZWN0LmFuYWx5c2lzLndpbmRvd3MubmV0IiwiZW1iZWRGZWF0dXJlcyI6eyJ1c2FnZU1ldHJpY3NWTmV4dCI6dHJ1ZSwiZGlzYWJsZUFuZ3VsYXJKU0Jvb3RzdHJhcFJlcG9ydEVtYmVkIjp0cnVlfX0%3d',
-                  accessToken: "eyJ0eXAiOiJKV1QiLCJub25jZSI6Ijc3eXplR3lVUGlQUUczUEdyUEdIU0JVOXFJT3dlaUVtWURsUzhKRnFaUFkiLCJhbGciOiJSUzI1NiIsIng1dCI6IlhSdmtvOFA3QTNVYVdTblU3Yk05blQwTWpoQSIsImtpZCI6IlhSdmtvOFA3QTNVYVdTblU3Yk05blQwTWpoQSJ9.eyJhdWQiOiJodHRwczovL2dyYXBoLm1pY3Jvc29mdC5jb20iLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC9hMWFlMzAxMS00ODAxLTQ5MGItYTEwNy05Y2Q4YWI2ZDU4MTcvIiwiaWF0IjoxNzA5ODI4ODEwLCJuYmYiOjE3MDk4Mjg4MTAsImV4cCI6MTcwOTgzMjcxMCwiYWlvIjoiRTJOZ1lDaGZLY2dseC96QzlYNEM1ODJkQzJiSUF3QT0iLCJhcHBfZGlzcGxheW5hbWUiOiJTR08iLCJhcHBpZCI6IjRiMTA2NjNhLTA0M2UtNDJiNy1hYmQ1LTRiNmEyZjlkYjdhNyIsImFwcGlkYWNyIjoiMSIsImlkcCI6Imh0dHBzOi8vc3RzLndpbmRvd3MubmV0L2ExYWUzMDExLTQ4MDEtNDkwYi1hMTA3LTljZDhhYjZkNTgxNy8iLCJpZHR5cCI6ImFwcCIsIm9pZCI6IjFjNTM2ZGE2LTE3MGItNGNjZC04NWU4LTAwMjhiMjI4NWFkMCIsInJoIjoiMC5BU1lBRVRDdW9RRklDMG1oQjV6WXEyMVlGd01BQUFBQUFBQUF3QUFBQUFBQUFBQW1BQUEuIiwic3ViIjoiMWM1MzZkYTYtMTcwYi00Y2NkLTg1ZTgtMDAyOGIyMjg1YWQwIiwidGVuYW50X3JlZ2lvbl9zY29wZSI6IlNBIiwidGlkIjoiYTFhZTMwMTEtNDgwMS00OTBiLWExMDctOWNkOGFiNmQ1ODE3IiwidXRpIjoiMFFyYVNfajZkVTZwVDk4ZUxhbUpBUSIsInZlciI6IjEuMCIsIndpZHMiOlsiMDk5N2ExZDAtMGQxZC00YWNiLWI0MDgtZDVjYTczMTIxZTkwIl0sInhtc190Y2R0IjoxNTI2NTcwMDIyfQ.ewB63gT5daw7Jmi5xboNZnOi2Yh7qh41C_X1Y_OBkFJS70Cu6YdNKWSkb6GuEY2LbV9-rAs5skSb5NZJLBRqj3TkC9Sfbu9lKiwyBMsU3aNH9IjKZIrU0yXJSdWEhmS-w4DVtpMa4033BL5PuWlt5R6ctbRI3ZIpx_QWeZaAj2FckdiQHlyn9x01XaFTkhiqLL9Tq25NRtVQn3hUgvD9dIMzx0mE71GNsim50joiSzEWxYsZBIo7UXaZWyh0iVmUjKiJXfNgWSaX1Bf1zNZuZKSe38GVc-WxdXAmXzSDPPcxd9cIa9YQEOHfthydDWJ20OFWC_OT-Dq0CBrLXig74Q",
+                  accessToken: accessToken.access_token,
                   tokenType: models.TokenType.Aad, // Use models.TokenType.Aad for SaaS embed
                   settings: {
                     panes: {

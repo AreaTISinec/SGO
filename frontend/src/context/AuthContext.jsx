@@ -29,12 +29,12 @@ export const AuthProvider = ({ children }) => {
      const [profile, setProfile] = useState({})
 
     
-
+    console.log("userr: ", user)
     const [loading, setLoading] = useState(true);
 
     const uploadDataProfile = async ()=> {
         try {
-            const res = await axios.get(`https://sgo-django.azurewebsites.net/api/profile/${user.user_id}/`)
+            const res = await axios.get(`https://sgo-django.azurewebsites.net/api/profile/set/${user.user_id}/`)
             setProfile(res.data)
         } catch (error) {
             console.error(error)

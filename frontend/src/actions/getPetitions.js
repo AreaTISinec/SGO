@@ -119,3 +119,22 @@ export const getProfile = async ( idProfile) => {
         console.error(error)
     }
 }
+
+export const getAvances = async ( idObra, setAvancesCallback ) => {
+    try {
+        const { data } = await axios.get(`https://sgo-django.azurewebsites.net/api/avance/list/${idObra}/`)
+        setAvancesCallback(data)
+    } catch (error) {
+        console.error(error)
+    }
+}
+
+export const getAccessToken = async (setAccessTokenCallback) => {
+
+    try {
+        const { data } = await axios.get("https://sgo-django.azurewebsites.net/api/powerbi/getAccessToken/")
+        setAccessTokenCallback(data)
+    }catch(error){
+        console.error(error)
+    }
+}

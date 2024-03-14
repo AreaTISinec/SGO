@@ -57,8 +57,7 @@ const NuevaObra = () => {
     estado_obra, 
     observaciones, 
     monto_facturado, 
-    monto_por_facturar, 
-    responsable,// ex id_user
+    monto_por_facturar,
     supervisor_id,
     cene_id,
     is_gantt,
@@ -124,7 +123,7 @@ const NuevaObra = () => {
     const {value } = target
     setComunas(regiones[value].comunas)
   }
- 
+  
 
   return (
     <div className="NuevaObra">
@@ -146,6 +145,7 @@ const NuevaObra = () => {
                 placeholder="Ingrese la direccion de la obra"
                 name="nombre"
                 onChange={onInputChange}
+                required
               />
             </Form.Group>
 
@@ -156,6 +156,7 @@ const NuevaObra = () => {
                 placeholder="Ingrese la fecha de inicio"
                 name="fecha_inicio"
                 onChange={onInputChange}
+                required
               />
             </Form.Group>
 
@@ -166,6 +167,7 @@ const NuevaObra = () => {
                 placeholder="Ingrese la fecha de termino"
                 name="fecha_termino"
                 onChange={onInputChange}
+                required
               />
             </Form.Group>
 
@@ -176,12 +178,14 @@ const NuevaObra = () => {
                 placeholder="Ingrese la fecha de asignacion"
                 name="fecha_asignacion"
                 onChange={onInputChange}
+                required
               />
             </Form.Group>
 
             <Form.Group className="mb-3" >
               <Form.Label>Region</Form.Label>
               <Form.Select onChange={onChangeSelect}>
+                <option value="">Selecciona una region</option>
                 {regiones.map((region, indice) => 
                    <option key={indice} value={indice}>{region.region}</option>
                 )
@@ -194,7 +198,9 @@ const NuevaObra = () => {
               <Form.Select
                 name="comuna"
                 onChange={onInputChange}
+                required
               >
+                <option value="">Selecciona una comuna</option>
                 {
                   comunas.map((comuna)=>
                     <option key={comuna} value={comuna}>{comuna}</option>
@@ -210,6 +216,7 @@ const NuevaObra = () => {
                 placeholder="Ingrese la direccion de la obra"
                 name="direccion"
                 onChange={onInputChange}
+                required
               />
             </Form.Group>
 
@@ -218,7 +225,9 @@ const NuevaObra = () => {
               <Form.Select
                 onChange={onInputChange}
                 name="empresa"
+                required
               >
+                <option value="">Selecciona una empresa</option>
                 {
                   empresas.map((empresa)=>(
                     <option key={empresa.id} value={empresa.nombre}>{empresa.nombre}</option>
@@ -232,7 +241,9 @@ const NuevaObra = () => {
               <Form.Select
                name='cene_id'
                onChange={onInputChange}
+               required
                >
+                <option value="">Selecciona un centro de negocios</option>
                 {
                   cenes.map((cene) => 
                     <option key={cene.id_cene}  value={cene.id_cene}>{cene.nombre}</option>
@@ -246,7 +257,9 @@ const NuevaObra = () => {
               <Form.Select
                name='cliente'
                onChange={onInputChange}
+               required
                >
+                <option value="">Selecciona un cliente</option>
                 {
                   clientes?.map((cliente) => 
                     <option key={cliente.rut}  value={cliente.nombre}>{cliente.nombre}</option>
@@ -260,7 +273,9 @@ const NuevaObra = () => {
               <Form.Select
                name='supervisor_id'
                onChange={onInputChange}
+               required
                >
+                <option value="">Selecciona un supervisor</option>
                 {
                   supervisores?.map((supervisor) => 
                     <option key={supervisor.id}  value={supervisor.id}>{supervisor.nombre} {supervisor.apellido}</option>
@@ -274,7 +289,9 @@ const NuevaObra = () => {
               <Form.Select
                 onChange={onInputChange}
                 name="tipo_obra"
+                required
               > 
+                <option value="">Selecciona un tipo de obra</option>
               {
                 tiposObra?.map((tipo)=>(
                   <option key={tipo.id} value={tipo.nombre}>{tipo.nombre}</option>
@@ -289,7 +306,9 @@ const NuevaObra = () => {
               <Form.Select
                 onChange={onInputChange}
                 name="estado_obra"
+                required
               >
+                <option value="">Selecciona un estado de obra</option>
                 {
                   estadosObra.map((estado)=>(
                     <option key={estado.id} value={estado.estado}>{estado.estado}</option>
@@ -306,6 +325,7 @@ const NuevaObra = () => {
                 placeholder="Ingrese el monto neto de la obra"
                 name="presupuesto"
                 onChange={onInputChange}
+                required
               />
             </Form.Group>
 
@@ -316,6 +336,7 @@ const NuevaObra = () => {
                 placeholder="Ingrese observaciones de la obra"
                 name="observaciones"
                 onChange={onInputChange}
+                required
               />
             </Form.Group>
 

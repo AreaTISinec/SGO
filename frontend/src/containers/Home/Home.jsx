@@ -106,7 +106,7 @@ const Home =  () => {
                     position: "right"
                   }
                 },
-                responsive:true
+                responsive: true
               }}
             />
             

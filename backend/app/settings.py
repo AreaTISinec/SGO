@@ -229,5 +229,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AZURE_AD_CREDENTIALS = {
     'TENANT_ID': 'a1ae3011-4801-490b-a107-9cd8ab6d5817',
     'CLIENT_ID': '4b10663a-043e-42b7-abd5-4b6a2f9db7a7',
-    'CLIENT_SECRET': 'xWo8Q~ic_fwxyjrqyTyeKxKvgryTXQRmaiwKIblQ',
+    'CLIENT_SECRET': 'Mob8Q~xV0WSCo4i~9kSajyHELHPOgxF5fBem_aMf',
+    'REDIRECT_URI': 'http://localhost:8000/getAToken',
+    'SCOPES': ['api://4b10663a-043e-42b7-abd5-4b6a2f9db7a7/.default'],
+    'AUTHORITY': 'https://login.microsoftonline.com/'
 }
