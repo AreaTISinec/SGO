@@ -16,9 +16,27 @@ export const upload = async (doc, tipo, id) => {
     try {
       const res = await axios.post('https://sgo-django.azurewebsites.net/api/files/upload/', formData, config)
       console.log(res)
+      swal.fire({
+        title: "Documento cargado correctamente",
+        icon: "success",
+        toast: true,
+        timer: 4000,
+        position: 'top-right',
+        timerProgressBar: true,
+        showConfirmButton: false,
+    })
 
   }catch(err){
     console.error(err)
+    swal.fire({
+      title: "Error al cargar el documento",
+      icon: "error",
+      toast: true,
+      timer: 4000,
+      position: 'top-right',
+      timerProgressBar: true,
+      showConfirmButton: false,
+    })
     }
 };
 
