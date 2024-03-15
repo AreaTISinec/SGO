@@ -9,6 +9,11 @@ import Form from "react-bootstrap/Form";
 import dataComunas from '../../utils/comunas.json'
 import SidebarV2 from "../SidebarV2/SidebarV2";
 import "./NuevaObra.css";
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
+import Divider from '@mui/material/Divider';
+import FloatingLabel from 'react-bootstrap/FloatingLabel';
+
 
 const NuevaObra = () => {
   const {profile} = useContext(AuthContext);
@@ -137,207 +142,323 @@ const NuevaObra = () => {
               <></>
             }
           </div>
+          <h2>Crear Nueva Obra</h2>
           <Form className="formularioNuevaObra" onSubmit={onSubmit}>
+          <Divider variant="middle"><strong>Informacion basica</strong></Divider>
           <Form.Group className="mb-3" >
-              <Form.Label>Nombre de la Obra</Form.Label>
+              <FloatingLabel
+                controlId="floatingInput"
+                label="Nombre de la Obra"
+                className="mb-3"
+              >
               <Form.Control
                 type="text"
-                placeholder="Ingrese la direccion de la obra"
                 name="nombre"
                 onChange={onInputChange}
+                placeholder="Ingrese el nombre de la obra"
                 required
               />
+              </FloatingLabel>
             </Form.Group>
+            <Row>
+              <Col>
+                <Form.Group className="mb-3" >
+                  <FloatingLabel
+                    controlId="floatingSelect"
+                    label="Nombre del Supervisor"
+                    className="mb-3"
+                  >
+                    <Form.Select
+                    name='supervisor_id'
+                    onChange={onInputChange}
+                    required
+                    >
+                      <option value="">Selecciona un supervisor</option>
+                      {
+                        supervisores?.map((supervisor) => 
+                          <option key={supervisor.id}  value={supervisor.id}>{supervisor.nombre} {supervisor.apellido}</option>
+                        )
+                      }
+                    </Form.Select>
+                  </FloatingLabel>
+                </Form.Group>
 
-            <Form.Group className="mb-3" >
-              <Form.Label>Fecha de inicio</Form.Label>
-              <Form.Control
-                type="date"
-                placeholder="Ingrese la fecha de inicio"
-                name="fecha_inicio"
-                onChange={onInputChange}
-                required
-              />
-            </Form.Group>
+              </Col>
+              <Col>
+                <Form.Group className="mb-3" >
+                  <FloatingLabel
+                    controlId="floatingSelect"
+                    label="Nombre del Cliente"
+                    className="mb-3"
+                  >
+                    <Form.Select
+                    name='cliente'
+                    onChange={onInputChange}
+                    required
+                    >
+                      <option value="">Selecciona un cliente</option>
+                      {
+                        clientes?.map((cliente) => 
+                          <option key={cliente.rut}  value={cliente.nombre}>{cliente.nombre}</option>
+                        )
+                      }
+                    </Form.Select>
+                  </FloatingLabel>
+                </Form.Group>
+              </Col>
+              <Col>
+                <Form.Group className="mb-3" >
+                  <FloatingLabel
+                    controlId="floatingSelect"
+                    label="Nombre de la Empresa"
+                    className="mb-3"
+                  >
+                  <Form.Select
+                    onChange={onInputChange}
+                    name="empresa"
+                    required
+                  >
+                    <option value="">Selecciona una empresa</option>
+                    {
+                      empresas.map((empresa)=>(
+                        <option key={empresa.id} value={empresa.nombre}>{empresa.nombre}</option>
+                      ))
+                    }
+                  </Form.Select>
+                  </FloatingLabel>
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <Form.Group className="mb-3" >
+                  <FloatingLabel
+                    controlId="floatingSelect"
+                    label="Tipo de Obra"
+                    className="mb-3"
+                >
+                    <Form.Select
+                      onChange={onInputChange}
+                      name="tipo_obra"
+                      required
+                    > 
+                      <option value="">Selecciona un tipo de obra</option>
+                    {
+                      tiposObra?.map((tipo)=>(
+                        <option key={tipo.id} value={tipo.nombre}>{tipo.nombre}</option>
+                      ))
+                    }
+                      
+                    </Form.Select>
+                  </FloatingLabel>
+                </Form.Group>
+              </Col>
+              <Col>
+                <Form.Group className="mb-3" >
+                  <FloatingLabel
+                    controlId="floatingSelect"
+                    label="Estado de la Obra"
+                    className="mb-3"
+                  >
+                    <Form.Select
+                      onChange={onInputChange}
+                      name="estado_obra"
+                      required
+                    >
+                      <option value="">Selecciona un estado de obra</option>
+                      {
+                        estadosObra.map((estado)=>(
+                          <option key={estado.id} value={estado.estado}>{estado.estado}</option>
+                        ))
+                      }
+                    </Form.Select>
+                  </FloatingLabel>
+                </Form.Group>
+              </Col>
+            </Row>
+            <Divider variant="middle"><strong>Presupuesto</strong></Divider>
+            <Row>
 
-            <Form.Group className="mb-3" >
-              <Form.Label>Fecha de Termino</Form.Label>
-              <Form.Control
-                type="date"
-                placeholder="Ingrese la fecha de termino"
-                name="fecha_termino"
-                onChange={onInputChange}
-                required
-              />
-            </Form.Group>
+              <Col>
+                <Form.Group className="mb-3" >
+                  <FloatingLabel
+                    controlId="floatingInput"
+                    label="Presupuesto Inicial"
+                    className="mb-3"
+                  >
+                    <Form.Control
+                      type="number"
+                      pattern="[0-9]*"
+                      placeholder="Ingrese el monto neto de la obra"
+                      name="presupuesto"
+                      onChange={onInputChange}
+                      required
+                    />
+                  </FloatingLabel>
+                </Form.Group>
+              </Col>
+              
+              <Col>
+                <Form.Group className="mb-3" >
+                  <FloatingLabel
+                    controlId="floatingSelect"
+                    label="Centro de Negocios"
+                    className="mb-3"
+                  >
+                    <Form.Select
+                    name='cene_id'
+                    onChange={onInputChange}
+                    required
+                    >
+                      <option value="">Selecciona un centro de negocios</option>
+                      {
+                        cenes.map((cene) => 
+                          <option key={cene.id_cene}  value={cene.id_cene}>{cene.nombre}</option>
+                        )
+                      }
+                    </Form.Select>
+                  </FloatingLabel>
+                </Form.Group>
+              </Col>
+            </Row>
 
-            <Form.Group className="mb-3" >
-              <Form.Label>Fecha de Asignacion</Form.Label>
-              <Form.Control
-                type="date"
-                placeholder="Ingrese la fecha de asignacion"
-                name="fecha_asignacion"
-                onChange={onInputChange}
-                required
-              />
-            </Form.Group>
+            <Divider variant="middle"><strong>Fechas</strong></Divider>
+            
+            <Row>
+              <Col>
+                <Form.Group className="mb-3" >
+                    <FloatingLabel
+                      controlId="floatingInput"
+                      label="Fecha de Asignación"
+                      className="mb-3"
+                    >
+                      <Form.Control
+                        type="date"
+                        name="fecha_asignacion"
+                        onChange={onInputChange}
+                        required
+                      />
+                    </FloatingLabel>
+                  </Form.Group>
+              </Col>
 
-            <Form.Group className="mb-3" >
-              <Form.Label>Region</Form.Label>
-              <Form.Select onChange={onChangeSelect}>
-                <option value="">Selecciona una region</option>
-                {regiones.map((region, indice) => 
-                   <option key={indice} value={indice}>{region.region}</option>
-                )
-                }
-              </Form.Select>
-            </Form.Group>
+              <Col>
+                <Form.Group className="mb-3" >
+                  <FloatingLabel
+                    controlId="floatingInput"
+                    label="Fecha de Inicio"
+                    className="mb-3"
+                  >
+                    <Form.Control
+                      type="date"
+                      placeholder="Ingrese la fecha de inicio"
+                      name="fecha_inicio"
+                      onChange={onInputChange}
+                      required
+                    />
+                  </FloatingLabel>
+                </Form.Group>
+              </Col>
 
+              <Col>
+                <Form.Group className="mb-3" >
+                  <FloatingLabel
+                    controlId="floatingInput"
+                    label="Fechaa de Termino"
+                    className="mb-3"
+                  >
+                    <Form.Control
+                      type="date"
+                      placeholder="Ingrese la fecha de termino"
+                      name="fecha_termino"
+                      onChange={onInputChange}
+                      required
+                    />
+                  </FloatingLabel>
+                </Form.Group>
+              </Col>
+            </Row>
+
+            <Divider variant="middle"><strong>Ubicacion</strong></Divider>
+
+            <Row>
+              <Col>
+                <Form.Group className="mb-3" >
+                  <FloatingLabel
+                    controlId="floatingInput"
+                    label="Región"
+                    className="mb-3"
+                  >
+                    <Form.Select onChange={onChangeSelect}>
+                      <option value="">Selecciona una region</option>
+                      {regiones.map((region, indice) => 
+                        <option key={indice} value={indice}>{region.region}</option>
+                      )
+                      }
+                    </Form.Select>
+                  </FloatingLabel>
+                </Form.Group>
+              </Col>
+
+              <Col>
+                <Form.Group className="mb-3" >
+                  <FloatingLabel
+                    controlId="floatingInput"
+                    label="Comuna"
+                    className="mb-3"
+                  >
+                    <Form.Select
+                      name="comuna"
+                      onChange={onInputChange}
+                      required
+                    >
+                      <option value="">Selecciona una comuna</option>
+                      {
+                        comunas.map((comuna)=>
+                          <option key={comuna} value={comuna}>{comuna}</option>
+                        )
+                      }
+                    </Form.Select>
+                  </FloatingLabel>
+                </Form.Group>
+              </Col>
+            </Row>
+            
             <Form.Group className="mb-3" >
-              <Form.Label>Comuna</Form.Label>
-              <Form.Select
-                name="comuna"
-                onChange={onInputChange}
-                required
+              <FloatingLabel
+                controlId="floatingInput"
+                label="Dirección de la Obra"
+                className="mb-3"
               >
-                <option value="">Selecciona una comuna</option>
-                {
-                  comunas.map((comuna)=>
-                    <option key={comuna} value={comuna}>{comuna}</option>
-                  )
-                }
-              </Form.Select>
+                <Form.Control
+                  type="text"
+                  placeholder="Ingrese la direccion de la obra"
+                  name="direccion"
+                  onChange={onInputChange}
+                  required
+                />
+              </FloatingLabel>
             </Form.Group>
+            <Row>
+
+            </Row>
+            
+            <Divider variant="middle"><strong>Adicional</strong></Divider>
 
             <Form.Group className="mb-3" >
-              <Form.Label>Direccion</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Ingrese la direccion de la obra"
-                name="direccion"
-                onChange={onInputChange}
-                required
-              />
-            </Form.Group>
-
-            <Form.Group className="mb-3" >
-              <Form.Label>Empresa</Form.Label>
-              <Form.Select
-                onChange={onInputChange}
-                name="empresa"
-                required
+              <FloatingLabel
+                controlId="floatingInput"
+                label="Observaciones"
+                className="mb-3"
               >
-                <option value="">Selecciona una empresa</option>
-                {
-                  empresas.map((empresa)=>(
-                    <option key={empresa.id} value={empresa.nombre}>{empresa.nombre}</option>
-                  ))
-                }
-              </Form.Select>
-            </Form.Group>
-
-            <Form.Group className="mb-3" >
-              <Form.Label>Centro de Negocios</Form.Label>
-              <Form.Select
-               name='cene_id'
-               onChange={onInputChange}
-               required
-               >
-                <option value="">Selecciona un centro de negocios</option>
-                {
-                  cenes.map((cene) => 
-                    <option key={cene.id_cene}  value={cene.id_cene}>{cene.nombre}</option>
-                  )
-                }
-              </Form.Select>
-            </Form.Group>
-
-            <Form.Group className="mb-3" >
-              <Form.Label>Cliente</Form.Label>
-              <Form.Select
-               name='cliente'
-               onChange={onInputChange}
-               required
-               >
-                <option value="">Selecciona un cliente</option>
-                {
-                  clientes?.map((cliente) => 
-                    <option key={cliente.rut}  value={cliente.nombre}>{cliente.nombre}</option>
-                  )
-                }
-              </Form.Select>
-            </Form.Group>
-
-            <Form.Group className="mb-3" >
-              <Form.Label>Supervisor de la Obra</Form.Label>
-              <Form.Select
-               name='supervisor_id'
-               onChange={onInputChange}
-               required
-               >
-                <option value="">Selecciona un supervisor</option>
-                {
-                  supervisores?.map((supervisor) => 
-                    <option key={supervisor.id}  value={supervisor.id}>{supervisor.nombre} {supervisor.apellido}</option>
-                  )
-                }
-              </Form.Select>
-            </Form.Group>
-
-            <Form.Group className="mb-3" >
-              <Form.Label>Tipo de obra</Form.Label>
-              <Form.Select
-                onChange={onInputChange}
-                name="tipo_obra"
-                required
-              > 
-                <option value="">Selecciona un tipo de obra</option>
-              {
-                tiposObra?.map((tipo)=>(
-                  <option key={tipo.id} value={tipo.nombre}>{tipo.nombre}</option>
-                ))
-              }
-                
-              </Form.Select>
-            </Form.Group>
-
-            <Form.Group className="mb-3" >
-              <Form.Label>Estado de obra</Form.Label>
-              <Form.Select
-                onChange={onInputChange}
-                name="estado_obra"
-                required
-              >
-                <option value="">Selecciona un estado de obra</option>
-                {
-                  estadosObra.map((estado)=>(
-                    <option key={estado.id} value={estado.estado}>{estado.estado}</option>
-                  ))
-                }
-              </Form.Select>
-            </Form.Group>
-
-            <Form.Group className="mb-3" >
-              <Form.Label>Presupuesto</Form.Label>
-              <Form.Control
-                type="number"
-                pattern="[0-9]*"
-                placeholder="Ingrese el monto neto de la obra"
-                name="presupuesto"
-                onChange={onInputChange}
-                required
-              />
-            </Form.Group>
-
-            <Form.Group className="mb-3" >
-              <Form.Label>Observaciones</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Ingrese observaciones de la obra"
-                name="observaciones"
-                onChange={onInputChange}
-                required
-              />
+                <Form.Control
+                  type="text"
+                  placeholder="Ingrese observaciones de la obra"
+                  name="observaciones"
+                  onChange={onInputChange}
+                  required
+                />
+              </FloatingLabel>
             </Form.Group>
 
             <Button variant="danger" type="submit" onClick={handleClick}>
