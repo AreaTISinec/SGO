@@ -18,11 +18,11 @@
   border-radius: 20px;
   box-sizing: border-box;
 }
-.formularioNuevaObra {
-  overflow-y: auto;
-}
+
+
 
 .spinnerLoading{
   display: flex;
   justify-content: center;
 }
+
