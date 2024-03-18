@@ -30,7 +30,7 @@ const Perfil = () => {
 
   const getDatosUser = async () => {
     try {
-      const { data } = await axios.get(`https://sgo-django.azurewebsites.net/api/profile/${idUsuario}/`);
+      const { data } = await axios.get(`https://sgo-django.azurewebsites.net/api/profile/set/${idUsuario}/`);
       setInfoUser(data);
     } catch (error) {
       console.error(error)
