@@ -25,6 +25,25 @@ export const dataObras = (adjudicada, ejecucion, paralizada, ejecutada, finaliza
     ],
   });
 
+export const dataPorc = (operativo, financiero) => ({
+  labels: ['Operativo', 'Financiero'],
+  datasets: [
+    {
+      label: '% avance promedio',
+      data: [operativo, financiero],
+      backgroundColor: [
+        'rgba(255, 99, 132, 0.7)',
+        'rgba(54, 162, 235, 0.7)',
+      ],
+      borderColor: [
+        'rgba(255, 99, 132, 1)',
+        'rgba(54, 162, 235, 1)',
+      ],
+      borderWidth: 1,
+    },
+  ],
+});
+
 export const dataFacturacion = {
   labels: ['Proyectado', 'Pendiente', 'Facturado'],
   datasets: [

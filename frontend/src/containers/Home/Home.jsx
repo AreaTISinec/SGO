@@ -6,10 +6,11 @@ import "./Home.css";
 
 import { ArcElement, Chart as ChartJS, Legend, Tooltip } from "chart.js";
 import { Doughnut } from 'react-chartjs-2'
-import { dataObras, dataFacturacion } from "../../components/Charts/Donuts/donut1";
+import { dataObras, dataFacturacion, dataPorc } from "../../components/Charts/Donuts/donut1";
 
 import Table  from 'react-bootstrap/Table'
 import Button from "react-bootstrap/Button";
+import Carousel from 'react-bootstrap/Carousel';
 
 
 import ClienteModal from "../../components/Modals/Cliente/ClienteModal";
@@ -22,6 +23,7 @@ import AddTipoObrasModal from "../../components/Modals/TipoObras/AddTipoObrasMod
 import AddEmpresaModal from "../../components/Modals/Empresa/AddEmpresaModal";
 import AddClienteModal from "../../components/Modals/Cliente/AddClienteModal";
 import AddCeneModal from "../../components/Modals/Cene/AddCeneModal";
+
 import { getObras } from "../../actions/getPetitions";
 
 ChartJS.register(ArcElement, Tooltip, Legend)
@@ -56,6 +58,10 @@ const Home =  () => {
     obrasEjecutadas: 0,
     obrasFinalizadas: 0,
     obrasSinEstado: 0
+  })
+  const [porcentajes, setPorcentajes] = useState({
+    operativo: 0,
+    financiero: 0
   })
 
 
@@ -104,6 +110,9 @@ const Home =  () => {
     let finalizadas = 0;
     let sinEstado = 0;
 
+    let acumuladoFinanciero = 0;
+    let acumuladoOperativo = 0;
+
     obras?.forEach((obra)=> {
       if(obra.estado_obra === 'Adjudicada') adjudicadas++;
         
@@ -116,6 +125,9 @@ const Home =  () => {
       if(obra.estado_obra === 'Finalizada') finalizadas++;
 
       if(obra.estado_obra === '') sinEstado++;
+
+      acumuladoFinanciero += obra.porc_avance_financiero;
+      acumuladoOperativo += obra.porc_avance_operativo;
         
     });
     setContadores(()=> ({
@@ -128,75 +140,148 @@ const Home =  () => {
       obrasTotales: obras.length
     }));
 
+    setPorcentajes(()=>({
+      operativo: acumuladoOperativo / obras.length,
+      financiero: acumuladoFinanciero / obras.length
+    }))
+
   }, [obras])
 
-  console.log("data: ",
-    dataObras(
-      contadores?.obrasAdjudicadas, 
-      contadores?.obrasEjecucion, 
-      contadores?.obrasParalizadas,
-      contadores?.obrasEjecutadas,
-      contadores?.obrasFinalizadas
-    ))
+  console.log("porcentajes: ", porcentajes)
   return (
     <main className="HomeContainer">
       <SidebarV2 />
       <div className="RecuadrosHome">
         <div className="RecuadroUno">
           <h3>Obras</h3>
-          <div className="content">
-            <div className="row-content"><strong>Cantidad de obras totales:</strong><span>{contadores.obrasTotales}</span></div>
-            <div className="row-content"><strong>Cantidad de obras adjudicadas:</strong><span>{contadores.obrasAdjudicadas}</span></div>
-            <div className="row-content"><strong>Cantidad de obras en ejecucion:</strong><span>{contadores.obrasEjecucion}</span></div>
-            <div className="row-content"><strong>Cantidad de obras paralizadas:</strong><span>{contadores.obrasParalizadas}</span></div>
-            <div className="row-content"><strong>Cantidad de obras ejecutadas:</strong><span>{contadores.obrasEjecutadas}</span></div>
-            <div className="row-content"><strong>Cantidad de obras finalizadas:</strong><span>{contadores.obrasFinalizadas}</span></div>
-            <div className="row-content"><strong>Cantidad de obras sin estado:</strong><span>{contadores.obrasSinEstado}</span></div>
-          </div>
-          <div className="chart">
-            <Doughnut 
-              data={
-                dataObras(
-                  contadores.obrasAdjudicadas, 
-                  contadores.obrasEjecucion, 
-                  contadores.obrasParalizadas,
-                  contadores.obrasEjecutadas,
-                  contadores.obrasFinalizadas,
-                  contadores.obrasSinEstado
-                )}
-              options={{
-                plugins: {
-                  legend:{
-                    position: "right"
-                  }
-                },
-                responsive: true
-              }}
-            />
+          <Carousel data-bs-theme="dark">
+            <Carousel.Item>
+              <div className="content">
+                <div className="row-content"><strong>Cantidad de obras totales:</strong><span>{contadores.obrasTotales}</span></div>
+                <div className="row-content"><strong>Cantidad de obras adjudicadas:</strong><span>{contadores.obrasAdjudicadas}</span></div>
+                <div className="row-content"><strong>Cantidad de obras en ejecucion:</strong><span>{contadores.obrasEjecucion}</span></div>
+                <div className="row-content"><strong>Cantidad de obras paralizadas:</strong><span>{contadores.obrasParalizadas}</span></div>
+                <div className="row-content"><strong>Cantidad de obras ejecutadas:</strong><span>{contadores.obrasEjecutadas}</span></div>
+                <div className="row-content"><strong>Cantidad de obras finalizadas:</strong><span>{contadores.obrasFinalizadas}</span></div>
+                <div className="row-content"><strong>Cantidad de obras sin estado:</strong><span>{contadores.obrasSinEstado}</span></div>
+              </div>
+              <div className="chart">
+                <Doughnut 
+                  data={
+                    dataObras(
+                      contadores.obrasAdjudicadas, 
+                      contadores.obrasEjecucion, 
+                      contadores.obrasParalizadas,
+                      contadores.obrasEjecutadas,
+                      contadores.obrasFinalizadas,
+                      contadores.obrasSinEstado
+                    )}
+                  options={{
+                    plugins: {
+                      legend:{
+                        position: "right"
+                      }
+                    },
+                    responsive: true
+                  }}
+                />
+              </div>
+            </Carousel.Item>
+            <Carousel.Item>
+              <div className="content">
+                <div className="row-content"><strong>Avance Operativo Promedio:</strong><span>{parseInt(porcentajes.operativo)} %</span></div>
+                <div className="row-content"><strong>Avance Financiero Promedio:</strong><span>{parseInt(porcentajes.financiero)} %</span></div>
+                
+              </div>
+              <div className="chart">
+                <Doughnut 
+                  data={
+                    dataPorc(porcentajes.operativo, porcentajes.financiero)
+                    }
+                  options={{
+                    plugins: {
+                      legend:{
+                        position: "right"
+                      }
+                    },
+                    responsive: true
+                  }}
+                />
+              </div>
+            </Carousel.Item>
+          </Carousel>
             
-          </div>
         </div>
         <div className="RecuadroDos">
           <h3>Resumen Facturacion</h3>
-          <div className="content">
-            <div className="row-content"><strong>Facturacion Proyectada:</strong><span>600.210.354</span></div>
-            <div className="row-content"><strong>Total Facturado:</strong><span>500.215.420</span></div>
-            <div className="row-content"><strong>Pendiente por Facturar:</strong><span>99.994.934</span></div>
-            <div className="row-content"><strong>Porcentaje Proyectado:</strong><span>83,34 %</span></div>
-            <div className="row-content"><strong>Porcentaje Pendiente:</strong><span>16,66 %</span></div>
-          </div>
-          <div className="chart">
-            <Doughnut 
-              data={dataFacturacion}
-              options={{
-                plugins: {
-                  legend:{
-                    position: "right"
-                  }
-                }
-              }}
-            />
-          </div>
+            <Carousel interval={null} data-bs-theme="dark">
+              <Carousel.Item>
+              <div className="content">
+                <h4>Mes Anterior</h4>
+                <div className="row-content"><strong>Facturacion Proyectada:</strong><span>$ 600.210.354</span></div>
+                <div className="row-content"><strong>Total Facturado:</strong><span>$ 500.215.420</span></div>
+                <div className="row-content"><strong>Pendiente por Facturar:</strong><span>$ 99.994.934</span></div>
+                <div className="row-content"><strong>Porcentaje Proyectado:</strong><span>83,3 %</span></div>
+                <div className="row-content"><strong>Porcentaje Pendiente:</strong><span>16,6 %</span></div>
+              </div>
+              <div className="chart">
+                <Doughnut 
+                  data={dataFacturacion}
+                  options={{
+                    plugins: {
+                      legend:{
+                        position: "right"
+                      }
+                    }
+                  }}
+                />
+              </div>
+              </Carousel.Item>
+              <Carousel.Item>
+              <div className="content">
+                <h4>Mes Actual</h4>
+                <div className="row-content"><strong>Facturacion Proyectada:</strong><span>$ 600.210.354</span></div>
+                <div className="row-content"><strong>Total Facturado:</strong><span>$ 500.215.420</span></div>
+                <div className="row-content"><strong>Pendiente por Facturar:</strong><span>$ 99.994.934</span></div>
+                <div className="row-content"><strong>Porcentaje Proyectado:</strong><span>83,3 %</span></div>
+                <div className="row-content"><strong>Porcentaje Pendiente:</strong><span>16,6 %</span></div>
+              </div>
+              <div className="chart">
+                <Doughnut 
+                  data={dataFacturacion}
+                  options={{
+                    plugins: {
+                      legend:{
+                        position: "right"
+                      }
+                    }
+                  }}
+                />
+              </div>
+              </Carousel.Item>
+              <Carousel.Item>
+              <div className="content">
+                <h4>Mes Siguiente</h4>
+                <div className="row-content"><strong>Facturacion Proyectada:</strong><span>$ 600.210.354</span></div>
+                <div className="row-content"><strong>Total Facturado:</strong><span>$ 500.215.420</span></div>
+                <div className="row-content"><strong>Pendiente por Facturar:</strong><span>$ 99.994.934</span></div>
+                <div className="row-content"><strong>Porcentaje Proyectado:</strong><span>83,3 %</span></div>
+                <div className="row-content"><strong>Porcentaje Pendiente:</strong><span>16,6 %</span></div>
+              </div>
+              <div className="chart">
+                <Doughnut 
+                  data={dataFacturacion}
+                  options={{
+                    plugins: {
+                      legend:{
+                        position: "right"
+                      }
+                    }
+                  }}
+                />
+              </div>
+              </Carousel.Item>
+            </Carousel>
         </div>
         <div className="RecuadroTres">
           <h3>Recursos</h3>
