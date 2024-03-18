@@ -123,7 +123,7 @@ export const getProfile = async ( idProfile) => {
 export const getAvances = async ( idObra, setAvancesCallback ) => {
     try {
         const { data } = await axios.get(`https://sgo-django.azurewebsites.net/api/avance/list/${idObra}/`)
-        setAvancesCallback(data)
+        setAvancesCallback(data.sort((a,b) => new Date(a.fecha) - new Date(b.fecha)))
     } catch (error) {
         console.error(error)
     }

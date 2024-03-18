@@ -26,6 +26,7 @@ const AvanceOperativo = () => {
   const [showAR, setShowAR] = useState(false);
   const [numHitos, setNumHitos] = useState(0);
   const [fechaActual, setFechaActual] = useState('')
+  const [proxAvance, setProxAvance] = useState({})
 
 
   const handleCloseAP = () => setShowAP(false);
@@ -49,12 +50,20 @@ const AvanceOperativo = () => {
     if(avance.tipo === 'real')
       avancesTemp.push(avance)
   })
-  
-  const avanceOrdenado = avancesTemp.sort((a,b) => new Date(a.fecha) - new Date(b.fecha));
+
   
   
   useEffect(()=>{
-    setAvancesReales(avanceOrdenado)
+    setAvancesReales(avancesTemp)
+  }, [avances])
+
+  const getProximoAvance = () => {
+    return avances.find((avance)=> avance.fecha > fechaActual && avance.tipo === 'proyectado' )
+  }
+
+  useEffect(()=> {
+    const data = getProximoAvance()
+    setProxAvance(data)
   }, [avances])
   
 
@@ -192,6 +201,10 @@ const AvanceOperativo = () => {
   filterType: models.FilterType.BasicFilter,
   requireSingleSelection: true
 }
+
+
+
+  
   
 
   return (
@@ -204,7 +217,7 @@ const AvanceOperativo = () => {
         <div className="detalle">
           <div className="dato"><span><strong>Porcentaje de Avance:</strong></span><span> {detalleObra.porc_avance_operativo} %</span></div>
           <div className="dato"><span><strong>Ultimo Avance:</strong></span><span>{avancesReales[avancesReales.length -1]?.fecha}</span></div>
-          <div className="dato"><span><strong>Proximo avance esperado:</strong></span><span>40% al 2024-03-01 </span></div>
+          <div className="dato"><span><strong>Proximo avance esperado:</strong></span><span>{proxAvance?.porcentaje}% al {proxAvance?.fecha} </span></div>
         </div>
         <div className="botonera">
           {
