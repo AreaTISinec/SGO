@@ -218,15 +218,15 @@ const Home =  () => {
               <Carousel.Item>
               <div className="content">
                 <h4>Mes Anterior</h4>
-                <div className="row-content"><strong>Facturacion Proyectada:</strong><span>$ 600.210.354</span></div>
-                <div className="row-content"><strong>Total Facturado:</strong><span>$ 500.215.420</span></div>
-                <div className="row-content"><strong>Pendiente por Facturar:</strong><span>$ 99.994.934</span></div>
-                <div className="row-content"><strong>Porcentaje Proyectado:</strong><span>83,3 %</span></div>
-                <div className="row-content"><strong>Porcentaje Pendiente:</strong><span>16,6 %</span></div>
+                <div className="row-content"><strong>Facturacion Proyectada:</strong><span>$ 43.210.400</span></div>
+                <div className="row-content"><strong>Total Facturado:</strong><span>$ 42.015.000</span></div>
+                <div className="row-content"><strong>Pendiente por Facturar:</strong><span>$ 1.195.400</span></div>
+                <div className="row-content"><strong>Porcentaje Proyectado:</strong><span>97,2 %</span></div>
+                <div className="row-content"><strong>Porcentaje Pendiente:</strong><span>2,8 %</span></div>
               </div>
               <div className="chart">
                 <Doughnut 
-                  data={dataFacturacion}
+                  data={dataFacturacion(43210400, 1195400, 42015000)}
                   options={{
                     plugins: {
                       legend:{
@@ -248,7 +248,7 @@ const Home =  () => {
               </div>
               <div className="chart">
                 <Doughnut 
-                  data={dataFacturacion}
+                  data={dataFacturacion(600210354, 99994934, 500215420)}
                   options={{
                     plugins: {
                       legend:{
@@ -262,15 +262,15 @@ const Home =  () => {
               <Carousel.Item>
               <div className="content">
                 <h4>Mes Siguiente</h4>
-                <div className="row-content"><strong>Facturacion Proyectada:</strong><span>$ 600.210.354</span></div>
-                <div className="row-content"><strong>Total Facturado:</strong><span>$ 500.215.420</span></div>
-                <div className="row-content"><strong>Pendiente por Facturar:</strong><span>$ 99.994.934</span></div>
-                <div className="row-content"><strong>Porcentaje Proyectado:</strong><span>83,3 %</span></div>
-                <div className="row-content"><strong>Porcentaje Pendiente:</strong><span>16,6 %</span></div>
+                <div className="row-content"><strong>Facturacion Proyectada:</strong><span>$ 56.350.000</span></div>
+                <div className="row-content"><strong>Total Facturado:</strong><span>$ 0</span></div>
+                <div className="row-content"><strong>Pendiente por Facturar:</strong><span>$ 56.350.000</span></div>
+                <div className="row-content"><strong>Porcentaje Proyectado:</strong><span>0 %</span></div>
+                <div className="row-content"><strong>Porcentaje Pendiente:</strong><span>100 %</span></div>
               </div>
               <div className="chart">
                 <Doughnut 
-                  data={dataFacturacion}
+                  data={dataFacturacion(56350000, 56350000, 0)}
                   options={{
                     plugins: {
                       legend:{
