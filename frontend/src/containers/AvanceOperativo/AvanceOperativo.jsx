@@ -181,6 +181,17 @@ const AvanceOperativo = () => {
     return fields;
   };
 
+  const basicFilter = {
+  $schema: "http://powerbi.com/product/schema#basic",
+  target: {
+    table: "avances",
+    column: "id_obra_id"
+  },
+  operator: "In",
+  values: [parseInt(idObra)],
+  filterType: models.FilterType.BasicFilter,
+  requireSingleSelection: true
+}
   
 
   return (
@@ -301,10 +312,11 @@ const AvanceOperativo = () => {
           <PowerBIEmbed
             embedConfig = {{
               type: 'report',   // Supported types: report, dashboard, tile, visual, qna, paginated report and create
-              id: '5c607318-8d82-49bf-a371-7e0edf855485',
-              embedUrl: 'https://app.powerbi.com/reportEmbed?reportId=5c607318-8d82-49bf-a371-7e0edf855485&config=eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly9XQUJJLVBBQVMtMS1TQ1VTLXJlZGlyZWN0LmFuYWx5c2lzLndpbmRvd3MubmV0IiwiZW1iZWRGZWF0dXJlcyI6eyJ1c2FnZU1ldHJpY3NWTmV4dCI6dHJ1ZSwiZGlzYWJsZUFuZ3VsYXJKU0Jvb3RzdHJhcFJlcG9ydEVtYmVkIjp0cnVlfX0%3d',
+              id: 'e1b87720-3289-423e-a369-2a7c7cca3630',
+              embedUrl: 'https://app.powerbi.com/reportEmbed?reportId=e1b87720-3289-423e-a369-2a7c7cca3630&config=eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly9XQUJJLVBBQVMtMS1TQ1VTLXJlZGlyZWN0LmFuYWx5c2lzLndpbmRvd3MubmV0IiwiZW1iZWRGZWF0dXJlcyI6eyJ1c2FnZU1ldHJpY3NWTmV4dCI6dHJ1ZSwiZGlzYWJsZUFuZ3VsYXJKU0Jvb3RzdHJhcFJlcG9ydEVtYmVkIjp0cnVlfX0%3d',
               accessToken: accessToken.access_token,
               tokenType: models.TokenType.Aad, // Use models.TokenType.Aad for SaaS embed
+              filters: [basicFilter],
               settings: {
                 panes: {
                   filters: {

@@ -11,7 +11,6 @@ import { dataObras, dataFacturacion } from "../../components/Charts/Donuts/donut
 import Table  from 'react-bootstrap/Table'
 import Button from "react-bootstrap/Button";
 
-import { getCeNes, getSupervisores, getClientes, getEmpresas, getTiposObra, getEstadosObra } from "../../actions/getPetitions";
 
 import ClienteModal from "../../components/Modals/Cliente/ClienteModal";
 import EmpresaModal from "../../components/Modals/Empresa/EmpresaModal";
@@ -23,6 +22,7 @@ import AddTipoObrasModal from "../../components/Modals/TipoObras/AddTipoObrasMod
 import AddEmpresaModal from "../../components/Modals/Empresa/AddEmpresaModal";
 import AddClienteModal from "../../components/Modals/Cliente/AddClienteModal";
 import AddCeneModal from "../../components/Modals/Cene/AddCeneModal";
+import { getObras } from "../../actions/getPetitions";
 
 ChartJS.register(ArcElement, Tooltip, Legend)
 
@@ -46,6 +46,17 @@ const Home =  () => {
   const [showPersonal, setShowPersonal] = useState(false)
 
   const [showEstado, setShowEstado] = useState(false)
+
+  const [obras, setObras] = useState([])
+  const [contadores, setContadores] = useState({
+    obrasTotales: 0,
+    obrasAdjudicadas: 0,
+    obrasEjecucion: 0,
+    obrasParalizadas: 0,
+    obrasEjecutadas: 0,
+    obrasFinalizadas: 0,
+    obrasSinEstado: 0
+  })
 
 
   const handleShowCene = () => setShowCene(!showCene)
@@ -81,8 +92,52 @@ const Home =  () => {
 
   useEffect(()=>{
     getUser()
+    getObras(setObras)
   },[])
 
+  console.log(obras)
+  useEffect(()=>{
+    let adjudicadas = 0;
+    let ejecucion = 0;
+    let paralizadas = 0;
+    let ejecutadas = 0;
+    let finalizadas = 0;
+    let sinEstado = 0;
+
+    obras?.forEach((obra)=> {
+      if(obra.estado_obra === 'Adjudicada') adjudicadas++;
+        
+      if(obra.estado_obra === 'En Ejecución') ejecucion++;
+        
+      if(obra.estado_obra === 'Paralizada') paralizadas++;
+      
+      if(obra.estado_obra === 'Ejecutada') ejecutadas++;
+        
+      if(obra.estado_obra === 'Finalizada') finalizadas++;
+
+      if(obra.estado_obra === '') sinEstado++;
+        
+    });
+    setContadores(()=> ({
+      obrasAdjudicadas: adjudicadas,
+      obrasEjecucion: ejecucion,
+      obrasParalizadas: paralizadas,
+      obrasEjecutadas: ejecutadas,
+      obrasFinalizadas: finalizadas,
+      obrasSinEstado: sinEstado,
+      obrasTotales: obras.length
+    }));
+
+  }, [obras])
+
+  console.log("data: ",
+    dataObras(
+      contadores?.obrasAdjudicadas, 
+      contadores?.obrasEjecucion, 
+      contadores?.obrasParalizadas,
+      contadores?.obrasEjecutadas,
+      contadores?.obrasFinalizadas
+    ))
   return (
     <main className="HomeContainer">
       <SidebarV2 />
@@ -90,16 +145,25 @@ const Home =  () => {
         <div className="RecuadroUno">
           <h3>Obras</h3>
           <div className="content">
-            <div className="row-content"><strong>Cantidad de obras totales:</strong><span>57</span></div>
-            <div className="row-content"><strong>Cantidad de obras adjudicadas:</strong><span>7</span></div>
-            <div className="row-content"><strong>Cantidad de obras en ejecucion:</strong><span>22</span></div>
-            <div className="row-content"><strong>Cantidad de obras paralizadas:</strong><span>5</span></div>
-            <div className="row-content"><strong>Cantidad de obras ejecutadas:</strong><span>15</span></div>
-            <div className="row-content"><strong>Cantidad de obras finalizadas:</strong><span>8</span></div>
+            <div className="row-content"><strong>Cantidad de obras totales:</strong><span>{contadores.obrasTotales}</span></div>
+            <div className="row-content"><strong>Cantidad de obras adjudicadas:</strong><span>{contadores.obrasAdjudicadas}</span></div>
+            <div className="row-content"><strong>Cantidad de obras en ejecucion:</strong><span>{contadores.obrasEjecucion}</span></div>
+            <div className="row-content"><strong>Cantidad de obras paralizadas:</strong><span>{contadores.obrasParalizadas}</span></div>
+            <div className="row-content"><strong>Cantidad de obras ejecutadas:</strong><span>{contadores.obrasEjecutadas}</span></div>
+            <div className="row-content"><strong>Cantidad de obras finalizadas:</strong><span>{contadores.obrasFinalizadas}</span></div>
+            <div className="row-content"><strong>Cantidad de obras sin estado:</strong><span>{contadores.obrasSinEstado}</span></div>
           </div>
           <div className="chart">
             <Doughnut 
-              data={dataObras}
+              data={
+                dataObras(
+                  contadores.obrasAdjudicadas, 
+                  contadores.obrasEjecucion, 
+                  contadores.obrasParalizadas,
+                  contadores.obrasEjecutadas,
+                  contadores.obrasFinalizadas,
+                  contadores.obrasSinEstado
+                )}
               options={{
                 plugins: {
                   legend:{

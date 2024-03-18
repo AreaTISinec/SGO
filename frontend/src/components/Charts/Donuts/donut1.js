@@ -1,9 +1,9 @@
-export const dataObras = {
-    labels: ['Adjudicada', 'En Ejecucion', 'Paralizada', 'Ejecutada', 'Finalizada'],
+export const dataObras = (adjudicada, ejecucion, paralizada, ejecutada, finalizada, na) => ({
+    labels: ['Adjudicada', 'En Ejecucion', 'Paralizada', 'Ejecutada', 'Finalizada', 'N-A'],
     datasets: [
       {
         label: 'Numero de obras',
-        data: [7, 22, 5, 15, 8],
+        data: [adjudicada, ejecucion, paralizada, ejecutada, finalizada, na],
         backgroundColor: [
           'rgba(255, 99, 132, 0.7)',
           'rgba(54, 162, 235, 0.7)',
@@ -23,7 +23,7 @@ export const dataObras = {
         borderWidth: 1,
       },
     ],
-  };
+  });
 
 export const dataFacturacion = {
   labels: ['Proyectado', 'Pendiente', 'Facturado'],
