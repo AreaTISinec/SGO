@@ -29,14 +29,23 @@ export const getDetalleObra = async (idObra, setDetalleObraCallback) => {
     
 };
 
-export const getEmpresas = async (setEmpresaCallback) => {
+export const getEmpresas = async (setEmpresasCallback) => {
     try {
         const res = await axios.get('https://sgo-django.azurewebsites.net/api/empresas/')
-        setEmpresaCallback(res.data)
+        setEmpresasCallback(res.data)
     } catch (err) {
         console.error("Error al obtener datos:", err);
     }
 };
+
+export const getEmpresa= async (idEmpresa, setEmpresaCallback) => {
+    try {
+        const { data } = await axios.get(`https://sgo-django.azurewebsites.net/api/empresas/${idEmpresa}/`)
+        setEmpresaCallback(data);      
+    } catch (error) {
+      console.error(error)
+    }
+  }
 
 export const getTiposObra = async (setTiposObraCallback) => {
     try {
@@ -83,9 +92,18 @@ export const getSupervisores = async (setSupervisoresCallback) => {
     }
 };
 
-export const getEncargado = async (idSupervisor ,setSupervisoresCallback) => {
+export const getEncargado = async (idPerfil ,setSupervisoresCallback) => {
     try {
-        const res = await axios.get(`https://sgo-django.azurewebsites.net/api/profile/${idSupervisor}/`);
+        const res = await axios.get(`https://sgo-django.azurewebsites.net/api/profile/${idPerfil}/`);
+        setSupervisoresCallback(res.data);
+    } catch (err) {
+        console.error("Error al obtener datos:", err);
+    }
+};
+
+export const getEncargadoPorAcc = async (idAcc ,setSupervisoresCallback) => {
+    try {
+        const res = await axios.get(`https://sgo-django.azurewebsites.net/api/profile/set/${idAcc}/`);
         setSupervisoresCallback(res.data);
     } catch (err) {
         console.error("Error al obtener datos:", err);
