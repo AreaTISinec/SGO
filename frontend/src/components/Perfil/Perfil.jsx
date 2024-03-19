@@ -8,6 +8,7 @@ import Modal from 'react-bootstrap/Modal';
 import Form from "react-bootstrap/Form";
 import  useForm  from '../../utils/useForm'
 import { uploadDataUser, updateDataUser } from "../../actions/newDataUsers"
+import { getEmpresa, getEmpresas, getEncargadoPorAcc } from "../../actions/getPetitions";
 
 const Perfil = () => {
   const { idUsuario } = useParams()
@@ -27,35 +28,7 @@ const Perfil = () => {
   const handleCloseAP = () => setShowAP(false);
   const handleShowAP = () => setShowAP(true);
 
-
-  const getDatosUser = async () => {
-    try {
-      const { data } = await axios.get(`https://sgo-django.azurewebsites.net/api/profile/set/${idUsuario}/`);
-      setInfoUser(data);
-    } catch (error) {
-      console.error(error)
-    }
-
-  };
-
-  const getEmpresasUser= async () => {
-    try {
-        const { data } = await axios.get(`https://sgo-django.azurewebsites.net/api/empresas/${infoUser?.empresa}/`)
-        setInfoEmpresa(data);      
-    } catch (error) {
-      console.error(error)
-    }
-  }
-
  
-  const getEmpresas = async () => {
-    try {
-      const response = await axios.get('https://sgo-django.azurewebsites.net/api/empresas/')
-      setEmpresas(response.data)
-    } catch (error) {
-      console.error(error)
-    }
-  }
 
   const newDataSubmit = (e) => {
     e.preventDefault()
@@ -77,13 +50,11 @@ const Perfil = () => {
   }
   
   useEffect(() => {
-    getDatosUser();
-    getEmpresas();
-  }, []);
+    getEmpresas(setEmpresas)
+    getEncargadoPorAcc(idUsuario, setInfoUser);
+    getEmpresa(infoUser?.empresa, setInfoEmpresa)
+  }, [idUsuario, infoUser?.empresa]);
   
-   useEffect(() => {
-    getEmpresasUser();
-  }, [infoUser]);
 
   return (
     <div className="PerfilContainer">
