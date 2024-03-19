@@ -8,6 +8,7 @@ import { useEffect } from 'react';
 import { getEmpresas } from '../../../actions/getPetitions';
 import { useState } from 'react';
 import useForm from '../../../utils/useForm';
+import FloatingLabel from 'react-bootstrap/esm/FloatingLabel';
 
 
 const AddCeneModal = ({ show, handleShow }) => {
@@ -43,40 +44,53 @@ const AddCeneModal = ({ show, handleShow }) => {
             <Modal.Body>
               <Form onSubmit={onSubmit}>
                 <Form.Group>
-                  <Form.Label>ID del Centro de Negocios</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="Ingrese el ID del Centro de Negocios"
-                    name="id_cene"
-                    onChange={ onInputChange }
-                    required
-                  />
+                  <FloatingLabel
+                    label='Ingrese el ID del Centro de Negocios'
+                    className='mb-3'
+                  >
+                    <Form.Control
+                      type="text"
+                      placeholder="Ingrese el ID del Centro de Negocios"
+                      name="id_cene"
+                      onChange={ onInputChange }
+                      required
+                    />
+                  </FloatingLabel>
                 </Form.Group>
 
                 <Form.Group >
-                  <Form.Label>Seleccione la empresa</Form.Label>
-                  <Form.Select
-                    onChange={ onInputChange }
-                    name="empresa"
-                    required
+                  <FloatingLabel
+                    label='Empresa'
+                    className='mb-3'
                   >
-                    {
-                      empresas.map((empresa) => (
-                        <option key={empresa.id} value={empresa.nombre}> {empresa.nombre} </option>
-                      ))
-                    }
-                  </Form.Select>
+                    <Form.Select
+                      onChange={ onInputChange }
+                      name="empresa"
+                      required
+                    >
+                      <option value=''>Seleccion una empresa</option>
+                      {
+                        empresas.map((empresa) => (
+                          <option key={empresa.id} value={empresa.nombre}> {empresa.nombre} </option>
+                        ))
+                      }
+                    </Form.Select>
+                  </FloatingLabel>
                 </Form.Group>
 
                 <Form.Group  >
-                  <Form.Label>Nombre del Centro de Negocios</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="Ingrese el nombre del Centro de Negocios"
-                    name="nombre"
-                    onChange={ onInputChange }
-                    required
-                  />
+                  <FloatingLabel
+                    label='Ingrese el nombre del Centro de Negocios'
+                    className='mb-3'
+                  >
+                    <Form.Control
+                      type="text"
+                      placeholder="Ingrese el nombre del Centro de Negocios"
+                      name="nombre"
+                      onChange={ onInputChange }
+                      required
+                    />
+                  </FloatingLabel>
                 </Form.Group>
 
                 <Button variant="danger" type="submit">

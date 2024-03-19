@@ -1,14 +1,18 @@
 import { useParams } from "react-router-dom"
-import SidebarV2 from "../SidebarV2/SidebarV2";
 import './Perfil.css'
-import axios from "axios"
 import { useEffect, useState } from "react"
+
 import Button from "react-bootstrap/Button";
 import Modal from 'react-bootstrap/Modal';
 import Form from "react-bootstrap/Form";
+import FloatingLabel from 'react-bootstrap/FloatingLabel';
+
 import  useForm  from '../../utils/useForm'
+import SidebarV2 from "../SidebarV2/SidebarV2";
+
 import { uploadDataUser, updateDataUser } from "../../actions/newDataUsers"
 import { getEmpresa, getEmpresas, getEncargadoPorAcc } from "../../actions/getPetitions";
+
 
 const Perfil = () => {
   const { idUsuario } = useParams()
@@ -79,48 +83,74 @@ const Perfil = () => {
                     <Modal.Body>
                       <Form onSubmit={updateDataSubmit}>
                         <Form.Group>
-                          <Form.Label>Ingresa tu nombre</Form.Label>
-                          <Form.Control 
-                            type="text"
-                            name="nombre"
-                            onChange={onInputChange}
-                            required
-                          />
-                        </Form.Group>
-
-                        <Form.Group>
-                          <Form.Label>Ingresa tu apellido</Form.Label>
-                          <Form.Control 
-                            type="text"
-                            name="apellido"
-                            onChange={onInputChange}
-                            required
-                          />
-                        </Form.Group>
-
-                        <Form.Group>
-                          <Form.Label>Ingresa tu celular</Form.Label>
-                          <Form.Control 
-                            type="text"
-                            name="numero"
-                            onChange={onInputChange}
-                            required
-                          />
-                        </Form.Group>
-
-                        <Form.Group>
-                          <Form.Label>¿A que empresa perteneces?</Form.Label>
-                          <Form.Select 
-                            name="empresa"
-                            onChange={onInputChange}
-                            required
+                          <FloatingLabel
+                            controlId="floatingInput"
+                            label='Ingrese su nombre'
+                            className="mb-3"
                           >
-                            {
-                              empresas?.map((empresa) => (
-                                <option key={empresa.id} value={empresa.id}> {empresa.nombre} </option>
-                              ))
-                            }
-                          </Form.Select>
+                            <Form.Control 
+                              type="text"
+                              name="nombre"
+                              placeholder="Ingrese su nombre"
+                              onChange={onInputChange}
+                              required
+                            />
+                          </FloatingLabel>
+                        </Form.Group>
+
+                        <Form.Group>
+                          <FloatingLabel
+                            controlId="floatingInput"
+                            label= 'Ingrese su apellido'
+                            className="mb-3"
+                          >
+                            <Form.Control 
+                              type="text"
+                              name="apellido"
+                              onChange={onInputChange}
+                              placeholder=""
+                              required
+                            />
+
+                          </FloatingLabel>
+                        </Form.Group>
+
+                        <Form.Group>
+                          <FloatingLabel
+                            label="Ingrese su numero"
+                            controlId='floatingInput'
+                            className="mb-3"
+                          >
+                            <Form.Control 
+                              type="text"
+                              name="numero"
+                              placeholder=""
+                              onChange={onInputChange}
+                              required
+                            />
+                          </FloatingLabel>
+                        </Form.Group>
+
+                        <Form.Group>
+                          <FloatingLabel
+                            controlId="floatingSelect"
+                            label='Ingrese la impresa'
+                            className="mb-3"
+                          >
+                            <Form.Select 
+                              name="empresa"
+                              onChange={onInputChange}
+                              required
+                            >
+                              <option value=''>Seleccione una Empresa</option>
+                              {
+                                empresas?.map((empresa) => (
+                                  <option key={empresa.id} value={empresa.id}> {empresa.nombre} </option>
+                                ))
+                              }
+                            </Form.Select>
+
+                          </FloatingLabel>
                         </Form.Group>
 
                         <Button variant="danger" type="onSubmit">
@@ -137,49 +167,75 @@ const Perfil = () => {
                     </Modal.Header>
                     <Modal.Body>
                       <Form onSubmit={newDataSubmit}>
-                        <Form.Group>
-                          <Form.Label>Ingresa tu nombre</Form.Label>
-                          <Form.Control 
-                            type="text"
-                            name="nombre"
-                            onChange={onInputChange}
-                            required
-                          />
-                        </Form.Group>
-
-                        <Form.Group>
-                          <Form.Label>Ingresa tu apellido</Form.Label>
-                          <Form.Control 
-                            type="text"
-                            name="apellido"
-                            onChange={onInputChange}
-                            required
-                          />
-                        </Form.Group>
-
-                        <Form.Group>
-                          <Form.Label>Ingresa tu celular</Form.Label>
-                          <Form.Control 
-                            type="text"
-                            name="numero"
-                            onChange={onInputChange}
-                            required
-                          />
-                        </Form.Group>
-
-                        <Form.Group>
-                          <Form.Label>¿A que empresa perteneces?</Form.Label>
-                          <Form.Select 
-                            name="empresa"
-                            onChange={onInputChange}
-                            required
+                      <Form.Group>
+                          <FloatingLabel
+                            controlId="floatingInput"
+                            label='Ingrese su nombre'
+                            className="mb-3"
                           >
-                            {
-                              empresas?.map((empresa) => (
-                                <option key={empresa.id} value={empresa.id}> {empresa.nombre} </option>
-                              ))
-                            }
-                          </Form.Select>
+                            <Form.Control 
+                              type="text"
+                              name="nombre"
+                              placeholder="Ingrese su nombre"
+                              onChange={onInputChange}
+                              required
+                            />
+                          </FloatingLabel>
+                        </Form.Group>
+
+                        <Form.Group>
+                          <FloatingLabel
+                            controlId="floatingInput"
+                            label= 'Ingrese su apellido'
+                            className="mb-3"
+                          >
+                            <Form.Control 
+                              type="text"
+                              name="apellido"
+                              onChange={onInputChange}
+                              placeholder=""
+                              required
+                            />
+
+                          </FloatingLabel>
+                        </Form.Group>
+
+                        <Form.Group>
+                          <FloatingLabel
+                            label="Ingrese su numero"
+                            controlId='floatingInput'
+                            className="mb-3"
+                          >
+                            <Form.Control 
+                              type="text"
+                              name="numero"
+                              placeholder=""
+                              onChange={onInputChange}
+                              required
+                            />
+                          </FloatingLabel>
+                        </Form.Group>
+
+                        <Form.Group>
+                          <FloatingLabel
+                            controlId="floatingSelect"
+                            label='Ingrese la impresa'
+                            className="mb-3"
+                          >
+                            <Form.Select 
+                              name="empresa"
+                              onChange={onInputChange}
+                              required
+                            >
+                              <option value=''>Seleccione una Empresa</option>
+                              {
+                                empresas?.map((empresa) => (
+                                  <option key={empresa.id} value={empresa.id}> {empresa.nombre} </option>
+                                ))
+                              }
+                            </Form.Select>
+
+                          </FloatingLabel>
                         </Form.Group>
 
                         <Button variant="danger" type="onSubmit">
@@ -197,39 +253,3 @@ const Perfil = () => {
 }
 
 export default Perfil
-
-/*
-  const [showAP, setShowAP] = useState(false);
-
-  const handleCloseAP = () => setShowAP(false);
-  const handleShowAP = () => setShowAP(true);
-
-{
-            infoUser ?
-            <>
-              <Button onClick={handleShowAP} variant="danger" className="boton-avance">Subir Avance Proyectado</Button>
-                  <Modal show={showAP} onHide={handleCloseAP}>
-                    <Modal.Header closeButton>
-                      <Modal.Title>Definir Avance Proyectado</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                      <Form >
-                        <Form.Group>
-                          <Form.Label>Ingrese la cantidad de hitos</Form.Label>
-                          <Form.Control 
-                            type="number"
-                            name="hitos"
-                            required
-                          />
-                        </Form.Group>
-                      
-                      <Button variant="primary" type="onSubmit">
-                        Guardar Avance
-                      </Button>
-                      </Form>
-                    </Modal.Body>
-                  </Modal>
-            </>:
-            <></>
-          }
-*/

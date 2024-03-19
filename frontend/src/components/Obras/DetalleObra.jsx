@@ -12,6 +12,7 @@ import { faPenToSquare } from '@fortawesome/free-solid-svg-icons'
 import Divider from '@mui/material/Divider';
 import { getDetalleObra, getEncargado, getSupervisores } from "../../actions/getPetitions.js"
 import Spinner from 'react-bootstrap/Spinner';
+import FloatingLabel from "react-bootstrap/esm/FloatingLabel.js";
 
 
 const DetalleObra = () => {
@@ -106,43 +107,6 @@ const DetalleObra = () => {
             <Link className="BotonNuevaObra" to={"./avance-operativo"}> {/*ver la url */}
               <Button variant="danger" onClick={handleClick}>Avance Operativo</Button>
             </Link>
-            {/* {
-              detalleObra && !detalleObra.is_avance ?
-              <span className="BotonNuevaObra">
-                <Button onClick={() => {handleShowAP(); handleClick();}} variant="danger" >Subir avance Proyectado</Button>
-                    <Modal show={showAP} onHide={handleCloseAP}>
-                      <Modal.Header closeButton>
-                        <Modal.Title>Definir Avance Proyectado</Modal.Title>
-                      </Modal.Header>
-                      <Modal.Body>
-                        <Form onSubmit={avanceProyecSubmit}>
-                          <Form.Group>
-                            <Form.Label>Ingrese la cantidad de hitos</Form.Label>
-                            <Form.Control 
-                              type="number"
-                              name="hitos"
-                              onChange={(e)=>{
-                                setNumHitos(parseInt(e.target.value))
-                              }}
-                              required
-                            />
-                          </Form.Group>
-
-                        {renderHitosFields()}
-                        
-                        <Button variant="primary" onClick={handleClick} type="onSubmit" disabled={errores.some(e => {
-                          if(e)
-                            return e.message !== ''
-                        }) }>
-                          Guardar Avance
-                        </Button>
-                        </Form>
-                      </Modal.Body>
-                    </Modal>
-              </span>:
-              <></>
-            } */}
-
           </div>
         </div>
         <>
@@ -160,18 +124,22 @@ const DetalleObra = () => {
                     <Modal.Body>
                       <Form onSubmit={avanceRealSubmit}>
                         <Form.Group>
-                          <Form.Label>Supervisores</Form.Label>
-                          <Form.Select
-                            name="supervisor"
-                            onChange={onInputChange}
+                          <FloatingLabel
+                            label='Supervisores'
+                            className="mb-3"
                           >
-                            <option value="">Seleccione un supervisor</option>
-                            {
-                              supervisores.map((superv) => 
-                                <option key={superv.id} value={superv.id}>{superv.nombre} {superv.apellido} </option>
-                              )
-                            }
-                          </Form.Select>
+                            <Form.Select
+                              name="supervisor"
+                              onChange={onInputChange}
+                            >
+                              <option value="">Seleccione un supervisor</option>
+                              {
+                                supervisores.map((superv) => 
+                                  <option key={superv.id} value={superv.id}>{superv.nombre} {superv.apellido} </option>
+                                )
+                              }
+                            </Form.Select>
+                          </FloatingLabel>
                         </Form.Group>
                       <Button variant="danger" type="onSubmit" onClick={handleClick} disabled>
                         Guardar Avance

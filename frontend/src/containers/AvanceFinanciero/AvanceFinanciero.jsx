@@ -11,6 +11,7 @@ import { getDetalleObra, getSupervisores, getHistorialFinanciero, getEmpresas } 
 import { uploadAvanceFinanciero } from "../../actions/newAvance";
 import AuthContext from "../../context/AuthContext";
 import { upload } from "../../actions/docs";
+import FloatingLabel from "react-bootstrap/esm/FloatingLabel";
 
 
 const AvanceFinanciero = () => {
@@ -37,7 +38,7 @@ const AvanceFinanciero = () => {
         getHistorialFinanciero(setHistorialFinanciero, idObra);
         getSupervisores(setResponsables)
         getEmpresas(setEmpresas)
-    }, [])
+    }, [idObra])
 
 
     const [docData, setDocData] = useState({
@@ -46,10 +47,7 @@ const AvanceFinanciero = () => {
         doc: null,
     });
     
-    const { tipo, doc, id_obra } = docData;
-    
-    console.log(docData)
-    
+    const { tipo, doc, id_obra } = docData;    
 
     
     const { monto, empresa, factura, fecha, onInputChange, onResetForm } = useForm({
@@ -65,6 +63,8 @@ const AvanceFinanciero = () => {
         uploadAvanceFinanciero(fecha, parseInt(monto), parseInt(idObra), profile.id, obra.presupuesto, empresa, factura)
         upload(doc, tipo, id_obra);
         onResetForm()
+        handleCloseAP()
+
     }
     
     
@@ -96,29 +96,43 @@ const AvanceFinanciero = () => {
                         <Modal.Body>
                             <Form onSubmit={(e) => {onSubmit(e)}}>
                                 <Form.Group>
-                                    <Form.Label>Fecha</Form.Label>
-                                    <Form.Control 
-                                        type="date"
-                                        name="fecha"
-                                        onChange={onInputChange}
-                                        
-                                    />
+                                    <FloatingLabel
+                                        label='Ingrese la fecha'
+                                        className="mb-3"
+                                    >
+                                        <Form.Control 
+                                            type="date"
+                                            name="fecha"
+                                            onChange={onInputChange}
+                                            
+                                        />
+                                    </FloatingLabel>
                                 </Form.Group>
                                 <Form.Group>
-                                    <Form.Label>Monto Facturado</Form.Label>
-                                    <Form.Control 
-                                        type="number"
-                                        name="monto"
-                                        onChange={onInputChange}
-                                    />
+                                    <FloatingLabel
+                                        label='Ingrese el monto facturado'
+                                        className="mb-3"
+                                    >
+                                        <Form.Control 
+                                            type="number"
+                                            name="monto"
+                                            placeholder=""
+                                            onChange={onInputChange}
+                                        />
+                                    </FloatingLabel>
                                 </Form.Group>
                                 <Form.Group>
-                                    <Form.Label>Numero de Factura</Form.Label>
-                                    <Form.Control 
-                                        type="number"
-                                        name="factura"
-                                        onChange={onInputChange}
-                                    />
+                                    <FloatingLabel
+                                        label='Ingrese el numero de factura'
+                                        className="mb-3"
+                                    >
+                                        <Form.Control 
+                                            type="number"
+                                            name="factura"
+                                            placeholder=""
+                                            onChange={onInputChange}
+                                        />
+                                    </FloatingLabel>
                                 </Form.Group>
                                 <Form.Group>
                                     <Form.Label>Documento Factura</Form.Label>
@@ -126,25 +140,30 @@ const AvanceFinanciero = () => {
                                         type="file"
                                         name="archivo"
                                         onChange={(e)=> onFileChange(e)}
+                                        className="mb-3"
                                     />
                                 </Form.Group>
                                 <Form.Group>
-                                    <Form.Label>Empresa</Form.Label>
-                                    <Form.Select
-                                        onChange={onInputChange}
-                                        name="empresa"
+                                    <FloatingLabel
+                                        label='Empresa'
+                                        className="mb-3"
                                     >
-                                        {
-                                            empresas?.map((empresa)=>
-                                                <option key={empresa.id} value={empresa.id}>{empresa.nombre}</option>
-                                            )
-                                        }
-                                    </Form.Select>
+                                        <Form.Select
+                                            onChange={onInputChange}
+                                            name="empresa"
+                                        >
+                                            <option value=''>Seleccione la Empresa</option>
+                                            {
+                                                empresas?.map((empresa)=>
+                                                    <option key={empresa.id} value={empresa.id}>{empresa.nombre}</option>
+                                                )
+                                            }
+                                        </Form.Select>
+                                    </FloatingLabel>
                                     
                                 </Form.Group>
                                 <Button variant="danger" type="onSubmit">Guardar</Button>
                             </Form>
-                        
                         </Modal.Body>
                     </Modal>
                 </div>

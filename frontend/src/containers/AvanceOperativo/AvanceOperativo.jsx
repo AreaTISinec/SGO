@@ -12,6 +12,8 @@ import { useParams } from "react-router-dom";
 import { uploadAvanceProyectado, uploadAvanceReal } from "../../actions/newAvance";
 import useForm from "../../utils/useForm";
 import swal from "sweetalert2";
+import FloatingLabel from "react-bootstrap/esm/FloatingLabel"
+import Divider from '@mui/material/Divider';
 
 
 const AvanceOperativo = () => {
@@ -159,32 +161,42 @@ const AvanceOperativo = () => {
         <div  key={i}>
   
           <Form.Group>
-            <Form.Label>{`Fecha hito ${i}`}</Form.Label>
-            <Form.Control 
-              type="date"
-              name={'fecha'}
-              placeholder={`Ingrese la fecha del hito ${i}`}
-              onChange={ (e) => {
-                onChangeProyectado(e, i)
-              }}
-              required
-            />
+            <FloatingLabel
+              label={`Fecha hito ${i}`}
+              className="mb-3"
+            >
+              <Form.Control 
+                type="date"
+                name={'fecha'}
+                placeholder={`Ingrese la fecha del hito ${i}`}
+                onChange={ (e) => {
+                  onChangeProyectado(e, i)
+                }}
+                required
+              />
+            </FloatingLabel>
+            
             {errores[i] && errores[i].name === 'fecha' && <span style={{ color: 'red' }}>{errores[i].message}<br/></span>}
-            <Form.Label><br/>{`% Avance esperado hito ${i}`}</Form.Label>
-            <Form.Control 
-              type="number"
-              name={'porcentaje'}
-              placeholder={`Ingrese el porcentaje de avance del hito ${i}`}
-              onChange={(e) => {
-                onChangeProyectado(e, i)
-              }}
-              required
-              max={100}
-              min={0}
-            />
+            <FloatingLabel
+              label={`Ingrese el porcentaje de avance esperado del hito ${i}`}
+            >
+              <Form.Control 
+                type="number"
+                name={'porcentaje'}
+                placeholder={`Ingrese el porcentaje de avance del hito ${i}`}
+                onChange={(e) => {
+                  onChangeProyectado(e, i)
+                }}
+                required
+                max={100}
+                min={0}
+              />
+            </FloatingLabel>
             {errores[i] && errores[i].name === 'porcentaje' && <span style={{ color: 'red' }}>{errores[i].message}</span>}
           </Form.Group>
-          <br/><br/>
+          <br/>
+            <Divider />
+          <br/>
         </div>
       );
     }
@@ -233,16 +245,24 @@ const AvanceOperativo = () => {
                 <Modal.Body>
                   <Form onSubmit={avanceProyecSubmit}>
                     <Form.Group>
-                      <Form.Label>Ingrese la cantidad de hitos</Form.Label>
-                      <Form.Control 
-                        type="number"
-                        name="hitos"
-                        onChange={(e)=>{
-                          setNumHitos(parseInt(e.target.value))
-                        }}
-                        required
-                      />
+                      <FloatingLabel
+                        label='Ingrese la cantidad de hitos'
+                        className="mb-1"
+                      >
+                        <Form.Control 
+                          type="number"
+                          name="hitos"
+                          placeholder=""
+                          onChange={(e)=>{
+                            setNumHitos(parseInt(e.target.value))
+                          }}
+                          required
+                        />
+                      </FloatingLabel>
                     </Form.Group>
+                    <br/>
+                    <Divider><strong>Hitos</strong></Divider>
+                    <br/>
 
                   {renderHitosFields()}
                   
@@ -263,16 +283,24 @@ const AvanceOperativo = () => {
                 <Modal.Body>
                   <Form onSubmit={avanceProyecSubmit}>
                     <Form.Group>
-                      <Form.Label>Ingrese la cantidad de hitos</Form.Label>
-                      <Form.Control 
-                        type="number"
-                        name="hitos"
-                        onChange={(e)=>{
-                          setNumHitos(parseInt(e.target.value))
-                        }}
-                        required
-                      />
+                      <FloatingLabel
+                        label='Ingrese la cantidad de hitos'
+                        className="mb-1"
+                      >
+                        <Form.Control 
+                          type="number"
+                          name="hitos"
+                          placeholder=""
+                          onChange={(e)=>{
+                            setNumHitos(parseInt(e.target.value))
+                          }}
+                          required
+                        />
+                      </FloatingLabel>
                     </Form.Group>
+                    <br/>
+                    <Divider><strong>Hitos</strong></Divider>
+                    <br/>
 
                   {renderHitosFields()}
                   
@@ -296,24 +324,33 @@ const AvanceOperativo = () => {
               <Modal.Body>
                 <Form onSubmit={avanceRealSubmit}>
                   <Form.Group>
-                    <Form.Label>Fecha Actual</Form.Label>
-                    <Form.Control 
-                      type="date"
-                      name="fecha"
-                      value={fechaActual}
-                      onChange={onInputChange}
-                      disabled
-                    />
+                    <FloatingLabel
+                      label='Fecha actual'
+                      className="mb-3"
+                    >
+                      <Form.Control 
+                        type="date"
+                        name="fecha"
+                        value={fechaActual}
+                        onChange={onInputChange}
+                        disabled
+                      />
+                    </FloatingLabel>
                   </Form.Group>
+
                   <Form.Group>
-                    <Form.Label>Porcentaje</Form.Label>
-                    <Form.Control 
-                      type="number"
-                      name="porcentaje"
-                      placeholder="Ingrese el porcentaje de avance operativo"
-                      onChange={onInputChange}
-                      required
-                    />
+                    <FloatingLabel
+                      label='Ingrese el porcentaje de avance'
+                      className="mb-3"
+                    >
+                      <Form.Control 
+                        type="number"
+                        name="Ingrese el porcentaje de avance"
+                        placeholder="Ingrese el porcentaje de avance operativo"
+                        onChange={onInputChange}
+                        required
+                      />
+                    </FloatingLabel>
                   </Form.Group>
                 <Button variant="danger" type="onSubmit" >
                   Guardar Avance

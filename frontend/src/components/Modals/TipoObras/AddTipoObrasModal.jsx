@@ -4,6 +4,7 @@ import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import { uploadTipoObra } from "../../../actions/newTipoObra"
+import FloatingLabel from "react-bootstrap/esm/FloatingLabel"
 
 
 const AddTipoObrasModal = ({ show, handleShow }) => {
@@ -26,13 +27,17 @@ const AddTipoObrasModal = ({ show, handleShow }) => {
       <Modal.Body>
         <Form onSubmit={onSubmit}>
           <Form.Group>
-            <Form.Label>Nuevo tipo de obra</Form.Label>
-            <Form.Control
-              type="text"
-              name="nombre"
-              onChange={onInputChange}
-              placeholder="Ingrese nombre de nuevo tipo de obra"
-            />
+            <FloatingLabel
+              label='Ingrese el nombre para el nuevo tipo de obra'
+              className="mb-3"
+            >
+              <Form.Control
+                type="text"
+                name="nombre"
+                onChange={onInputChange}
+                placeholder="Ingrese nombre de nuevo tipo de obra"
+              />
+            </FloatingLabel>
           </Form.Group>
           <Button type="onSubmit" variant="danger">Crear</Button>
         </Form>
