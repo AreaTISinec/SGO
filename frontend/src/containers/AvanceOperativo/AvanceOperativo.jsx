@@ -8,10 +8,10 @@ import { PowerBIEmbed } from 'powerbi-client-react';
 import { models } from 'powerbi-client';
 import { useState, useEffect } from "react";
 import { getAccessToken, getAvances, getDetalleObra } from "../../actions/getPetitions";
-import { useParams } from "react-router-dom"
-import { uploadAvanceProyectado, uploadAvanceReal } from "../../actions/newAvance"
-import useForm from "../../utils/useForm"
-import swal from "sweetalert2"
+import { useParams } from "react-router-dom";
+import { uploadAvanceProyectado, uploadAvanceReal } from "../../actions/newAvance";
+import useForm from "../../utils/useForm";
+import swal from "sweetalert2";
 
 
 const AvanceOperativo = () => {
@@ -43,17 +43,18 @@ const AvanceOperativo = () => {
 
   useEffect(()=>{
     getAvances(idObra, setAvances)
-  }, [idObra]);
+  }, [detalleObra]);
 
-  const avancesTemp = [] 
-  avances?.map((avance)=>{
-    if(avance.tipo === 'real')
-      avancesTemp.push(avance)
-  })
+  
 
   
   
   useEffect(()=>{
+    const avancesTemp = [] 
+    avances?.map((avance)=>{
+      if(avance.tipo === 'real')
+        avancesTemp.push(avance)
+    })
     setAvancesReales(avancesTemp)
   }, [avances])
 
@@ -64,7 +65,7 @@ const AvanceOperativo = () => {
   useEffect(()=> {
     const data = getProximoAvance()
     setProxAvance(data)
-  }, [avances])
+  }, [])
   
 
   const { fecha, porcentaje, onInputChange, onResetForm } = useForm({
@@ -210,7 +211,8 @@ const AvanceOperativo = () => {
   return (
     <div className="AvancesContainer">
       <SidebarV2 />
-      <div className="recuadro-contenido">
+      
+      <div className="recuadro-contenido ">
         <div className="titulo">
           <h1>Avance Operativo</h1>
         </div>
