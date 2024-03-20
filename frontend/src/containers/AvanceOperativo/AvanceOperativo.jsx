@@ -29,6 +29,7 @@ const AvanceOperativo = () => {
   const [numHitos, setNumHitos] = useState(0);
   const [fechaActual, setFechaActual] = useState('')
   const [proxAvance, setProxAvance] = useState({})
+  const [nuevaProyeccion, setNuevaProyeccion] = useState()
 
 
   const handleCloseAP = () => setShowAP(false);
@@ -58,6 +59,7 @@ const AvanceOperativo = () => {
         avancesTemp.push(avance)
     })
     setAvancesReales(avancesTemp)
+    setNuevaProyeccion(avances.some(avance => avance.tipo === 'nueva-proyeccion'))
   }, [avances])
 
   const getProximoAvance = () => {
@@ -67,10 +69,10 @@ const AvanceOperativo = () => {
   useEffect(()=> {
     const data = getProximoAvance()
     setProxAvance(data)
-  }, [])
+  }, [avances])
   
 
-  const { fecha, porcentaje, onInputChange, onResetForm } = useForm({
+  const { porcentaje, onInputChange, onResetForm } = useForm({
     fecha: fechaActual,
     porcentaje: 0
   })
@@ -108,6 +110,8 @@ const AvanceOperativo = () => {
         ...nuevosHitos[index],
         [name]: value
       };
+
+    
   
       // Creamos una variable para almacenar el mensaje de error
       let errorMessage = '';
@@ -148,11 +152,22 @@ const AvanceOperativo = () => {
   const avanceProyecSubmit = (e) => {
     e.preventDefault();
 
-    uploadAvanceProyectado(hitos, idObra);
+    uploadAvanceProyectado( hitos, idObra, 'proyectado');
       
     onResetForm()
     handleCloseAR()
   }
+
+  const avanceNuevaProyecSubmit = (e) => {
+    e.preventDefault();
+
+    uploadAvanceProyectado( hitos, idObra, 'nueva-proyeccion');
+    setNuevaProyeccion(true)
+
+    onResetForm()
+    handleCloseAR()
+  }
+  console.log(hitos)
 
   const renderHitosFields = () => {
     const fields = [];
@@ -161,6 +176,19 @@ const AvanceOperativo = () => {
         <div  key={i}>
   
           <Form.Group>
+            <FloatingLabel
+                label={`Ingrese el nombre del hito ${i}`}
+                className="mb-3"
+              >
+                <Form.Control 
+                  type="text"
+                  name='nombre'
+                  placeholder={`Ingrese el nombre del hito ${i}`}
+                  onChange={ (e) => {
+                    onChangeProyectado(e, i)
+                  }}
+                />
+            </FloatingLabel>
             <FloatingLabel
               label={`Fecha hito ${i}`}
               className="mb-3"
@@ -235,15 +263,17 @@ const AvanceOperativo = () => {
         </div>
         <div className="botonera">
           {
+            detalleObra && nuevaProyeccion ?
+            <></>:
             detalleObra && detalleObra.is_avance ? 
-            <>
+            (<>
             <Button variant="danger" onClick={handleShowAP}>Proyectar Nuevo Avance</Button>
               <Modal show={showAP} onHide={handleCloseAP}>
                 <Modal.Header closeButton>
                   <Modal.Title>Definir Nuevo Avance Proyectado</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                  <Form onSubmit={avanceProyecSubmit}>
+                  <Form onSubmit={avanceNuevaProyecSubmit}>
                     <Form.Group>
                       <FloatingLabel
                         label='Ingrese la cantidad de hitos'
@@ -266,15 +296,15 @@ const AvanceOperativo = () => {
 
                   {renderHitosFields()}
                   
-                  <Button variant="danger" type="onSubmit" disabled>
+                  <Button variant="danger" type="onSubmit">
                     Guardar Avance
                   </Button>
                   </Form>
                 </Modal.Body>
               </Modal>
-            </>
+            </>)
             :
-            <>
+            (<>
             <Button variant="danger" onClick={handleShowAP}>Proyectar Avance inicial</Button>
               <Modal show={showAP} onHide={handleCloseAP}>
                 <Modal.Header closeButton>
@@ -314,7 +344,7 @@ const AvanceOperativo = () => {
                   </Form>
                 </Modal.Body>
               </Modal>
-            </>
+            </>)
           }
           <Button variant="danger" onClick={handleShowAR}>Subir Avance</Button>
             <Modal show={showAR} onHide={handleCloseAR}>
@@ -345,7 +375,7 @@ const AvanceOperativo = () => {
                     >
                       <Form.Control 
                         type="number"
-                        name="Ingrese el porcentaje de avance"
+                        name="porcentaje"
                         placeholder="Ingrese el porcentaje de avance operativo"
                         onChange={onInputChange}
                         required
