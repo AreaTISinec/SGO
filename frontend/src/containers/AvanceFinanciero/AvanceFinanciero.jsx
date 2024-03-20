@@ -23,12 +23,15 @@ const AvanceFinanciero = () => {
     const [obra, setObra] = useState({})
     const [historialFinanciero, setHistorialFinanciero] = useState([])
     const [empresas, setEmpresas] = useState([])
+    const [showDoc, setShowDoc] = useState(false)
 
     
 
     
     const handleCloseAP = () => setShowAP(false);
     const handleShowAP = () => setShowAP(true);
+
+    const handleShowDoc = () => setShowDoc(!showDoc)
     
     useEffect(()=> {
         const fecha = new Date().toISOString().split('T')[0];
@@ -52,19 +55,32 @@ const AvanceFinanciero = () => {
     
     const { monto, empresa, factura, fecha, onInputChange, onResetForm } = useForm({
         monto: 0,
-        empresa: 1,
+        empresa: '',
         factura: 0,
         fecha: fechaActual
 
       })
 
-    const onSubmit = (e) => {
+    const onSubmit = async (e) => {
         e.preventDefault()
-        uploadAvanceFinanciero(fecha, parseInt(monto), parseInt(idObra), profile.id, obra.presupuesto, empresa, factura)
-        upload(doc, tipo, id_obra);
+        try {
+            await uploadAvanceFinanciero(fecha, parseInt(monto), parseInt(idObra), profile.id, obra.presupuesto, empresa, factura)
+            handleCloseAP()
+            handleShowDoc()
+        } catch (error) {
+            console.error(error)    
+        }
         onResetForm()
-        handleCloseAP()
+    }
 
+    const onSubmitDoc = async (e) => {
+        e.preventDefault();
+        try{
+            await upload(doc, tipo, idObra)
+
+        }finally{
+            handleShowDoc()
+        }
     }
     
     
@@ -103,6 +119,7 @@ const AvanceFinanciero = () => {
                                         <Form.Control 
                                             type="date"
                                             name="fecha"
+                                            value={fecha}
                                             onChange={onInputChange}
                                             
                                         />
@@ -116,33 +133,28 @@ const AvanceFinanciero = () => {
                                         <Form.Control 
                                             type="number"
                                             name="monto"
+                                            value={monto}
                                             placeholder=""
                                             onChange={onInputChange}
                                         />
                                     </FloatingLabel>
                                 </Form.Group>
+
                                 <Form.Group>
-                                    <FloatingLabel
-                                        label='Ingrese el numero de factura'
-                                        className="mb-3"
-                                    >
-                                        <Form.Control 
-                                            type="number"
-                                            name="factura"
-                                            placeholder=""
-                                            onChange={onInputChange}
-                                        />
-                                    </FloatingLabel>
-                                </Form.Group>
-                                <Form.Group>
-                                    <Form.Label>Documento Factura</Form.Label>
-                                    <Form.Control
-                                        type="file"
-                                        name="archivo"
-                                        onChange={(e)=> onFileChange(e)}
-                                        className="mb-3"
+                                <FloatingLabel
+                                    label='Ingrese el numero de factura'
+                                    className="mb-3"
+                                >
+                                    <Form.Control 
+                                        type="number"
+                                        name="factura"
+                                        value={factura}
+                                        placeholder=""
+                                        onChange={onInputChange}
                                     />
+                                </FloatingLabel>
                                 </Form.Group>
+                                
                                 <Form.Group>
                                     <FloatingLabel
                                         label='Empresa'
@@ -151,6 +163,7 @@ const AvanceFinanciero = () => {
                                         <Form.Select
                                             onChange={onInputChange}
                                             name="empresa"
+                                            value={empresa}
                                         >
                                             <option value=''>Seleccione la Empresa</option>
                                             {
@@ -161,6 +174,25 @@ const AvanceFinanciero = () => {
                                         </Form.Select>
                                     </FloatingLabel>
                                     
+                                </Form.Group>
+                                <Button variant="danger" type="onSubmit">Guardar</Button>
+                            </Form>
+                        </Modal.Body>
+                    </Modal>
+                    <Modal show={showDoc} onHide={handleShowDoc}>
+                        <Modal.Header>
+                            <Modal.Title>Cargar Documento de Factura</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            <Form onSubmit={onSubmitDoc}>
+                                <Form.Group>
+                                    <Form.Label>Documento Factura</Form.Label>
+                                    <Form.Control
+                                        type="file"
+                                        name="archivo"
+                                        onChange={(e)=> onFileChange(e)}
+                                        className="mb-3"
+                                    />
                                 </Form.Group>
                                 <Button variant="danger" type="onSubmit">Guardar</Button>
                             </Form>
