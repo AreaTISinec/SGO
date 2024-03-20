@@ -76,8 +76,7 @@ const AvanceFinanciero = () => {
     const onSubmitDoc = async (e) => {
         e.preventDefault();
         try{
-            await upload(doc, tipo, idObra)
-
+            await upload(doc, tipo, id_obra)
         }finally{
             handleShowDoc()
         }
