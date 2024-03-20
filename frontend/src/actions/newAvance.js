@@ -44,19 +44,21 @@ export const uploadAvanceReal = async (fecha, porcentaje, id_obra) => {
     }
 }
 
-export const uploadAvanceProyectado = async (hitos, id_obra) => {
-    console.log(hitos)
+export const uploadAvanceProyectado = async (hitos, id_obra, tipo_avance) => {
     for(let i =1; i< hitos.length; i++){
         let fecha = hitos[i]['fecha']
         let porcentaje = hitos[i]['porcentaje']
-        const tipo = 'proyectado'
+        let nombre_hito = hitos[i]['nombre']
+        const tipo = tipo_avance
 
         const body = JSON.stringify({
             fecha,
             porcentaje,
             id_obra,
-            tipo
+            tipo,
+            nombre_hito
         })
+        console.log(body)
         
         const config = {
             headers: {
