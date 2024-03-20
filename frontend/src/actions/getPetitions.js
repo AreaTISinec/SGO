@@ -12,8 +12,14 @@ export const getObra = async (id ,setObraCallback) => {
 
 export  const getObras = async (setObrasCallback) => {
     try {
-        const res = await axios.get(`https://sgo-django.azurewebsites.net/api/obras/`);
-        setObrasCallback(res.data);
+        const { data } = await axios.get(`https://sgo-django.azurewebsites.net/api/obras/`);
+        setObrasCallback(data.sort((a,b) => {
+            let x = a.nombre.toLowerCase()
+            let y = b.nombre.toLowerCase()
+            if(x < y) return -1
+            if(x > y) return 1
+            return 0
+        }));
       }catch (err) {
         console.error("Error al obtener datos:", err);
     }
