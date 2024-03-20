@@ -25,6 +25,8 @@ const AvanceFinanciero = () => {
     const [empresas, setEmpresas] = useState([])
     const [showDoc, setShowDoc] = useState(false)
 
+    const [loading, setLoading] = useState(false)
+
     
 
     
@@ -41,7 +43,7 @@ const AvanceFinanciero = () => {
         getHistorialFinanciero(setHistorialFinanciero, idObra);
         getSupervisores(setResponsables)
         getEmpresas(setEmpresas)
-    }, [idObra])
+    }, [idObra, showDoc])
 
 
     const [docData, setDocData] = useState({
@@ -76,7 +78,9 @@ const AvanceFinanciero = () => {
     const onSubmitDoc = async (e) => {
         e.preventDefault();
         try{
+            setLoading(true)
             await upload(doc, tipo, id_obra)
+            setLoading(false)
         }finally{
             handleShowDoc()
         }
@@ -193,7 +197,7 @@ const AvanceFinanciero = () => {
                                         className="mb-3"
                                     />
                                 </Form.Group>
-                                <Button variant="danger" type="onSubmit">Guardar</Button>
+                                <Button variant="danger" type="onSubmit" disabled={loading} >Guardar</Button>
                             </Form>
                         </Modal.Body>
                     </Modal>

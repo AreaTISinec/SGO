@@ -14,16 +14,7 @@ const ListaDocumentos = () => {
 
   const [loading, setLoading] = useState(false)
 
-  const handleClick = () => {
-    setLoading(true)
-    setTimeout(() => {
-      setLoading(false);
-    }, 2650);
-  }
 
-  const click2 = () => {
-    
-  }
 
   async function fetchListadoDocumentos() {
     try {
@@ -39,6 +30,7 @@ const ListaDocumentos = () => {
 
   const handleDownload = async (documentId) => {
     try {
+      setLoading(true)
       const response = await axios.get(`https://sgo-django.azurewebsites.net/api/files/download/${documentId}/`, {
         responseType: 'blob',
       });
@@ -52,6 +44,8 @@ const ListaDocumentos = () => {
       window.URL.revokeObjectURL(url);
     }catch (error){
       console.error('Error en la descarga del documento', error)
+    }finally{
+      setLoading(false)
     }
   }
 
@@ -73,7 +67,7 @@ const ListaDocumentos = () => {
                     return (
                   <ListGroup.Item className="ListaDocumentosDisponibles" key={document.id}>
                     {document.file_name}
-                    <Button variant="danger" onClick={() => {handleDownload(document.id); handleClick();}}>Descargar</Button>
+                    <Button variant="danger" onClick={() => {handleDownload(document.id)}} disabled={loading}>Descargar</Button>
                     
                   </ListGroup.Item> )
                 }
@@ -90,7 +84,7 @@ const ListaDocumentos = () => {
                     return (
                   <ListGroup.Item className="ListaDocumentosDisponibles" key={document.id}>
                     {document.file_name}
-                    <Button variant="danger" onClick={() => {handleDownload(document.id); handleClick();}}>Descargar</Button>
+                    <Button variant="danger" onClick={() => {handleDownload(document.id)}} disabled={loading} >Descargar</Button>
                   </ListGroup.Item> )
                 }
                 )}
@@ -106,7 +100,7 @@ const ListaDocumentos = () => {
                     return (
                   <ListGroup.Item className="ListaDocumentosDisponibles" key={document.id}>
                     {document.file_name}
-                    <Button variant="danger" onClick={() => {handleDownload(document.id); handleClick();}}>Descargar</Button>
+                    <Button variant="danger" onClick={() => {handleDownload(document.id)}}  disabled={loading}>Descargar</Button>
                   </ListGroup.Item> )
                 }
                 )}
@@ -122,7 +116,7 @@ const ListaDocumentos = () => {
                     return (
                   <ListGroup.Item className="ListaDocumentosDisponibles" key={document.id}>
                     {document.file_name}
-                    <Button variant="danger" onClick={() => {handleDownload(document.id); handleClick();}}>Descargar</Button>
+                    <Button variant="danger" onClick={() => {handleDownload(document.id)}}  disabled={loading}>Descargar</Button>
                   </ListGroup.Item> )
                 }
                 )}
