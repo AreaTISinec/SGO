@@ -69,12 +69,13 @@ export const reqUpload = async (doc,tipo, id) => {
     swal.fire({
       title: "Error al cargar el documento",
       icon: "error",
-      text: `${err.response.request.responseText}`,
+      text: `${err.message}`,
       toast: true,
       timer: 4000,
       position: 'top-right',
       timerProgressBar: true,
       showConfirmButton: false,
     })
+    throw err
   }
 };
