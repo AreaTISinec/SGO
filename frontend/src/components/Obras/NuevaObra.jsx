@@ -13,9 +13,13 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Divider from '@mui/material/Divider';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
+import { useNavigate } from "react-router-dom";
+
+import swal from 'sweetalert2';
 
 
 const NuevaObra = () => {
+  const navigate = useNavigate()
   const {profile} = useContext(AuthContext);
 
   const [empresas, setEmpresas] = useState([]);
@@ -71,20 +75,20 @@ const NuevaObra = () => {
     onInputChange, 
     onResetForm 
   } = useForm({ //agregar correctamente los parametros de la nueva obra
-    fecha_inicio: null,
-    fecha_termino: null,
-    fecha_asignacion: null,
+    fecha_inicio: '',
+    fecha_termino: '',
+    fecha_asignacion: '',
     presupuesto: 0,
-    empresa: 'Sinec',
+    empresa: '',
     cliente: '',
     nombre: '',
     porc_avance_financiero: 0,
     porc_avance_operativo: 0,
     direccion: '',
     comuna: '',
-    tipo_obra: 'Empalmes y Celdas',
-    estado_obra: 'Adjudicada',
-    observaciones: '',
+    tipo_obra: '',
+    estado_obra: '',
+    observaciones: 'sin observaciones',
     monto_facturado: 0, 
     monto_por_facturar: 0,
     supervisor_id: 0,
@@ -94,34 +98,51 @@ const NuevaObra = () => {
     is_avance: false
   });
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
-    uploadObra(
-      empresa, 
-      cliente, 
-      nombre,
-      parseInt(presupuesto), 
-      porc_avance_financiero,  //debiesen iniciar en 0, en una obra nueva
-      porc_avance_operativo,
-      estado_obra,
-      fecha_inicio, 
-      fecha_termino, 
-      fecha_asignacion, 
-      direccion, 
-      comuna, 
-      tipo_obra,
-      //RELLENO
-      profile.id,
-      parseInt(supervisor_id),
-      cene_id,
-      observaciones,
-      monto_facturado,
-      monto_por_facturar,
-      is_gantt,
-      is_presupuesto,
-      is_avance
-    )  
+    try {
+      const resp = await uploadObra(
+        empresa, 
+        cliente, 
+        nombre,
+        parseInt(presupuesto), 
+        porc_avance_financiero,  //debiesen iniciar en 0, en una obra nueva
+        porc_avance_operativo,
+        estado_obra,
+        fecha_inicio, 
+        fecha_termino, 
+        fecha_asignacion, 
+        direccion, 
+        comuna, 
+        tipo_obra,
+        //RELLENO
+        profile.id,
+        parseInt(supervisor_id),
+        cene_id,
+        observaciones,
+        monto_facturado,
+        monto_por_facturar,
+        is_gantt,
+        is_presupuesto,
+        is_avance
+      )
+      navigate(`/obras/${resp.data.id}/req-documento`)
+    }catch(err){
+      const { response } = err
+      swal.fire({
+        title: "Error al crear la obra",
+        text:  `${response.request.responseText}`,
+        icon: "error",
+        toast: true,
+        timer: 4000,
+        position: 'top-right',
+        timerProgressBar: true,
+        showConfirmButton: false,
+      })
+    }
     onResetForm();
+    
+    
   };
 
   const onChangeSelect = ({target}) => {
@@ -154,6 +175,7 @@ const NuevaObra = () => {
               <Form.Control
                 type="text"
                 name="nombre"
+                value={nombre}
                 onChange={onInputChange}
                 placeholder="Ingrese el nombre de la obra"
                 required
@@ -171,6 +193,7 @@ const NuevaObra = () => {
                     <Form.Select
                     name='supervisor_id'
                     onChange={onInputChange}
+                    value={supervisor_id}
                     required
                     >
                       <option value="">Selecciona un supervisor</option>
@@ -194,6 +217,7 @@ const NuevaObra = () => {
                     <Form.Select
                     name='cliente'
                     onChange={onInputChange}
+                    value={cliente}
                     required
                     >
                       <option value="">Selecciona un cliente</option>
@@ -216,6 +240,7 @@ const NuevaObra = () => {
                   <Form.Select
                     onChange={onInputChange}
                     name="empresa"
+                    value={empresa}
                     required
                   >
                     <option value="">Selecciona una empresa</option>
@@ -240,6 +265,7 @@ const NuevaObra = () => {
                     <Form.Select
                       onChange={onInputChange}
                       name="tipo_obra"
+                      value={tipo_obra}
                       required
                     > 
                       <option value="">Selecciona un tipo de obra</option>
@@ -263,6 +289,7 @@ const NuevaObra = () => {
                     <Form.Select
                       onChange={onInputChange}
                       name="estado_obra"
+                      value={estado_obra}
                       required
                     >
                       <option value="">Selecciona un estado de obra</option>
@@ -291,6 +318,7 @@ const NuevaObra = () => {
                       pattern="[0-9]*"
                       placeholder="Ingrese el monto neto de la obra"
                       name="presupuesto"
+                      value={presupuesto}
                       onChange={onInputChange}
                       required
                     />
@@ -308,6 +336,7 @@ const NuevaObra = () => {
                     <Form.Select
                     name='cene_id'
                     onChange={onInputChange}
+                    value={cene_id}
                     required
                     >
                       <option value="">Selecciona un centro de negocios</option>
@@ -336,6 +365,7 @@ const NuevaObra = () => {
                         type="date"
                         name="fecha_asignacion"
                         onChange={onInputChange}
+                        value={fecha_asignacion}
                         required
                       />
                     </FloatingLabel>
@@ -354,6 +384,7 @@ const NuevaObra = () => {
                       placeholder="Ingrese la fecha de inicio"
                       name="fecha_inicio"
                       onChange={onInputChange}
+                      value={fecha_inicio}
                       required
                     />
                   </FloatingLabel>
@@ -372,6 +403,7 @@ const NuevaObra = () => {
                       placeholder="Ingrese la fecha de termino"
                       name="fecha_termino"
                       onChange={onInputChange}
+                      value={fecha_termino}
                       required
                     />
                   </FloatingLabel>
@@ -411,6 +443,7 @@ const NuevaObra = () => {
                       name="comuna"
                       onChange={onInputChange}
                       required
+                      value={comuna}
                     >
                       <option value="">Selecciona una comuna</option>
                       {
@@ -435,6 +468,7 @@ const NuevaObra = () => {
                   placeholder="Ingrese la direccion de la obra"
                   name="direccion"
                   onChange={onInputChange}
+                  value={direccion}
                   required
                 />
               </FloatingLabel>
@@ -455,8 +489,8 @@ const NuevaObra = () => {
                   type="text"
                   placeholder="Ingrese observaciones de la obra"
                   name="observaciones"
+                  value={observaciones}
                   onChange={onInputChange}
-                  required
                 />
               </FloatingLabel>
             </Form.Group>

@@ -58,8 +58,7 @@ export const uploadAvanceProyectado = async (hitos, id_obra, tipo_avance) => {
             tipo,
             nombre_hito
         })
-        console.log(body)
-        
+                
         const config = {
             headers: {
                 'Content-Type': 'application/json'
