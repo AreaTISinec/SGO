@@ -30,6 +30,7 @@ export const upload = async (doc, tipo, id) => {
     console.error(err)
     swal.fire({
       title: "Error al cargar el documento",
+      text: `${err.message}`,
       icon: "error",
       toast: true,
       timer: 4000,
@@ -65,10 +66,10 @@ export const reqUpload = async (doc,tipo, id) => {
       showConfirmButton: false,
   })
   } catch(err) {
-    console.error(err)
     swal.fire({
       title: "Error al cargar el documento",
       icon: "error",
+      text: `${err.response.request.responseText}`,
       toast: true,
       timer: 4000,
       position: 'top-right',

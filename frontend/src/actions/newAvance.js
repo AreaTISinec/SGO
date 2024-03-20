@@ -127,16 +127,17 @@ export const uploadAvanceFinanciero = async (fecha, monto, id_obra, responsable,
             })
         console.log(res)
     } catch (error) {
-        console.error(error);
         swal.fire({
         title: "A ocurrido un error: ",
         icon: "error",
+        text: `${error.response.request.responseText}`,
         toast: true,
         timer: 4000,
         position: 'top-right',
         timerProgressBar: true,
         showConfirmButton: false,
-    })
+        })
+        throw error
     }
 }
 
