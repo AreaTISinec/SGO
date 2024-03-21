@@ -10,14 +10,16 @@ import {
   getClientes,
   getEmpresas,
   getEstadosObra,
+  getObras,
   getTiposObra,
 } from "../../actions/getPetitions";
 
-const FilterObra = ({ data }) => {
+const FilterObra = ({ onFilter }) => {
   const [tiposObras, setTiposObras] = useState([]);
   const [estadoObras, setEstadosObras] = useState([]);
   const [empresas, setEmpresas] = useState([]);
   const [clientes, setClientes] = useState([]);
+	const [obras, setObras] = useState([])
 
   const [showFilter, setShowFilter] = useState(false);
 
@@ -31,6 +33,7 @@ const FilterObra = ({ data }) => {
 	const [dataFiltrada, setDataFiltrada] = useState([])
 
   useEffect(() => {
+		getObras(setObras)
     getTiposObra(setTiposObras);
     getEstadosObra(setEstadosObras);
     getEmpresas(setEmpresas);
@@ -40,6 +43,9 @@ const FilterObra = ({ data }) => {
   const handleShowFilter = () => setShowFilter(!showFilter);
 
 	const handleOnCheck = (e, campo) => {
+		// let resultadoFiltro = []
+		let newDataFiltrada = [...dataFiltrada]
+
 		switch(campo){
 			case 'tipo_obra':
 				setFiltros({
@@ -51,11 +57,9 @@ const FilterObra = ({ data }) => {
 				})
 
 				if(e.target.checked){
-					const resultadoFiltro = data.filter(item => item.tipo_obra === e.target.value)
-					setDataFiltrada([...dataFiltrada, ...resultadoFiltro])
+					newDataFiltrada = [...newDataFiltrada, ...obras.filter(item => item.tipo_obra === e.target.value)]
 				}else{
-					const resultadoFiltro = dataFiltrada.filter(item => item.tipo_obra !== e.target.value)
-					setDataFiltrada([...resultadoFiltro])
+					newDataFiltrada = newDataFiltrada.filter(item => item.tipo_obra !== e.target.value)
 				}
 				break;
 
@@ -70,11 +74,9 @@ const FilterObra = ({ data }) => {
 				})
 
 				if(e.target.checked){
-					const resultadoFiltro = data.filter(item => item.tipo_obra === e.target.value)
-					setDataFiltrada([...dataFiltrada, ...resultadoFiltro])
+					newDataFiltrada = [...newDataFiltrada, ...obras.filter(item => item.estado_obra === e.target.value)]
 				}else{
-					const resultadoFiltro = dataFiltrada.filter(item => item.tipo_obra !== e.target.value)
-					setDataFiltrada([...resultadoFiltro])
+					newDataFiltrada = newDataFiltrada.filter(item => item.estado_obra !== e.target.value)
 				}
 				break;
 
@@ -89,11 +91,9 @@ const FilterObra = ({ data }) => {
 				})
 				
 				if(e.target.checked){
-					const resultadoFiltro = data.filter(item => item.empresa === e.target.value)
-					setDataFiltrada([...dataFiltrada, ...resultadoFiltro])
+					newDataFiltrada= [...newDataFiltrada, ...obras.filter(item => item.empresa === e.target.value)]
 				}else{
-					const resultadoFiltro = dataFiltrada.filter(item => item.empresa !== e.target.value)
-					setDataFiltrada([...resultadoFiltro])
+					newDataFiltrada = newDataFiltrada.filter(item => item.empresa !== e.target.value)
 				}
 				break;
 
@@ -108,18 +108,21 @@ const FilterObra = ({ data }) => {
 				})
 				
 				if(e.target.checked){
-					const resultadoFiltro = data.filter(item => item.cliente === e.target.value)
-					setDataFiltrada([...dataFiltrada, ...resultadoFiltro])
+					newDataFiltrada = [...newDataFiltrada, ...obras.filter(item => item.cliente === e.target.value)]
 				}else{
-					const resultadoFiltro = dataFiltrada.filter(item => item.cliente !== e.target.value)
-					setDataFiltrada([...resultadoFiltro])
+					newDataFiltrada = newDataFiltrada.filter(item => item.cliente !== e.target.value)
 				}
 				break;
 		}
-		onFilter(dataFiltrada)
+
+		setDataFiltrada(newDataFiltrada)
+		
+		onFilter(newDataFiltrada.length > 0 ? newDataFiltrada : obras)
+
 	}
-	console.log('data :', data)
-	console.log('data filtrada:', dataFiltrada)
+	console.log('data (filtro):', obras)
+	console.log('data filtrada (filtro):', dataFiltrada)
+	console.log('filtros (filtro):', filtros)
 
   return (
     <div>
@@ -133,8 +136,9 @@ const FilterObra = ({ data }) => {
               <Accordion.Header>Tipos de obras</Accordion.Header>
               <Accordion.Body>
                 {tiposObras?.map((tipo) => (
-                  <>
+                  <div key={tipo.id}>
                     <input
+											
 											onChange={(e) => handleOnCheck(e, 'tipo_obra')}
                       type="checkbox"
                       name={tipo.nombre}
@@ -142,7 +146,7 @@ const FilterObra = ({ data }) => {
                       id={tipo.nombre}
                     />
                     <label htmlFor={tipo.nombre}>{tipo.nombre}</label>
-                  </>
+                  </div>
                 ))}
               </Accordion.Body>
             </Accordion.Item>
@@ -150,8 +154,9 @@ const FilterObra = ({ data }) => {
               <Accordion.Header>Estado de Obras</Accordion.Header>
               <Accordion.Body>
                 {estadoObras?.map((estado) => (
-                  <>
+                  <div key={estado.id}>
                     <input
+											
 											onChange={ e => handleOnCheck(e, 'estado_obra')}
                       type="checkbox"
                       name={estado.estado}
@@ -159,7 +164,7 @@ const FilterObra = ({ data }) => {
                       id={estado.estado}
                     />
                     <label htmlFor={estado.estado}>{estado.estado}</label>
-                  </>
+                  </div>
                 ))}
               </Accordion.Body>
             </Accordion.Item>
@@ -167,8 +172,9 @@ const FilterObra = ({ data }) => {
               <Accordion.Header>Empresas</Accordion.Header>
               <Accordion.Body>
                 {empresas?.map((empresa) => (
-                  <>
+                  <div key={empresa.id}>
                     <input
+											
 											onChange={ e => handleOnCheck(e, 'empresa')}
                       type="checkbox"
                       name={empresa.nombre}
@@ -176,7 +182,7 @@ const FilterObra = ({ data }) => {
                       id={empresa.nombre}
                     />
                     <label htmlFor={empresa.nombre}>{empresa.nombre}</label>
-                  </>
+                  </div>
                 ))}
               </Accordion.Body>
             </Accordion.Item>
@@ -184,7 +190,7 @@ const FilterObra = ({ data }) => {
               <Accordion.Header>Clientes</Accordion.Header>
               <Accordion.Body>
 								{clientes?.map((cliente) => (
-                  <>
+                  <div key={cliente.rut}>
                     <input
 											onChange={e => handleOnCheck(e, 'cliente')}
                       type="checkbox"
@@ -193,7 +199,7 @@ const FilterObra = ({ data }) => {
                       id={cliente.nombre}
                     />
                     <label htmlFor={cliente.nombre}>{cliente.nombre}</label>
-                  </>
+                  </div>
                 ))}
               </Accordion.Body>
             </Accordion.Item>

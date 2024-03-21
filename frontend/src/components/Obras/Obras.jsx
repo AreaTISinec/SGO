@@ -15,13 +15,16 @@ import FilterObra from "../Filter/FilterObra";
 
 
 const Obras = () => {
-  const [obrasData, setObrasData] = useState([]);
   const [searchTerm, setSearchTerm] = useState(""); // Estado para el término de búsqueda
 
   const [loading, setLoading] = useState(false)
 
   const [ordenAsc, setOrdenAsc] = useState(false)
   const [campoOrden, setCampoOrden] = useState('')
+
+  const [filteredData, setFilteredData] = useState([])
+
+  const handleFilter = (data) => setFilteredData(data)
 
   const handleClick = () => {
     setLoading(true)
@@ -34,14 +37,14 @@ const Obras = () => {
   const { user } = useContext(AuthContext);
 
   const filterObrasByDirec = (searchTerm) => {
-    if (!Array.isArray(obrasData)) {
+    if (!Array.isArray(filteredData)) {
       return [];
     }
     if (searchTerm.trim() === "") {
-      return obrasData;
+      return filteredData;
     } else {
-      return obrasData.filter((obra) =>
-        obra.direccion.toLowerCase().includes(searchTerm.toLowerCase())
+      return filteredData.filter((obra) =>
+        obra.nombre.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
   };
@@ -50,9 +53,9 @@ const Obras = () => {
     try {
       const id = user.user_id
       if (user.rol == 1 || user.rol == 2 || user.rol == 5) {
-        getObras(setObrasData)
+        getObras(setFilteredData)
       } else {
-        getObra(id, setObrasData)
+        getObra(id, setFilteredData)
       }
     } catch (err) {
       console.error("Error al obtener datos:", err);
@@ -62,13 +65,15 @@ const Obras = () => {
   useEffect(() => {
     getDatos();
   }, [searchTerm]);
-  console.log(obrasData)
+
+  console.log('data obra (obras)',filteredData)
+  console.log('data filtrada (obras)', filteredData)
 
   const sortTable = (campo) => {
     let sortedData;
     switch(campo){
       case 'nombre':
-        sortedData = [...obrasData].sort((a,b)=> {
+        sortedData = [...filteredData].sort((a,b)=> {
             let x = a.nombre.toLowerCase()
             let y = b.nombre.toLowerCase()
             if(x < y) return -1
@@ -77,10 +82,10 @@ const Obras = () => {
         })
         break;
       case 'fecha_inicio':
-        sortedData = [...obrasData].sort((a,b)=> new Date(a.fecha_inicio) > new Date(b.fecha_inicio) )
+        sortedData = [...filteredData].sort((a,b)=> new Date(a.fecha_inicio) > new Date(b.fecha_inicio) )
         break;
       case 'direccion':
-        sortedData = [...obrasData].sort((a,b)=> {
+        sortedData = [...filteredData].sort((a,b)=> {
           let x = a.direccion.toLowerCase()
           let y = b.direccion.toLowerCase()
           if(x < y) return -1
@@ -89,7 +94,7 @@ const Obras = () => {
       })
         break;
       case 'tipo_obra':
-        sortedData = [...obrasData].sort((a,b)=> {
+        sortedData = [...filteredData].sort((a,b)=> {
           let x = a.tipo_obra.toLowerCase()
           let y = b.tipo_obra.toLowerCase()
           if(x < y) return -1
@@ -98,7 +103,7 @@ const Obras = () => {
       })
         break;
       case 'avance_operativo':
-        sortedData = [...obrasData].sort((a,b)=> {
+        sortedData = [...filteredData].sort((a,b)=> {
           if(a.porc_avance_operativo < b.porc_avance_operativo)
             return -1;
           if(a.porc_avance_operativo > b.porc_avance_operativo)
@@ -116,7 +121,7 @@ const Obras = () => {
     }
 
     setCampoOrden(campo);
-    setObrasData(sortedData);
+    setFilteredData(sortedData);
   }
 
 
@@ -126,7 +131,7 @@ const Obras = () => {
       <SidebarV2 />
       <div className="RecuadroListadoObras">
         <div className="Titulo">
-          <h5>Tabla de Obras {obrasData.length}</h5>
+          <h5>Tabla de Obras {filteredData.length}</h5>
         </div>
         <div>
           <form
@@ -136,7 +141,7 @@ const Obras = () => {
               getDatos();
             }}
           >
-            <label htmlFor="search">Buscar por ID:</label>
+            <label htmlFor="search">Buscar por nombre:</label>
             <input
               className="BuscadorDeObras"
               type="text"
@@ -193,12 +198,12 @@ const Obras = () => {
                   </button>
                 </th>
                 <th>
-                  <FilterObra data={obrasData}/>
+                  <FilterObra onFilter={handleFilter}/>
                 </th>
               </tr>
             </thead>
             <tbody>
-              {obrasData.length > 0 && filterObrasByDirec(searchTerm).map((obra) => (
+              {filteredData.length > 0 && filterObrasByDirec(searchTerm).map((obra) => (
                 <tr key={obra.id}>
                   <td>{obra.nombre}</td>
                   <td>{obra.fecha_inicio}</td>
