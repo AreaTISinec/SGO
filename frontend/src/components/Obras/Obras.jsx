@@ -66,9 +66,6 @@ const Obras = () => {
     getDatos();
   }, [searchTerm]);
 
-  console.log('data obra (obras)',filteredData)
-  console.log('data filtrada (obras)', filteredData)
-
   const sortTable = (campo) => {
     let sortedData;
     switch(campo){

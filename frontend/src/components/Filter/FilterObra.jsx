@@ -120,9 +120,6 @@ const FilterObra = ({ onFilter }) => {
 		onFilter(newDataFiltrada.length > 0 ? newDataFiltrada : obras)
 
 	}
-	console.log('data (filtro):', obras)
-	console.log('data filtrada (filtro):', dataFiltrada)
-	console.log('filtros (filtro):', filtros)
 
   return (
     <div>
