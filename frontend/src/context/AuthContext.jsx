@@ -52,7 +52,6 @@ export const AuthProvider = ({ children }) => {
         })
         const data = await response.json()
         
-        
 
         if(response.status === 200){
             setAuthTokens(data)
@@ -68,7 +67,11 @@ export const AuthProvider = ({ children }) => {
                 showConfirmButton: false,
             })
             uploadDataProfile()
-            return navigate('/home')
+            const rol = jwtDecode(data.access).rol
+            if( rol === 1 || rol === 2 || rol ===5)
+                return navigate('/home')
+            else
+                return navigate('/obras')
         } else {
             console.log("there was a server issue");
             swal.fire({

@@ -93,9 +93,7 @@ export const uploadAvanceProyectado = async (hitos, id_obra, tipo_avance) => {
 }
 
 export const uploadAvanceFinanciero = async (fecha, monto, id_obra, responsable, presupuesto, empresa, numero_factura) => {
-    console.log("monto", monto)
     const porcentaje = parseInt((monto/presupuesto)*100)
-    console.log("porcentaje historial", porcentaje)
 
     const body = JSON.stringify({
         fecha,
@@ -106,7 +104,6 @@ export const uploadAvanceFinanciero = async (fecha, monto, id_obra, responsable,
         empresa,
         numero_factura
     })
-    console.log(body)
 
     const config = {
         headers: {

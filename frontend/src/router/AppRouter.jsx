@@ -9,13 +9,12 @@ import NotFound from "../components/NotFound";
 import PrivateRoute from "../utils/PrivateRoute";
 import DetalleObra from "../components/Obras/DetalleObra";
 import NuevaObra from "../components/Obras/NuevaObra";
-import CentroDeNegocios from "../components/Centro de Negocios/CentroDeNegocios";
-import NuevoCentroDeNegocios from "../components/Centro de Negocios/NuevoCentroDeNegocios";
 import { Route, Routes } from "react-router-dom";
 import ReqFiles from "../containers/UploadFile/ReqFiles";
 import Perfil from "../components/Perfil/Perfil";
 import AvanceFinanciero from "../containers/AvanceFinanciero/AvanceFinanciero";
 import AvanceOperativo from "../containers/AvanceOperativo/AvanceOperativo";
+import Facturacion from "../containers/Facturacion/Facturacion";
 
 const AppRouter = () => {
 
@@ -98,23 +97,16 @@ const AppRouter = () => {
               </PrivateRoute>
             }
           />
+
           <Route
-            path="/centro-de-negocios"
+            path="/facturacion"
             element={
               <PrivateRoute>
-                <CentroDeNegocios />
+                <Facturacion />
               </PrivateRoute>
             }
           />
           
-          <Route
-            path="/centro-de-negocios/nuevo-centro-de-negocios"
-            element={
-              <PrivateRoute>
-                <NuevoCentroDeNegocios />
-              </PrivateRoute>
-            }
-          />
           <Route
             path="/perfil/:idUsuario"
             element={

@@ -1,10 +1,13 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import "./SidebarV2.css";
+import AuthContext from "../../context/AuthContext";
 
 const SidebarV2 = () => {
     const navigate = useNavigate();
+
+    const { user } = useContext(AuthContext)
 
     const [openSidebar, setOpenSidebar] = useState(false);
 
@@ -26,12 +29,17 @@ const SidebarV2 = () => {
                             
                         </div>
                         <div className="botonera">
-                            <button
-                                className="BotonNavigate"
-                                onClick={() => {navigate("/home")}}
-                            >
-                                Home
-                            </button>
+                        {
+                            (user.rol == 1 || user.rol == 2 || user.rol == 5) ? 
+                                <button
+                                    className="BotonNavigate"
+                                    onClick={() => {navigate("/home")}}
+                                >
+                                    Dashboard
+                                </button> 
+                            : <></>
+
+                        }
                             <button
                                 className="BotonNavigate"
                                 onClick={() => {navigate("/obras")}}
@@ -40,9 +48,9 @@ const SidebarV2 = () => {
                             </button>
                             <button
                                 className="BotonNavigate"
-                                onClick={() => {navigate("/centro-de-negocios")}}
+                                onClick={() => {navigate("/facturacion")}}
                             >
-                                Negocios
+                                Facturacion
                             </button>
                         </div>
                         <div style={{ visibility: "hidden" }}></div>
