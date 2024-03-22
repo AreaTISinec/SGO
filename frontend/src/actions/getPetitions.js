@@ -135,6 +135,15 @@ export const getHistorialFinanciero = async (setHistorialFinancieroCallback, idO
     }
 }
 
+export const getAllHistorialFinanciero = async (setHistorialFinancieroCallback) => {
+    try {
+        const { data } = await axios.get(`https://sgo-django.azurewebsites.net/api/historial/`)
+        setHistorialFinancieroCallback(data)
+    } catch (error) {
+        console.error(error)
+    }
+}
+
 export const getProfile = async ( idProfile) => {
     try {
         const { data } = await axios.get(`https://sgo-django.azurewebsites.net/api/profile/${idProfile}/`)
