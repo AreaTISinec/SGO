@@ -17,3 +17,9 @@
     border-radius: 20px;
     box-sizing: border-box;
 }
+
+.nav-tabs .nav-link {
+    color: #dc3545 !important;
+  }
+  
+ 
