@@ -22,17 +22,23 @@ def import_from_excel(request):
                 row_data = dict(zip(headers,row))
                 try:
                     if any(value is not None for value in row[:len(headers)]):
-                        data = Ventas(nombre_doc=row_data['Nombre Doc'],    \
+                        data = Ventas(
+                            nombre_doc=row_data['Nombre Doc'],                      \
                             num_doc=row_data['Número del Documento'],               \
-                            cod_cliente=row_data['Código del Cliente'],             \
+                            cod_cliente=row_data['RUT Cliente'],                    \
                             nom_cliente=row_data['Nombre del Cliente'],             \
                             fecha=row_data['Fecha'],                                \
+                            fecha_venc=row_data['Fecha Vencimiento'],               \
                             desc_producto=row_data['Desc. Producto'],               \
                             total_detalle=row_data['Total Detalle'],                \
-                            analisis_cn=int(row_data['Análisis C. Negocio']),            \
+                            analisis_cn=(row_data['Análisis C. Negocio']),       \
                             comentario=row_data['Comentario Ítem'],                 \
-                            linea=row_data['Línea'],                            \
-                            empresa=row_data['Empresa'])
+                            linea=row_data['Línea'],                                \
+                            empresa=row_data['Empresa'],
+                            precio_unit=row_data['Precio Unitario'],
+                            total_neto=['Total Neto Linea'],
+                            es_venta=['Es venta']
+                        )
                         data.full_clean()
                         data.save()
                 except Exception as err:

@@ -8,12 +8,16 @@ class Ventas(models.Model):
     cod_cliente = models.CharField(max_length=45)
     nom_cliente = models.CharField(max_length=45)
     fecha = models.DateField()
+    fecha_venc = models.DateField()
     desc_producto = models.TextField()
     total_detalle = models.IntegerField()
     analisis_cn = models.IntegerField()
     comentario = models.TextField()
     linea = models.IntegerField()
     empresa = models.CharField(max_length=45)
+    precio_unit = models.IntegerField()
+    total_neto = models.IntegerField()
+    es_venta = models.IntegerField()
     
     def full_clean(self):
         super().clean()
