@@ -3,9 +3,20 @@ import Modal from 'react-bootstrap/Modal'
 import Table from 'react-bootstrap/Table'
 import { getEstadosObra } from '../../../actions/getPetitions' 
 import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const EstadoObrasModal = ({ show, handleShow}) => {
   const [estados, setEstados] = useState([])
+
+  const navigate = useNavigate()
+
+  const handleClick = (valor) => {
+    navigate('/obras', {
+      state: {
+        estado_obra: valor
+      }
+    })
+  } 
 
   useEffect(()=>{
     getEstadosObra(setEstados)
@@ -25,7 +36,7 @@ const EstadoObrasModal = ({ show, handleShow}) => {
         {
           estados?.map((estado)=>{
             return(
-              <tr key={estado.id}>
+              <tr onClick={()=> handleClick(estado.estado)} key={estado.id} style={{cursor: 'pointer'}}>
                 <td>{estado.estado}</td>
               </tr>
             )

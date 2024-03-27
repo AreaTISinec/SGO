@@ -3,9 +3,20 @@ import Modal from 'react-bootstrap/Modal'
 import Table from 'react-bootstrap/Table'
 import { getCeNes } from '../../../actions/getPetitions' 
 import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const CeneModal = ({ show, handleShow }) => {
     const [cenes, setCenes] = useState([])
+
+    const navigate = useNavigate()
+
+    const handleClick = (valor) => {
+        navigate('/obras', {
+            state: {
+                cene: valor
+            }
+        })
+    }
 
     useEffect(()=> {
         getCeNes(setCenes)
@@ -29,7 +40,7 @@ const CeneModal = ({ show, handleShow }) => {
                     {
                         cenes?.map((cene)=>{
                             return(
-                            <tr key={cene.id_cene}>
+                            <tr onClick={()=> handleClick(cene.id_cene)} key={cene.id_cene} style={{cursor: 'pointer'}} >
                                 <td>{cene.id_cene}</td>
                                 <td>{cene.nombre}</td>
                                 <td>{cene.empresa}</td>

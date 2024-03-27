@@ -3,9 +3,20 @@ import Modal from 'react-bootstrap/Modal'
 import Table from 'react-bootstrap/Table'
 import { getEmpresas } from '../../../actions/getPetitions' 
 import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const EmpresaModal = ({ show, handleShow}) => {
   const [empresas, setEmpresas] = useState([])
+
+  const navigate = useNavigate()
+
+  const handleClick = (valor) => {
+    navigate('/obras', {
+      state: {
+        empresa: valor
+      }
+    })
+  }
 
   useEffect(()=>{
     getEmpresas(setEmpresas)
@@ -26,7 +37,7 @@ const EmpresaModal = ({ show, handleShow}) => {
         {
           empresas?.map((empresa) => {
             return(
-              <tr key={empresa.id}>
+              <tr style={{cursor: 'pointer'}} key={empresa.id} onClick={()=> handleClick(empresa.nombre)}>
                 <td>{empresa.nombre}</td>
               </tr>
             )

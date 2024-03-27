@@ -3,9 +3,20 @@ import Modal from 'react-bootstrap/Modal'
 import Table from 'react-bootstrap/Table'
 import { getTiposObra } from '../../../actions/getPetitions' 
 import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const TiposObraModal = ({ show, handleShow}) => {
   const [tipos, setTipos] = useState([])
+
+  const navigate = useNavigate()
+
+  const handleClick = (valor) => {
+    navigate('/obras', {
+      state: {
+        tipo_obra: valor
+      }
+    })
+  }
 
   useEffect(()=>{
     getTiposObra(setTipos)
@@ -25,7 +36,7 @@ const TiposObraModal = ({ show, handleShow}) => {
         {
           tipos?.map((tipo) => {
             return(
-              <tr key={tipo.id}>
+              <tr onClick={()=>handleClick(tipo.nombre)} key={tipo.id} style={{cursor: 'pointer'}}>
                 <td>{tipo.nombre}</td>
               </tr>
             )
