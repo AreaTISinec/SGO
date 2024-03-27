@@ -4,7 +4,7 @@ import "./Obras.css";
 import { useState, useEffect, useContext } from "react";
 
 import Button from "react-bootstrap/Button";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
 import { getObras, getObra } from "../../actions/getPetitions";
 
@@ -25,6 +25,10 @@ const Obras = () => {
   const [filteredData, setFilteredData] = useState([])
 
   const handleFilter = (data) => setFilteredData(data)
+
+  const location = useLocation();
+  const { state } = location
+
 
   const handleClick = () => {
     setLoading(true)
@@ -49,11 +53,11 @@ const Obras = () => {
     }
   };
 
-  const getDatos = () => {
+  const getDatos =  () => {
     try {
       const id = user.user_id
       if (user.rol == 1 || user.rol == 2 || user.rol == 5) {
-        getObras(setFilteredData)
+         getObras(setFilteredData, state)
       } else {
         getObra(id, setFilteredData)
       }
@@ -65,6 +69,7 @@ const Obras = () => {
   useEffect(() => {
     getDatos();
   }, [searchTerm]);
+
 
   const sortTable = (campo) => {
     let sortedData;
@@ -120,6 +125,9 @@ const Obras = () => {
     setCampoOrden(campo);
     setFilteredData(sortedData);
   }
+
+
+  
 
 
 
