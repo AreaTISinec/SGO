@@ -214,7 +214,7 @@ const Home =  () => {
         </div>
         <div className="RecuadroDos">
           <h3>Resumen Facturacion</h3>
-            <Carousel interval={null} data-bs-theme="dark">
+            <Carousel interval={null} data-bs-theme="dark" defaultActiveIndex={1}>
               <Carousel.Item>
               <div className="content">
                 <h4>Mes Anterior</h4>
