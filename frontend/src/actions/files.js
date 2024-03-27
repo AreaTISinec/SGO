@@ -1,8 +1,6 @@
 import axios from "axios"
-import { setAlert } from "./alert";
-import { UPLOAD_FAIL, UPLOAD_SUCCES } from "./types";
 
-export const upload_xlxs = ( file ) => async dispatch => {
+export const upload_xlxs = async ( file )   => {
     const config = {
         headers: {
             'Content-Type': 'multipart/form-data'
@@ -13,19 +11,27 @@ export const upload_xlxs = ( file ) => async dispatch => {
     formData.append('file', file);
 
     try {
-        const res = await axios.post('https://sgo-django.azurewebsites.net/api/ventas/upload', formData, config)
-
-        dispatch({
-            type: UPLOAD_SUCCES,
-            payload: res.data
-        });
-
-        dispatch(setAlert('Archivo subido correctamente', 'success'))
+        const res = await axios.post('https://sgo-django.azurewebsites.net/api/ventas/upload/file/', formData, config)
+        console.log(res)
     }catch(err){
-        dispatch({
-            type: UPLOAD_FAIL 
-        });
+        console.error(err)
+    }
+}
+export const uploadForm = async (nombre_doc,num_doc,cod_cliente,nom_cliente,fecha,fecha_venc,desc_producto,total_detalle,analisis_cn,comentario,linea,empresa,precio_unit,total_neto,es_venta) => {
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
 
-        dispatch(setAlert('Error al subir arhivo', 'error'))
+    const body = JSON.stringify({
+        nombre_doc,num_doc,cod_cliente,nom_cliente,fecha,fecha_venc,desc_producto,total_detalle,analisis_cn,comentario,linea,empresa,precio_unit,total_neto,es_venta
+    })
+
+    try {
+        const res = await axios.post('https://sgo-django.azurewebsites.net/api/ventas/upload/form/', body, config)
+        console.log(res)
+    } catch (error) {
+        console.error(error)
     }
 }
