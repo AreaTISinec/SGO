@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import SidebarV2 from "../../components/SidebarV2/SidebarV2"
 import './Facturacion.css'
-import { getEmpresas, getAllHistorialFinanciero, getObras } from '../../actions/getPetitions'
+import { getEmpresas, getAllHistorialFinanciero, getObras, getCeNes } from '../../actions/getPetitions'
 
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
@@ -13,11 +13,14 @@ import Divider from '@mui/material/Divider';
 import Modal from 'react-bootstrap/Modal';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
+import useForm from "../../utils/useForm";
+import { uploadForm, upload_xlxs } from "../../actions/files";
 
 const Facturacion = () => {
   const [presupuesto, setPresupuesto] = useState(0);
   const [obras, setObras] = useState([])
   const [empresas, setEmpresas] = useState([])
+  const [cenes, setCenes] = useState([])
   const [preEmpresas, setPreEmpresas] = useState({})
   const [avances, setAvances] = useState({})
   const [facturacion, setFacturacion] = useState({})
@@ -25,6 +28,29 @@ const Facturacion = () => {
   const [show, setShow] = useState(false)
   const [carga, setCarga] = useState(false)
   const [manual, setManual] = useState(false)
+  const [file, setFile] = useState(null)
+
+  const onChange = e => {
+    setFile(e.target.files[0])
+  }
+
+  const { nombre_doc, num_doc, cod_cliente, nom_cliente, fecha, fecha_venc, desc_producto, total_detalle, analisis_cn, comentario, linea, empresa, precio_unit, total_neto, es_venta, onInputChange, onResetForm } = useForm({
+    nombre_doc: '',
+    num_doc: -1,
+    cod_cliente: '',
+    nom_cliente: '',
+    fecha: '',
+    fecha_venc: '',
+    desc_producto: '',
+    total_detalle: 0,
+    analisis_cn: '',
+    comentario: '',
+    linea: 0,
+    empresa: '',
+    precio_unit: 0,
+    total_neto: 0,
+    es_venta: 0
+  })
 
   const handleShow = () => setShow(!show)
  
@@ -32,6 +58,7 @@ const Facturacion = () => {
     getObras(setObras);
     getEmpresas(setEmpresas);
     getAllHistorialFinanciero(setHistorialFacturas)
+    getCeNes(setCenes)
   }, [])
 
   useEffect(()=>{
@@ -99,6 +126,19 @@ const Facturacion = () => {
     setFacturacion(facturacion)
   }, [obras, empresas, historialFacturas])
 
+  const onSubmitForm = (e) => {
+    e.preventDefault();
+    uploadForm(nombre_doc, num_doc, cod_cliente, nom_cliente, fecha, fecha_venc, desc_producto, total_detalle, analisis_cn, comentario, linea, empresa, precio_unit, total_neto, es_venta)
+    onResetForm();
+  }
+
+  const onSubmitFile = (e) => {
+    console.log('e', e)
+    console.log('file: ', file)
+    e.preventDefault()
+    upload_xlxs(file)
+  }
+
   return (
     <div className="facturacion-container">
     <SidebarV2 />
@@ -110,7 +150,7 @@ const Facturacion = () => {
           <p> | filtrar?Meses?Clientes?Trabajador? | graficos?semaforo? | ???</p>
           <Button variant='danger' onClick={()=>handleShow()} className="mx-2">Subir Factura</Button>
           <Button variant='danger'>Proyectar Facturacion</Button>
-            <p>Total presupuestos: $ {presupuesto}</p>
+            <p className="mt-3">Total presupuestos: $ {presupuesto}</p>
             <Tabs fill>
               <Tab eventKey='Sinec' title='Sinec'>
                 <p >Total presupuesto Sinec: $ {preEmpresas.Sinec} </p>
@@ -170,7 +210,7 @@ const Facturacion = () => {
             {
               manual && !carga ?
 
-              <Form>
+              <Form onSubmit={onSubmitForm}>
                 <Divider><strong>Manual</strong></Divider>
                 <Row>
                   <Col>
@@ -183,8 +223,9 @@ const Facturacion = () => {
                         <Form.Control
                           type="text"
                           placeholder="Ingrese el nombre del documento"
-                          name="nombre-documento"
-                          value=''
+                          name="nombre_doc"
+                          value={nombre_doc}
+                          onChange={onInputChange}
                         />
                       </FloatingLabel>
                     </Form.Group>
@@ -199,8 +240,9 @@ const Facturacion = () => {
                         <Form.Control 
                           type='number'
                           placeholder='Ingrese el numero de documento'
-                          name='numero-documento'
-                          value=''
+                          name='num_doc'
+                          value={num_doc}
+                          onChange={onInputChange}
                         />
                       </FloatingLabel>
                     </Form.Group>
@@ -221,7 +263,8 @@ const Facturacion = () => {
                           type="date"
                           placeholder="Ingresa la fecha"
                           name='fecha'
-                          value=''
+                          value={fecha}
+                          onChange={onInputChange}
                         />
                       </FloatingLabel>
                     </Form.Group>
@@ -236,8 +279,9 @@ const Facturacion = () => {
                         <Form.Control 
                           type="date"
                           placeholder="Ingresa la fecha vencimiento"
-                          name='fecha'
-                          value=''
+                          name='fecha_venc'
+                          value={fecha_venc}
+                          onChange={onInputChange}
                         />
                       </FloatingLabel>
                     </Form.Group>
@@ -257,8 +301,9 @@ const Facturacion = () => {
                         <Form.Control
                           type='text'
                           placeholder="Ingrese el nombre del cliente"
-                          name='cliente'
-                          value=''
+                          name='nom_cliente'
+                          value={nom_cliente}
+                          onChange={onInputChange}
                         />
                       </FloatingLabel>
                     </Form.Group>
@@ -273,8 +318,9 @@ const Facturacion = () => {
                         <Form.Control 
                           type="text"
                           placeholder="Ingrese el rut del cliente"
-                          name='rut-cliente'
-                          value=''
+                          name='cod_cliente'
+                          value={cod_cliente}
+                          onChange={onInputChange}
                         />
                       </FloatingLabel>
                     </Form.Group>
@@ -294,8 +340,9 @@ const Facturacion = () => {
                         <Form.Control 
                           type='number'
                           placeholder='Ingrese el total del detalle'
-                          name='total'
-                          value=''
+                          name='total_detalle'
+                          value={total_detalle}
+                          onChange={onInputChange}
                         />
                       </FloatingLabel>
                     </Form.Group>
@@ -306,9 +353,61 @@ const Facturacion = () => {
                         controlId="floatingInput"
                         label='Centro de Negocios'
                         className="mb-3"
+                        
                       >
-                        <Form.Select>
+                        <Form.Select
+                          onChange={onInputChange}
+                          value={analisis_cn}
+                          name='analisis_cn'
+                        >
                           <option>Seleccione un centro de negocios</option>
+                          {
+                            cenes.map((cene) => (
+                              <option value={cene.id} key={cene.id_cene}>{cene.nombre}</option>
+                            ))
+                          }
+                        </Form.Select>
+                      </FloatingLabel>
+                    </Form.Group>
+                  </Col>
+                </Row>
+
+                <Row>
+                  <Col>
+                    <Form.Group>
+                      <FloatingLabel
+                        controlId="floatingInput"
+                        label='Linea'
+                        className="mb-3"
+                      >
+                        <Form.Control 
+                          type='number'
+                          placeholder='Ingrese la Linea'
+                          name='linea'
+                          value={linea}
+                          onChange={onInputChange}
+                        />
+                      </FloatingLabel>
+                    </Form.Group>
+                  </Col>
+                  <Col>
+                    <Form.Group>
+                      <FloatingLabel
+                        controlId="floatingInput"
+                        label='Empresa'
+                        className="mb-3"
+                      >
+                        <Form.Select
+                          onChange={onInputChange}
+                          name='empresa'
+                          value={empresa}
+                        >
+                          <option>Seleccione una empresa</option>
+                          {
+                            empresas.map((empresa)=>(
+                              <option value={empresa.id} key={empresa.nombre}>{empresa.nombre}</option>
+                            ))
+                          }
                         </Form.Select>
                       </FloatingLabel>
                     </Form.Group>
@@ -327,7 +426,8 @@ const Facturacion = () => {
                       type='text'
                       placeholder="Ingrese comentario del item"
                       name='comentario'
-                      value=''
+                      value={comentario}
+                      onChange={onInputChange}
                     />
                   </FloatingLabel>
                 </Form.Group>
@@ -341,27 +441,32 @@ const Facturacion = () => {
                     <Form.Control 
                       type='text'
                       placeholder='Ingrese la descripcion del producto'
-                      name='descripcion'
-                      value=''
+                      name='desc_producto'
+                      value={desc_producto}
+                      onChange={onInputChange}
                     />
                   </FloatingLabel>
                 </Form.Group>
 
-                <Button variant='danger'>Subir Facturacion</Button>
+                <Button variant='danger' type="submit">Subir Facturacion</Button>
 
               </Form>
               : (!manual && carga ) ?
-              <Form>
+              <Form className="d-flex flex-column" onSubmit={onSubmitFile} encType="multipart/form-data">
               <Divider><strong>Archivo</strong></Divider>
                 <Form.Group>
                   <Form.Label>Seleccione documento</Form.Label>
                   <Form.Control
                     type="file"
+                    name="file"
+                    onChange={onChange}
                   />
 
                 </Form.Group>
+                
+                <a className="mt-3 bg-transparent" href="">Descargar Plantilla</a>
 
-                <Button variant='danger' className="mt-3">Subir Facturacion</Button>
+                <Button variant='danger' className="mt-3" type="submit">Subir Facturacion</Button>
               </Form>
             : <></>
           }
