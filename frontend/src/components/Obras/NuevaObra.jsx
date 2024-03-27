@@ -194,7 +194,6 @@ const NuevaObra = () => {
                     name='supervisor_id'
                     onChange={onInputChange}
                     value={supervisor_id}
-                    required
                     >
                       <option value="">Selecciona un supervisor</option>
                       {
@@ -342,7 +341,7 @@ const NuevaObra = () => {
                       <option value="">Selecciona un centro de negocios</option>
                       {
                         cenes.map((cene) => 
-                          <option key={cene.id_cene}  value={cene.id_cene}>{cene.nombre}</option>
+                          <option key={cene.id_cene}  value={cene.id_cene}>{cene.id_cene} - {cene.nombre}</option>
                         )
                       }
                     </Form.Select>
